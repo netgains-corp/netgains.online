@@ -33,28 +33,27 @@
            HEADER & NAVIGATION
            ========================================== */
         .site-header {
-            position: relative; /* Wichtig für den Glow-Effekt */
-            background-color: #ffffff; /* Weißer Header */
+            position: relative; 
+            background-color: #ffffff; 
             width: 100%;
-            height: 80px; /* Feste Höhe zur Vermeidung von Layout Shifts (CLS) */
+            /* Dynamische Header-Höhe: mind. 60px, ideal 8vh, max 100px für 4K */
+            height: clamp(60px, 8vh, 100px); 
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Links, Mitte (Logo), Rechts */
+            grid-template-columns: 1fr auto 1fr; 
             align-items: center;
-            padding: 0 5%; /* Abstand zum Rand */
-            z-index: 100; /* Header über den Inhalt legen */
+            padding: 0 5%; 
+            z-index: 100; 
         }
 
         /* Der bunte, glänzende Drop-Shadow (Hardware-beschleunigt) */
         .site-header::after {
             content: '';
             position: absolute;
-            top: 100%; /* Setzt direkt unter dem Header an */
+            top: 100%; 
             left: 0;
             width: 100%;
-            height: 15px; /* Länge des Schattenverlaufs nach unten */
-            /* Bunter Verlauf: Pink -> Lila -> Cyan -> Grün */
+            height: 6px; 
             background: linear-gradient(90deg, #ff007a, #7a00ff, #00e5ff, #00ff7a);
-            /* Maske sorgt für den weichen, unsichtbar werdenden Verlauf NUR nach unten */
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
             z-index: -1;
@@ -63,16 +62,17 @@
 
         .header-nav {
             display: flex;
-            gap: 1.5rem;
+            /* Dynamischer Abstand zwischen Links */
+            gap: clamp(1rem, 2vw, 2.5rem);
         }
 
         .nav-left {
-            justify-content: flex-end; /* Navigationspunkte rücken näher zur Mitte (zum Logo) */
+            justify-content: flex-end; 
             padding-right: 3vw;
         }
 
         .nav-right {
-            justify-content: flex-start; /* Navigationspunkte rücken näher zur Mitte (zum Logo) */
+            justify-content: flex-start; 
             padding-left: 3vw;
         }
 
@@ -80,14 +80,15 @@
             text-decoration: none;
             color: #111111;
             font-weight: 600;
-            font-size: 1rem;
+            /* Dynamische Schriftgröße für die Navigation */
+            font-size: clamp(0.85rem, 1vw, 1.1rem); 
             padding: 0.5rem 1rem;
             border-radius: 8px;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         .nav-link:hover {
-            background-color: #f0f0f0; /* Leichtes Feedback beim Hover */
+            background-color: #f0f0f0; 
             color: #000000;
         }
 
@@ -102,18 +103,18 @@
         }
 
         .logo-img {
-            width: 200px;
-            height: 50px;
+            /* Dynamische Logo-Größe mit festem Aspect-Ratio für 0 CLS */
+            width: clamp(150px, 15vw, 250px);
+            height: auto;
+            aspect-ratio: 200 / 50;
             object-fit: contain;
-            /* Invertiert das weiße Logo zu schwarz, damit es auf dem weißen Header sichtbar ist. 
-               Entfernen, sobald ein dunkles Logo verwendet wird! */
             filter: invert(1); 
         }
 
-        /* Mobile Ansicht: Navigation vorerst ausblenden für 100/100 Basis (Mobile Menu folgt bei Bedarf) */
+        /* Mobile Ansicht: Navigation vorerst ausblenden */
         @media (max-width: 900px) {
             .site-header {
-                grid-template-columns: auto; /* Nur noch Logo zentriert */
+                grid-template-columns: auto; 
                 justify-content: center;
             }
             .header-nav {
@@ -126,17 +127,19 @@
            ========================================== */
         .hero-section {
             width: 100%;
-            padding: 6rem 5%;
+            /* Dynamisches Padding: mind. 4rem, ideal 10vh, max 12rem für 4K */
+            padding: clamp(4rem, 10vh, 12rem) 5%;
             display: flex;
-            justify-content: center; /* Hält den Inhalt zentriert */
+            justify-content: center; 
         }
 
         .hero-container {
             width: 100%;
-            max-width: 1200px; /* Begrenzt die Breite auf Ultrawides */
+            /* Dynamische Max-Breite, wächst auf großen Bildschirmen bis 1600px mit */
+            max-width: clamp(1200px, 85vw, 1600px); 
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Zwei Spalten: Text & Bild */
-            gap: 4rem;
+            grid-template-columns: 1fr 1fr; 
+            gap: clamp(2rem, 5vw, 6rem); /* Dynamischer Abstand zwischen Text und Bild */
             align-items: center;
         }
 
@@ -147,69 +150,70 @@
         }
 
         .hero-title {
-            font-size: 4rem;
+            /* Fluid Typography: Wächst von 2.5rem auf kleinen Screens bis zu 5.5rem auf 4K */
+            font-size: clamp(2.5rem, 4.5vw, 5.5rem); 
             font-weight: 800;
             color: #111111;
             line-height: 1.1;
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 clamp(1rem, 2vh, 2rem) 0;
             letter-spacing: -0.02em;
         }
 
-        /* Container für den rotierenden Text. inline-grid verhindert Layout-Shifts (CLS) */
         .word-rotator {
             display: inline-grid;
             vertical-align: bottom;
         }
 
         .word-rotator span {
-            grid-area: 1 / 1; /* Legt alle Wörter exakt übereinander */
+            grid-area: 1 / 1; 
             opacity: 0;
-            animation: rotateWords 9s linear infinite; /* 3 Wörter * 3 Sekunden = 9s */
-        }
-
-        /* Versetzte Startzeiten für die einzelnen Wörter */
-        .word-rotator span:nth-child(1) { animation-delay: 0s; }
-        .word-rotator span:nth-child(2) { animation-delay: 3s; }
-        .word-rotator span:nth-child(3) { animation-delay: 6s; }
-
-        @keyframes rotateWords {
-            0% { opacity: 0; transform: translateY(15px); }
-            5% { opacity: 1; transform: translateY(0); }
-            28% { opacity: 1; transform: translateY(0); }
-            33% { opacity: 0; transform: translateY(-15px); }
-            100% { opacity: 0; transform: translateY(-15px); }
-        }
-
-        .hero-title-highlight {
-            /* Glänzender Text-Effekt passend zum Header-Schatten */
+            animation: rotateWords 9s linear infinite; 
             background: linear-gradient(90deg, #7a00ff, #00e5ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
+        .word-rotator span:nth-child(1) { animation-delay: 0s; }
+        .word-rotator span:nth-child(2) { animation-delay: 3s; }
+        .word-rotator span:nth-child(3) { animation-delay: 6s; }
+
+        /* Animation nutzt nun 'em' statt 'px', damit die Bewegung relativ zur Textgröße skaliert */
+        @keyframes rotateWords {
+            0% { opacity: 0; transform: translateY(0.3em); }
+            5% { opacity: 1; transform: translateY(0); }
+            28% { opacity: 1; transform: translateY(0); }
+            33% { opacity: 0; transform: translateY(-0.3em); }
+            100% { opacity: 0; transform: translateY(-0.3em); }
+        }
+
         .hero-subtitle {
-            font-size: 1.25rem;
+            /* Dynamischer Untertitel */
+            font-size: clamp(1rem, 1.25vw, 1.5rem); 
             color: #555555;
             line-height: 1.6;
-            margin: 0 0 2.5rem 0;
+            margin: 0 0 clamp(2rem, 4vh, 3.5rem) 0;
             max-width: 90%;
         }
 
         .hero-cta-wrapper {
             display: flex;
-            gap: 1rem;
+            gap: clamp(1rem, 1.5vw, 2rem);
+        }
+
+        .btn-primary, .btn-secondary {
+            text-decoration: none;
+            font-weight: 600;
+            /* Dynamische Button-Schriftgröße und Abstände */
+            font-size: clamp(1rem, 1.1vw, 1.25rem);
+            padding: clamp(0.8rem, 1vw, 1.2rem) clamp(1.5rem, 2vw, 2.5rem);
+            border-radius: 50px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
 
         .btn-primary {
             background-color: #111111;
             color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
             border: 2px solid #111111;
         }
 
@@ -221,12 +225,6 @@
         .btn-secondary {
             background-color: transparent;
             color: #111111;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            transition: background-color 0.2s ease;
             border: 2px solid #e0e0e0;
         }
 
@@ -236,7 +234,6 @@
 
         .hero-image-wrapper {
             width: 100%;
-            /* aspect-ratio verhindert Layout Shifts (CLS), bevor das Bild geladen ist */
             aspect-ratio: 4 / 3; 
             background-color: #f9f9f9;
             border-radius: 24px;
@@ -246,9 +243,11 @@
             align-items: center;
             color: #999999;
             font-weight: 500;
+            /* Dynamische Textgröße im Platzhalter */
+            font-size: clamp(1rem, 1.5vw, 2rem);
         }
 
-        /* Hero Responsive */
+        /* Hero Responsive für Tablets und Mobile */
         @media (max-width: 900px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -257,9 +256,6 @@
             }
             .hero-content {
                 align-items: center;
-            }
-            .hero-title {
-                font-size: 3rem;
             }
             .hero-subtitle {
                 max-width: 100%;
@@ -270,8 +266,8 @@
            MAIN CONTENT
            ========================================== */
         .site-main {
-            /* Füllt den restlichen Bildschirm aus */
-            min-height: calc(100vh - 80px); 
+            /* Errechnet den Restplatz minus dynamischer Headerhöhe */
+            min-height: calc(100vh - clamp(60px, 8vh, 100px)); 
             display: block;
         }
     </style>
@@ -312,7 +308,7 @@
                 <div class="hero-content">
                     <h1 class="hero-title">
                         Websites, Apps und Systeme die<br>
-                        <span class="hero-title-highlight word-rotator">
+                        <span class="word-rotator">
                             <span>verkaufen.</span>
                             <span>skalieren.</span>
                             <span>wirken.</span>
@@ -327,7 +323,7 @@
 
                 <!-- Rechte Seite: Bild Platzhalter -->
                 <div class="hero-image-wrapper">
-                    <span></span>
+                    <span>[Bild des Helden-Platzhalters]</span>
                 </div>
             </div>
         </section>
@@ -341,8 +337,7 @@
            ========================================== */
         
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialer Setup-Code hier
-            console.log("Ultra Website initialisiert. Ladezeit-Status: Perfekt.");
+            console.log("Ultra Website initialisiert. Skalierung: Fluid auf allen Auflösungen.");
         });
     </script>
 
