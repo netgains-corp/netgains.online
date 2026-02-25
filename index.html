@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <!-- Wichtig für responsive Darstellung und Mobile SEO -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO: Titel und Beschreibung -->
+    <title>Startseite | Die Ultra Website</title>
+    <meta name="description" content="Unsere hochoptimierte Plattform. Marktführer in Performance und Ladezeit.">
+    
+    <!-- LCP Optimierung: Preload für das wichtigste Element im Viewport (das Logo) -->
+    <link rel="preload" as="image" href="logo_white.webp" fetchpriority="high">
+
+    <style>
+        /* ==========================================
+           CSS RESET & BASIS (Minimalistischer Ansatz)
+           ========================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* Weißer Blank Space für den Body */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ==========================================
+           HEADER & NAVIGATION
+           ========================================== */
+        .site-header {
+            position: relative; /* Wichtig für den Glow-Effekt */
+            background-color: #ffffff; /* Weißer Header */
+            width: 100%;
+            height: 80px; /* Feste Höhe zur Vermeidung von Layout Shifts (CLS) */
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Links, Mitte (Logo), Rechts */
+            align-items: center;
+            padding: 0 5%; /* Abstand zum Rand */
+            z-index: 100; /* Header über den Inhalt legen */
+        }
+
+        /* Der bunte, glänzende Drop-Shadow (Hardware-beschleunigt) */
+        .site-header::after {
+            content: '';
+            position: absolute;
+            top: 100%; /* Setzt direkt unter dem Header an */
+            left: 0;
+            width: 100%;
+            height: 15px; /* Länge des Schattenverlaufs nach unten */
+            /* Bunter Verlauf: Pink -> Lila -> Cyan -> Grün */
+            background: linear-gradient(90deg, #ff007a, #7a00ff, #00e5ff, #00ff7a);
+            /* Maske sorgt für den weichen, unsichtbar werdenden Verlauf NUR nach unten */
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            z-index: -1;
+            opacity: 0.9;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-left {
+            justify-content: flex-end; /* Navigationspunkte rücken näher zur Mitte (zum Logo) */
+            padding-right: 3vw;
+        }
+
+        .nav-right {
+            justify-content: flex-start; /* Navigationspunkte rücken näher zur Mitte (zum Logo) */
+            padding-left: 3vw;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #111111;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f0f0f0; /* Leichtes Feedback beim Hover */
+            color: #000000;
+        }
+
+        .logo-link {
+            display: inline-flex;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.8; 
+        }
+
+        .logo-img {
+            width: 200px;
+            height: 50px;
+            object-fit: contain;
+            /* Invertiert das weiße Logo zu schwarz, damit es auf dem weißen Header sichtbar ist. 
+               Entfernen, sobald ein dunkles Logo verwendet wird! */
+            filter: invert(1); 
+        }
+
+        /* Mobile Ansicht: Navigation vorerst ausblenden für 100/100 Basis (Mobile Menu folgt bei Bedarf) */
+        @media (max-width: 900px) {
+            .site-header {
+                grid-template-columns: auto; /* Nur noch Logo zentriert */
+                justify-content: center;
+            }
+            .header-nav {
+                display: none; 
+            }
+        }
+
+        /* ==========================================
+           HERO SECTION
+           ========================================== */
+        .hero-section {
+            width: 100%;
+            padding: 6rem 5%;
+            display: flex;
+            justify-content: center; /* Hält den Inhalt zentriert */
+        }
+
+        .hero-container {
+            width: 100%;
+            max-width: 1200px; /* Begrenzt die Breite auf Ultrawides */
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Zwei Spalten: Text & Bild */
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #111111;
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        /* Container für den rotierenden Text. inline-grid verhindert Layout-Shifts (CLS) */
+        .word-rotator {
+            display: inline-grid;
+            vertical-align: bottom;
+        }
+
+        .word-rotator span {
+            grid-area: 1 / 1; /* Legt alle Wörter exakt übereinander */
+            opacity: 0;
+            animation: rotateWords 9s linear infinite; /* 3 Wörter * 3 Sekunden = 9s */
+        }
+
+        /* Versetzte Startzeiten für die einzelnen Wörter */
+        .word-rotator span:nth-child(1) { animation-delay: 0s; }
+        .word-rotator span:nth-child(2) { animation-delay: 3s; }
+        .word-rotator span:nth-child(3) { animation-delay: 6s; }
+
+        @keyframes rotateWords {
+            0% { opacity: 0; transform: translateY(15px); }
+            5% { opacity: 1; transform: translateY(0); }
+            28% { opacity: 1; transform: translateY(0); }
+            33% { opacity: 0; transform: translateY(-15px); }
+            100% { opacity: 0; transform: translateY(-15px); }
+        }
+
+        .hero-title-highlight {
+            /* Glänzender Text-Effekt passend zum Header-Schatten */
+            background: linear-gradient(90deg, #7a00ff, #00e5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #555555;
+            line-height: 1.6;
+            margin: 0 0 2.5rem 0;
+            max-width: 90%;
+        }
+
+        .hero-cta-wrapper {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #111111;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 2px solid #111111;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #111111;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            transition: background-color 0.2s ease;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+
+        .hero-image-wrapper {
+            width: 100%;
+            /* aspect-ratio verhindert Layout Shifts (CLS), bevor das Bild geladen ist */
+            aspect-ratio: 4 / 3; 
+            background-color: #f9f9f9;
+            border-radius: 24px;
+            border: 2px dashed #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999999;
+            font-weight: 500;
+        }
+
+        /* Hero Responsive */
+        @media (max-width: 900px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+            .hero-content {
+                align-items: center;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-subtitle {
+                max-width: 100%;
+            }
+        }
+
+        /* ==========================================
+           MAIN CONTENT
+           ========================================== */
+        .site-main {
+            /* Füllt den restlichen Bildschirm aus */
+            min-height: calc(100vh - 80px); 
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <!-- Linke Navigation -->
+        <nav class="header-nav nav-left" aria-label="Hauptnavigation Links">
+            <a href="#websites" class="nav-link">Websites</a>
+            <a href="#apps" class="nav-link">Apps & Webapps</a>
+        </nav>
+
+        <!-- Logo Mittig -->
+        <a href="/" class="logo-link" aria-label="Zurück zur Startseite">
+            <img 
+                src="logo_white.webp" 
+                alt="Firmenlogo" 
+                class="logo-img" 
+                width="200" 
+                height="50" 
+                fetchpriority="high" 
+                decoding="sync"
+            >
+        </a>
+
+        <!-- Rechte Navigation -->
+        <nav class="header-nav nav-right" aria-label="Hauptnavigation Rechts">
+            <a href="#erfahrungen" class="nav-link">Erfahrungen</a>
+            <a href="#about" class="nav-link">Über uns</a>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        <section class="hero-section">
+            <div class="hero-container">
+                <!-- Linke Seite: Text & CTA -->
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Websites, Apps und Systeme die<br>
+                        <span class="hero-title-highlight word-rotator">
+                            <span>verkaufen.</span>
+                            <span>skalieren.</span>
+                            <span>wirken.</span>
+                        </span>
+                    </h1>
+                    <p class="hero-subtitle">Maximiere deine Conversion-Raten mit einer Plattform, die in Millisekunden lädt. Perfekte PageSpeed-Scores, kompromissloses Design.</p>
+                    <div class="hero-cta-wrapper">
+                        <a href="#start" class="btn-primary">Jetzt starten</a>
+                        <a href="#portfolio" class="btn-secondary">Projekte ansehen</a>
+                    </div>
+                </div>
+
+                <!-- Rechte Seite: Bild Platzhalter -->
+                <div class="hero-image-wrapper">
+                    <span></span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* ==========================================
+           VANILLA JAVASCRIPT
+           Alles wird hier in einem Scope oder per Modul geschrieben, 
+           um externe Requests zu sparen.
+           ========================================== */
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialer Setup-Code hier
+            console.log("Ultra Website initialisiert. Ladezeit-Status: Perfekt.");
+        });
+    </script>
+
+</body>
+</html>
