@@ -9,10 +9,14 @@
     <title>Startseite | Die Ultra Website</title>
     <meta name="description" content="Unsere hochoptimierte Plattform. Marktführer in Performance und Ladezeit.">
     
-    <!-- LCP Optimierung: Preload für das wichtigste Element im Viewport (das Logo) -->
-    <link rel="preload" as="image" href="logo_weiß.webp" fetchpriority="high">
+    <!-- Favicon: Firmenlogo als Icon festlegen -->
+    <link rel="icon" type="image/webp" href="logo_white.webp">
+    
+    <!-- LCP Optimierung: Preload für die wichtigsten Elemente im Viewport -->
+    <link rel="preload" as="image" href="logo_white.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="dancin.webp" fetchpriority="high">
 
-    <!-- Typografie: Hochoptimiertes Laden der professionellen "Inter" Schriftart (jetzt inkl. Font-Weight 700 für mehr Seriosität) -->
+    <!-- Typografie: Hochoptimiertes Laden der professionellen "Inter" Schriftart -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,99 +32,105 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #ffffff; /* Weißer Blank Space für den Body */
-            /* Professionelle, edle Typografie für Tech & Agenturen */
+            background-color: #ffffff; 
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* Sorgt für ein leicht aufgeräumteres Schriftbild */
             letter-spacing: -0.01em; 
+            min-height: 150vh;
         }
 
         /* ==========================================
-           HEADER & NAVIGATION
+           HEADER & NAVIGATION (Glassmorphism)
            ========================================== */
         .site-header {
-            position: relative; 
-            background-color: #ffffff; 
+            position: sticky; 
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            
             width: 100%;
-            /* Dynamische Header-Höhe: mind. 60px, ideal 8vh, max 100px für 4K */
-            height: clamp(60px, 8vh, 100px); 
+            height: clamp(70px, 9vh, 110px); 
             display: grid;
             grid-template-columns: 1fr auto 1fr; 
             align-items: center;
             padding: 0 5%; 
             z-index: 100; 
-            /* Ein hauchdünner, grauer Rahmen unten sorgt für optische Struktur */
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
         }
 
-        /* Der bunte, glänzende Drop-Shadow (Hardware-beschleunigt) */
         .site-header::after {
             content: '';
             position: absolute;
             top: 100%; 
             left: 0;
             width: 100%;
-            height: 4px; /* Wieder etwas präsenter und dicker (vorher 2px) */
-            background: linear-gradient(90deg, #ff007a, #7a00ff, #00e5ff, #00ff7a);
+            height: 4px; 
+            background: linear-gradient(90deg, #ff007a, #7a00ff, #00e5ff, #00ff7a, #ff007a);
+            background-size: 200% 100%;
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
             z-index: -1;
-            opacity: 0.6; /* Deutlicher sichtbar, aber immer noch edel */
+            opacity: 0.6; 
+            animation: flowShadow 6s linear infinite;
+        }
+
+        @keyframes flowShadow {
+            0% { background-position: 200% 0; }
+            100% { background-position: 0% 0; }
         }
 
         .header-nav {
             display: flex;
-            gap: clamp(1rem, 2vw, 2.5rem);
+            gap: clamp(1.2rem, 2.5vw, 3rem);
         }
 
         .nav-left {
             justify-content: flex-end; 
-            padding-right: 3vw;
+            padding-right: 4vw;
         }
 
         .nav-right {
             justify-content: flex-start; 
-            padding-left: 3vw;
+            padding-left: 4vw;
         }
 
         .nav-link {
             text-decoration: none;
             color: #555555;
-            font-weight: 500; /* Etwas leichter für den Editorial-Look */
-            /* Dynamische Schriftgröße für die Navigation */
-            font-size: clamp(0.75rem, 0.8vw, 0.9rem); 
-            text-transform: uppercase; /* Großbuchstaben wirken seriöser */
-            letter-spacing: 0.05em; /* Gesperrter Text */
+            font-weight: 500; 
+            font-size: clamp(0.85rem, 0.9vw, 1rem); 
+            text-transform: uppercase; 
+            letter-spacing: 0.06em; 
             padding: 0.5rem 0.5rem;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
         }
 
         .nav-link:hover {
-            color: #000000; /* Nur Farbwechsel, kein unruhiger grauer Kasten mehr beim Hover */
+            color: #000000; 
+            text-shadow: 0 0 12px rgba(0,0,0,0.1); 
         }
 
         .logo-link {
             display: inline-flex;
             text-decoration: none;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
         .logo-link:hover {
             opacity: 0.8; 
+            transform: scale(0.98);
         }
 
         .logo-img {
-            /* Dynamische Logo-Größe mit festem Aspect-Ratio für 0 CLS */
-            width: clamp(150px, 15vw, 250px);
+            width: clamp(160px, 15vw, 240px); 
             height: auto;
             aspect-ratio: 200 / 50;
             object-fit: contain;
             filter: invert(1); 
         }
 
-        /* Mobile Ansicht: Navigation vorerst ausblenden */
         @media (max-width: 900px) {
             .site-header {
                 grid-template-columns: auto; 
@@ -132,23 +142,21 @@
         }
 
         /* ==========================================
-           HERO SECTION
+           HERO SECTION 
            ========================================== */
         .hero-section {
             width: 100%;
-            /* Dynamischeres Padding, reagiert stärker auf Fensterhöhe */
-            padding: clamp(3rem, 12vh, 12rem) 5%;
+            padding: clamp(4rem, 12vh, 14rem) 5%;
             display: flex;
             justify-content: center; 
         }
 
         .hero-container {
             width: 100%;
-            /* Container ist jetzt fließender */
-            max-width: clamp(1000px, 90vw, 1500px); 
+            max-width: clamp(1000px, 90vw, 1600px); 
             display: grid;
             grid-template-columns: 1fr 1fr; 
-            gap: clamp(2rem, 6vw, 8rem); /* Abstand skaliert jetzt stärker mit */
+            gap: clamp(3rem, 6vw, 8rem); 
             align-items: center;
         }
 
@@ -159,13 +167,12 @@
         }
 
         .hero-title {
-            /* Extrem dynamische Typografie: wächst stark mit der Bildschirmbreite */
-            font-size: clamp(2.5rem, 6vw, 6.5rem); 
+            font-size: clamp(2.8rem, 5.5vw, 6.5rem); 
             font-weight: 700; 
             color: #0a0a0a; 
-            line-height: 1.15; 
-            margin: 0 0 clamp(1rem, 3vh, 2.5rem) 0;
-            letter-spacing: -0.02em; 
+            line-height: 1.1; 
+            margin: 0 0 clamp(1.2rem, 3vh, 2.5rem) 0;
+            letter-spacing: -0.03em; 
         }
 
         .word-rotator {
@@ -177,7 +184,6 @@
             grid-area: 1 / 1; 
             opacity: 0;
             animation: rotateWords 9s linear infinite; 
-            /* Seriöser, metallischer Graphit-Verlauf statt bunter Neon-Farben */
             background: linear-gradient(90deg, #0a0a0a, #666666);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -188,7 +194,6 @@
         .word-rotator span:nth-child(2) { animation-delay: 3s; }
         .word-rotator span:nth-child(3) { animation-delay: 6s; }
 
-        /* Animation nutzt nun 'em' statt 'px', damit die Bewegung relativ zur Textgröße skaliert */
         @keyframes rotateWords {
             0% { opacity: 0; transform: translateY(0.3em); }
             5% { opacity: 1; transform: translateY(0); }
@@ -198,12 +203,11 @@
         }
 
         .hero-subtitle {
-            /* Dynamischer Untertitel, skaliert spürbarer */
-            font-size: clamp(1rem, 1.5vw, 1.4rem); 
+            font-size: clamp(1.1rem, 1.4vw, 1.6rem); 
             font-weight: 400;
             color: #444444; 
             line-height: 1.6;
-            margin: 0 0 clamp(2rem, 5vh, 4rem) 0;
+            margin: 0 0 clamp(2.5rem, 5vh, 4rem) 0;
             max-width: 90%;
         }
 
@@ -215,9 +219,8 @@
         .btn-primary, .btn-secondary {
             text-decoration: none;
             font-weight: 600;
-            /* Knöpfe wachsen und schrumpfen dynamisch mit */
-            font-size: clamp(0.9rem, 1.2vw, 1.15rem);
-            padding: clamp(0.8rem, 1.5vh, 1.2rem) clamp(1.5rem, 2.5vw, 2.5rem);
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            padding: clamp(0.9rem, 1.6vh, 1.3rem) clamp(1.8rem, 2.5vw, 3rem);
             border-radius: 4px; 
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
         }
@@ -225,78 +228,94 @@
         .btn-primary {
             background-color: #0a0a0a;
             color: #ffffff;
-            border: 1px solid #0a0a0a; /* Feinerer Rand */
+            border: 1px solid #0a0a0a; 
+            box-shadow: 0 10px 25px -8px rgba(10, 10, 10, 0.4);
         }
 
         .btn-primary:hover {
-            background-color: #333333; /* Dezenterer Hover */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background-color: #333333; 
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -10px rgba(10, 10, 10, 0.5);
         }
 
         .btn-secondary {
-            background-color: transparent;
+            background-color: rgba(255, 255, 255, 0.6); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #0a0a0a;
-            border: 1px solid #d0d0d0; /* Feinerer, grauer Rand */
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.05); 
         }
 
         .btn-secondary:hover {
-            background-color: #fafafa;
-            border-color: #0a0a0a;
+            background-color: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.1);
         }
 
         /* Container für Bild und Glow-Bubble */
         .hero-image-container {
             position: relative;
             width: 100%;
-            z-index: 1; /* Hält den Inhalt über der Bubble */
+            z-index: 1; 
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Der türkise Glow-Bubble hinter dem Bild */
         .glow-bubble {
             position: absolute;
             top: 20%;
-            left: -15%; /* Leicht nach links versetzt */
-            width: 60%;
+            left: -15%; 
+            width: 70%; 
             aspect-ratio: 1;
-            background: rgba(0, 229, 255, 0.35); /* Türkis mit Transparenz */
-            filter: blur(80px); /* Sehr weicher, diffuser Glow */
+            background: rgba(0, 229, 255, 0.45); 
+            filter: blur(100px); 
             border-radius: 50%;
-            z-index: -1; /* Hinter das Bild legen */
-            /* Eine flüssige, hochperformante Puls-Animation für noch mehr Dynamik */
+            z-index: -1; 
             animation: floatGlow 8s ease-in-out infinite alternate;
             will-change: transform, opacity;
         }
 
         @keyframes floatGlow {
             0% { transform: scale(1) translate(0, 0); opacity: 0.7; }
-            100% { transform: scale(1.1) translate(-20px, 15px); opacity: 1; }
+            100% { transform: scale(1.15) translate(-30px, 20px); opacity: 1; }
         }
 
         .hero-image-wrapper {
             width: 100%;
             aspect-ratio: 4 / 3; 
-            background-color: #ffffff; 
-            border-radius: 6px; 
-            border: 1px solid rgba(0, 163, 255, 0.15); 
-            /* Der hellblaue Drop-Shadow: Großflächig und weich */
-            box-shadow: 0 20px 50px -10px rgba(0, 163, 255, 0.25);
+            background-color: rgba(255, 255, 255, 0.4); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 8px; 
+            border: 1px solid rgba(255, 255, 255, 0.8); 
+            box-shadow: 0 30px 70px -20px rgba(0, 163, 255, 0.35),
+                        inset 0 0 25px rgba(255, 255, 255, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #a0a0a0;
-            font-weight: 500;
-            font-size: clamp(1rem, 1.5vw, 2rem);
+            overflow: hidden; /* Sorgt dafür, dass das Bild innerhalb des Radius bleibt */
         }
 
-        /* Hero Responsive für Tablets und Mobile */
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Füllt den Glass-Container perfekt aus */
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image-wrapper:hover .hero-img {
+            transform: scale(1.05); /* Dezenter Zoom-Effekt für Interaktivität */
+        }
+
         @media (max-width: 900px) {
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 3rem;
+                gap: 3.5rem;
             }
             .hero-content {
                 align-items: center;
@@ -310,8 +329,7 @@
            MAIN CONTENT
            ========================================== */
         .site-main {
-            /* Errechnet den Restplatz minus dynamischer Headerhöhe */
-            min-height: calc(100vh - clamp(60px, 8vh, 100px)); 
+            min-height: calc(100vh - clamp(70px, 9vh, 110px)); 
             display: block;
         }
     </style>
@@ -319,13 +337,11 @@
 <body>
 
     <header class="site-header">
-        <!-- Linke Navigation -->
         <nav class="header-nav nav-left" aria-label="Hauptnavigation Links">
             <a href="#websites" class="nav-link">Websites</a>
             <a href="#apps" class="nav-link">Apps & Webapps</a>
         </nav>
 
-        <!-- Logo Mittig -->
         <a href="/" class="logo-link" aria-label="Zurück zur Startseite">
             <img 
                 src="logo_white.webp" 
@@ -338,7 +354,6 @@
             >
         </a>
 
-        <!-- Rechte Navigation -->
         <nav class="header-nav nav-right" aria-label="Hauptnavigation Rechts">
             <a href="#erfahrungen" class="nav-link">Erfahrungen</a>
             <a href="#about" class="nav-link">Über uns</a>
@@ -348,7 +363,6 @@
     <main class="site-main">
         <section class="hero-section">
             <div class="hero-container">
-                <!-- Linke Seite: Text & CTA -->
                 <div class="hero-content">
                     <h1 class="hero-title">
                         Websites, Apps und Systeme die<br>
@@ -365,11 +379,18 @@
                     </div>
                 </div>
 
-                <!-- Rechte Seite: Bild Platzhalter mit Glow Bubble -->
                 <div class="hero-image-container">
                     <div class="glow-bubble"></div>
                     <div class="hero-image-wrapper">
-                        <span>[Bild des Helden-Platzhalters]</span>
+                        <!-- Hero Bild mit High-Performance Attributen -->
+                        <img 
+                            src="dancin.webp" 
+                            alt="Visualisierung von dynamischen Systemen" 
+                            class="hero-img" 
+                            loading="eager" 
+                            fetchpriority="high"
+                            decoding="async"
+                        >
                     </div>
                 </div>
             </div>
@@ -377,14 +398,8 @@
     </main>
 
     <script>
-        /* ==========================================
-           VANILLA JAVASCRIPT
-           Alles wird hier in einem Scope oder per Modul geschrieben, 
-           um externe Requests zu sparen.
-           ========================================== */
-        
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("Ultra Website initialisiert. Skalierung: Fluid auf allen Auflösungen.");
+            console.log("Ultra Website initialisiert. Hero-Image 'dancin.webp' mit High Performance geladen.");
         });
     </script>
 
