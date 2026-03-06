@@ -52,8 +52,8 @@
             -webkit-backdrop-filter: blur(16px);
             
             width: 100%;
-            /* Höhe wieder etwas präsenter: Max 100px */
-            height: clamp(70px, 8vh, 100px); 
+            /* Höhe minimal reduziert */
+            height: clamp(65px, 7vh, 90px); 
             display: grid;
             grid-template-columns: 1fr auto 1fr; 
             align-items: center;
@@ -85,7 +85,7 @@
 
         .header-nav {
             display: flex;
-            gap: clamp(1.2rem, 2vw, 3rem);
+            gap: clamp(1rem, 1.8vw, 2.5rem);
         }
 
         .nav-left {
@@ -102,7 +102,7 @@
             text-decoration: none;
             color: #555555;
             font-weight: 500; 
-            font-size: clamp(0.85rem, 0.9vw, 1rem); 
+            font-size: clamp(0.8rem, 0.85vw, 0.95rem); 
             text-transform: uppercase; 
             letter-spacing: 0.06em; 
             padding: 0.5rem 0.5rem;
@@ -124,12 +124,12 @@
         }
 
         .logo-img {
-            /* Logo auf HD wieder größer: Max 220px */
-            width: clamp(160px, 14vw, 220px); 
+            /* Logo etwas kompakter */
+            width: clamp(150px, 12vw, 200px); 
             height: auto;
             aspect-ratio: 200 / 50;
             object-fit: contain;
-            filter: invert(1); 
+            /* Invert-Filter entfernt, damit die Originalfarben erhalten bleiben */
         }
 
         @media (max-width: 900px) {
@@ -147,18 +147,18 @@
            ========================================== */
         .hero-section {
             width: 100%;
-            padding: clamp(4rem, 12vh, 12rem) 5%;
+            padding: clamp(3.5rem, 10vh, 10rem) 5%;
             display: flex;
             justify-content: center; 
         }
 
         .hero-container {
             width: 100%;
-            /* Container-Breite erhöht für mehr HD-Wirkung: Max 1480px */
-            max-width: clamp(1000px, 85vw, 1480px); 
+            /* Container-Breite leicht verringert */
+            max-width: clamp(950px, 80vw, 1380px); 
             display: grid;
             grid-template-columns: 1fr 1fr; 
-            gap: clamp(3rem, 6vw, 8rem); 
+            gap: clamp(2.5rem, 5vw, 6rem); 
             align-items: center;
         }
 
@@ -169,12 +169,12 @@
         }
 
         .hero-title {
-            /* Erhöhte Basis und Wachstumsrate, moderates 4K Cap: Max 5.8rem */
-            font-size: clamp(2.8rem, 5.2vw, 5.8rem); 
+            /* Textgrößen leicht nach unten korrigiert */
+            font-size: clamp(2.5rem, 4.5vw, 5.2rem); 
             font-weight: 700; 
             color: #0a0a0a; 
             line-height: 1.1; 
-            margin: 0 0 clamp(1.2rem, 3vh, 2.5rem) 0;
+            margin: 0 0 clamp(1rem, 2.5vh, 2rem) 0;
             letter-spacing: -0.03em; 
         }
 
@@ -206,26 +206,26 @@
         }
 
         .hero-subtitle {
-            /* Erhöhte Lesbarkeit auf HD: Max 1.5rem */
-            font-size: clamp(1.1rem, 1.35vw, 1.5rem); 
+            /* Lesbarkeit auf HD optimiert, aber nicht zu wuchtig */
+            font-size: clamp(1.05rem, 1.2vw, 1.35rem); 
             font-weight: 400;
             color: #444444; 
             line-height: 1.6;
-            margin: 0 0 clamp(2.5rem, 5vh, 4rem) 0;
+            margin: 0 0 clamp(2rem, 4vh, 3.5rem) 0;
             max-width: 90%;
         }
 
         .hero-cta-wrapper {
             display: flex;
-            gap: clamp(1rem, 2vw, 2rem);
+            gap: clamp(0.8rem, 1.5vw, 1.5rem);
         }
 
         .btn-primary, .btn-secondary {
             text-decoration: none;
             font-weight: 600;
-            /* Buttons kräftiger für Marktführer-Look */
-            font-size: clamp(1rem, 1.1vw, 1.25rem);
-            padding: clamp(0.9rem, 1.5vh, 1.25rem) clamp(1.8rem, 2.5vw, 3rem);
+            /* Buttons etwas feiner */
+            font-size: clamp(0.9rem, 1vw, 1.15rem);
+            padding: clamp(0.8rem, 1.2vh, 1.1rem) clamp(1.5rem, 2.2vw, 2.5rem);
             border-radius: 4px; 
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
@@ -269,7 +269,7 @@
             position: absolute;
             top: 20%;
             left: -10%; 
-            width: 65%; 
+            width: 60%; /* Leicht verkleinert von 65% */
             aspect-ratio: 1;
             background: rgba(0, 229, 255, 0.35); 
             filter: blur(90px); 
@@ -330,7 +330,7 @@
            MAIN CONTENT
            ========================================== */
         .site-main {
-            min-height: calc(100vh - clamp(70px, 8vh, 100px)); 
+            min-height: calc(100vh - clamp(65px, 7vh, 90px)); 
             display: block;
         }
     </style>
@@ -366,7 +366,7 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <h1 class="hero-title">
-                        Websites, Apps und Systeme die<br>
+                        Websites, Apps die<br>
                         <span class="word-rotator">
                             <span>verkaufen.</span>
                             <span>skalieren.</span>
