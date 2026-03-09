@@ -943,6 +943,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
   text-decoration: none;
+  display: block; /* Make sure links behave as blocks inside the grid */
   box-shadow: 0 1px 0 0 rgba(255,255,255,0.09) inset, 0 -1px 0 0 rgba(0,0,0,0.28) inset, 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
 }
 .portfolio-card:hover {
@@ -1706,7 +1707,7 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
-<!-- ══ 6 WEBSITES SHOWCASE ══ -->
+<!-- ══ WEBSITES SHOWCASE ══ -->
 <section class="portfolio" style="background: var(--bg);" id="referenzen">
   <div class="container">
     <div class="section-header">
@@ -1715,66 +1716,105 @@ img { display: block; max-width: 100%; }
       <p class="section-sub" data-reveal data-delay="2" data-de="Einige unserer neuesten Website-Kreationen mit Fokus auf Performance und Design." data-en="Some of our latest website creations with a focus on performance and design.">Einige unserer neuesten Website-Kreationen mit Fokus auf Performance und Design.</p>
     </div>
     <div class="portfolio-grid">
-      <div class="portfolio-card" data-reveal>
+      <!-- 1 -->
+      <a href="https://testgains3.pages.dev/" target="_blank" class="portfolio-card" data-reveal>
         <div class="portfolio-thumb">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Tech Dashboard">
+          <img src="x1.webp" alt="Finanzberater" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
-          <div class="portfolio-name">Fintech Dashboard</div>
-          <div class="portfolio-type">Web App · React</div>
+          <div class="portfolio-name">Finanzberater</div>
+          <div class="portfolio-type">3D Logo</div>
         </div>
-      </div>
-      <div class="portfolio-card" data-reveal data-delay="1">
+      </a>
+      <!-- 2 -->
+      <a href="https://fliessen-kemmer.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
         <div class="portfolio-thumb">
-          <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=800&q=80" alt="Creative Agency">
+          <img src="x2.webp" alt="Fliesen Kemmer" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
-          <div class="portfolio-name">Kreativagentur</div>
-          <div class="portfolio-type">Onepager · Premium</div>
+          <div class="portfolio-name">Fliesen Kemmer</div>
+          <div class="portfolio-type">Handwerker Website</div>
         </div>
-      </div>
-      <div class="portfolio-card" data-reveal data-delay="2">
+      </a>
+      <!-- 3 -->
+      <a href="https://merzenich-heck.pages.dev/#" target="_blank" class="portfolio-card" data-reveal data-delay="2">
         <div class="portfolio-thumb">
-          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="E-Commerce">
+          <img src="x3.webp" alt="Merzenich & Heck" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
-          <div class="portfolio-name">E-Commerce Brand</div>
-          <div class="portfolio-type">Smart Website · Shop</div>
+          <div class="portfolio-name">Merzenich & Heck</div>
+          <div class="portfolio-type">Videohintergrund</div>
         </div>
-      </div>
-      <div class="portfolio-card" data-reveal>
+      </a>
+      <!-- 4 -->
+      <a href="https://green-phantasies.pages.dev/" target="_blank" class="portfolio-card" data-reveal>
         <div class="portfolio-thumb">
-          <img src="https://images.unsplash.com/photo-1481481102804-972179f8c148?auto=format&fit=crop&w=800&q=80" alt="Minimal Portfolio">
+          <img src="x4.webp" alt="Green Phantasies" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
-          <div class="portfolio-name">Architektur Portfolio</div>
-          <div class="portfolio-type">Multi-Page · Clean</div>
+          <div class="portfolio-name">Green Phantasies</div>
+          <div class="portfolio-type">Moderner Headshop & Growshop</div>
         </div>
-      </div>
-      <div class="portfolio-card" data-reveal data-delay="1">
+      </a>
+      <!-- 5 -->
+      <a href="https://eventus-productions.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
         <div class="portfolio-thumb">
-          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Software SaaS">
+          <img src="x5.webp" alt="Eventus Productions" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
-          <div class="portfolio-name">SaaS Landingpage</div>
-          <div class="portfolio-type">Onepager · Dark Mode</div>
+          <div class="portfolio-name">Eventus Productions</div>
+          <div class="portfolio-type">3D Hintergrund, Marketingfirma</div>
         </div>
-      </div>
-      <div class="portfolio-card" data-reveal data-delay="2">
+      </a>
+      <!-- 6 -->
+      <a href="https://nuja-koenigsmassage.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="2">
         <div class="portfolio-thumb">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Real Estate">
+          <img src="x6.webp" alt="Nuja Königsmassage" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
-          <div class="portfolio-name">Immobilienportal</div>
-          <div class="portfolio-type">Smart Website · Listings</div>
+          <div class="portfolio-name">Nuja Königsmassage</div>
+          <div class="portfolio-type">Moderne Massagenwebsite</div>
         </div>
-      </div>
+      </a>
+      <!-- 7 -->
+      <a href="https://eventus-masterclass.pages.dev/" target="_blank" class="portfolio-card" data-reveal>
+        <div class="portfolio-thumb">
+          <img src="x7.webp" alt="Eventus Masterclass" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Eventus Masterclass</div>
+          <div class="portfolio-type">Masterclass Plattform</div>
+        </div>
+      </a>
+      <!-- 8 -->
+      <a href="https://dj-merzix.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
+        <div class="portfolio-thumb">
+          <img src="x8.webp" alt="DJ Merzix" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">DJ Merzix</div>
+          <div class="portfolio-type">DJ Website</div>
+        </div>
+      </a>
+      <!-- 9 -->
+      <a href="https://autoservice-simmern.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="2">
+        <div class="portfolio-thumb">
+          <img src="x9.webp" alt="Autoservice Simmern" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Autoservice Simmern</div>
+          <div class="portfolio-type">Praktischer Onepager</div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1946,9 +1986,9 @@ img { display: block; max-width: 100%; }
       </div>
       <span class="testi-quote-mark" style="margin-bottom: 0.5rem;">"</span>
       <p class="testi-text" style="font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.7; font-weight: 500; color: #fff;">
-        Ich belächele das eigentlich, dass junge oder auch ältere Leute auf Consulter oder Unternehmensberater machen. Für meine Fähigkeiten spricht jedoch, dass ich seit 8 Jahren selbstständig bin, dass ich Florians Kundenzahl verdoppelt habe und er am Tag durch mich 3 Stunden weniger arbeitet. 
+        Ich belächele das eigentlich, dass wenn junge oder auch ältere Leute auf Consulter oder Unternehmensberater machen, es spricht aber für mich, dass ich seit 8 Jahren selbstständig bin, dass ich Florians Kundenzahl verdoppelt habe und er am Tag durch mich 3 Stunden weniger arbeitet. 
         <br><br>
-        Durch meine Programme und Automationen sind Florians Kunden bereits vorinformiert, ihre Daten eingetragen, und Florian ein umfangreiches Cockpit Dashboard hat, wo er alle relevanten Informationen automatisch sortiert sieht. Zudem ist er durch Adaption meiner Arbeitsweisen in allem schneller und effizienter geworden.
+        Da meine Programme seine Kunden bereits registrieren lassen, sortieren, sie vorinformieren, und Florian ein umfangreiches Cockpit Dashboard hat, wo er alle relevanten Informationen automatisch sortiert sieht.
         <br><br>
         <span style="color: var(--aqua);">Wenn man genau weiß, wie es an jeder Ecke des Unternehmens läuft, kann man bessere strategische Entscheidungen treffen.</span>
       </p>
