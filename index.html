@@ -97,7 +97,6 @@ img { display: block; max-width: 100%; }
   letter-spacing: -0.01em;
   color: #fff;
   margin-bottom: 1rem;
-  /* Dehnt die Schrift vertikal */
   scale: 1 1.15;
   transform-origin: center bottom;
 }
@@ -138,12 +137,27 @@ img { display: block; max-width: 100%; }
 ══════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 70vh; /* Etwas weniger, damit das Bild gut sichtbar ist */
+  min-height: 100vh;
   display: flex;
   align-items: center;
   padding-top: 6rem;
   padding-bottom: 2rem;
   overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.6;
+}
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .hero-content {
@@ -169,7 +183,6 @@ img { display: block; max-width: 100%; }
   max-width: 900px;
   opacity: 0;
   animation: fadeUp 0.9s 0.35s cubic-bezier(.16,1,.3,1) forwards;
-  /* Dehnt die Schrift vertikal */
   scale: 1 1.15;
   transform-origin: center bottom;
 }
@@ -218,28 +231,6 @@ img { display: block; max-width: 100%; }
 }
 
 /* ══════════════════════════════════════
-   HERO IMAGE (Rechteckig über Stats)
-══════════════════════════════════════ */
-.hero-image-wrapper {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 4rem auto;
-  aspect-ratio: 16/9; /* Perfekt rechteckig */
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
-  background: var(--card);
-}
-.hero-image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ══════════════════════════════════════
    STATS
 ══════════════════════════════════════ */
 .stats {
@@ -265,6 +256,7 @@ img { display: block; max-width: 100%; }
   padding: 2.5rem 2rem;
   transition: background 0.35s, transform 0.35s;
   position: relative;
+  text-align: center;
 }
 .stat-item::after {
   content: '';
@@ -287,7 +279,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: -0.01em;
   text-shadow: 0 0 30px rgba(127,255,212,0.25);
   scale: 1 1.15;
-  transform-origin: left bottom;
+  transform-origin: center bottom;
 }
 .stat-label {
   font-size: 0.85rem;
@@ -368,7 +360,7 @@ img { display: block; max-width: 100%; }
 ══════════════════════════════════════ */
 .portfolio {
   padding: 7rem 0;
-  background: var(--bg2);
+  background: var(--bg);
 }
 .portfolio-grid {
   display: grid;
@@ -406,11 +398,13 @@ img { display: block; max-width: 100%; }
   font-family: var(--fd);
   position: relative;
   overflow: hidden;
+  background: #111;
 }
 .portfolio-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
   transition: transform 0.5s cubic-bezier(.16,1,.3,1);
 }
 .portfolio-card:hover .portfolio-thumb img {
@@ -443,120 +437,58 @@ img { display: block; max-width: 100%; }
 }
 .portfolio-name {
   font-family: var(--fd);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.4rem;
 }
 .portfolio-type {
   font-size: 0.78rem;
   color: var(--muted);
 }
+.portfolio-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 0.4rem;
+}
+.portfolio-desc span {
+  color: var(--aqua);
+}
 
-/* ══════════════════════════════════════
-   TEAM & TESTIMONIALS
-══════════════════════════════════════ */
-.team {
-  padding: 7rem 0;
-  background: var(--bg2);
-}
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  max-width: 760px;
-  margin-top: 3.5rem;
-}
-.team-card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid rgba(255,255,255,0.11);
-  border-top-color: rgba(255,255,255,0.22);
-  border-radius: var(--radius);
-  padding: 2.5rem;
+/* LOGO GRID */
+.logo-grid {
   display: flex;
-  gap: 1.75rem;
-  align-items: flex-start;
-  box-shadow: 0 1px 0 0 rgba(255,255,255,0.09) inset, 0 -1px 0 0 rgba(0,0,0,0.28) inset, 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
-  transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s, background 0.35s;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2.5rem;
+  align-items: center;
+  padding: 0.5rem 0;
 }
-.team-card:hover {
-  border-color: rgba(127,255,212,0.22);
-  box-shadow: 0 1px 0 0 rgba(127,255,212,0.14) inset, 0 -1px 0 0 rgba(0,0,0,0.22) inset, 0 24px 64px rgba(0,0,0,0.45), 0 8px 32px rgba(127,255,212,0.08);
-  transform: translateY(-3px);
-}
-.team-photo {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 2px solid var(--border2);
-  flex-shrink: 0;
+.logo-item {
+  width: 100px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--fd);
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: rgba(255,255,255,0.2);
-  overflow: hidden;
 }
-.team-photo img { width: 100%; height: 100%; object-fit: cover; }
-.team-name {
-  font-family: var(--fd);
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 0.3rem;
+.logo-mask {
+  width: 100%;
+  height: 100%;
+  background-image: var(--logo-url);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: grayscale(100%) brightness(1.5) opacity(0.4);
+  transition: all 0.3s ease;
 }
-.team-role {
-  font-size: 0.8rem;
-  color: var(--aqua);
-  font-weight: 500;
-  margin-bottom: 0.65rem;
-}
-.team-bio {
-  font-size: 0.83rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-.testimonials {
-  padding: 7rem 0;
-  background: var(--bg);
-}
-.testi-featured {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid rgba(255,255,255,0.11);
-  border-top-color: rgba(255,255,255,0.22);
-  border-radius: 2rem;
-  padding: 4rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 1px 0 0 rgba(255,255,255,0.12) inset, 0 -1px 0 0 rgba(0,0,0,0.22) inset, 0 32px 80px rgba(0,0,0,0.55), 0 12px 32px rgba(0,0,0,0.4);
-}
-.testi-quote-mark {
-  font-family: Georgia, serif;
-  font-size: 6rem;
-  line-height: 0.6;
-  color: rgba(127,255,212,0.15);
-  margin-bottom: 1.5rem;
-  display: block;
-}
-.testi-text {
-  font-family: var(--fd);
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  font-weight: 500;
-  color: #fff;
-  line-height: 1.7;
-  margin-bottom: 2rem;
+.logo-item:hover .logo-mask {
+  filter: grayscale(0%) brightness(1) opacity(1);
+  transform: scale(1.08);
 }
 
 /* ══════════════════════════════════════
-   INVESTORA
+   INVESTORA / SHOWCASE
 ══════════════════════════════════════ */
 .investora {
   padding: 7rem 0;
@@ -621,9 +553,78 @@ img { display: block; max-width: 100%; }
   margin-bottom: 0.45rem;
 }
 .inv-screen-line.a { background: rgba(127,255,212,0.15); }
+
 .inv-s1 { width: 120px; height: 160px; transform: rotate(-6deg) translateY(10px); }
 .inv-s2 { width: 140px; height: 195px; }
 .inv-s3 { width: 120px; height: 160px; transform: rotate(6deg) translateY(10px); }
+
+/* ══════════════════════════════════════
+   TEAM
+══════════════════════════════════════ */
+.team {
+  padding: 7rem 0;
+  background: var(--bg2);
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 760px;
+  margin-top: 3.5rem;
+}
+.team-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255,255,255,0.11);
+  border-top-color: rgba(255,255,255,0.22);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  display: flex;
+  gap: 1.75rem;
+  align-items: flex-start;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.09) inset, 0 -1px 0 0 rgba(0,0,0,0.28) inset, 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
+  transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
+}
+.team-card:hover {
+  border-color: rgba(127,255,212,0.22);
+  box-shadow: 0 1px 0 0 rgba(127,255,212,0.14) inset, 0 -1px 0 0 rgba(0,0,0,0.22) inset, 0 24px 64px rgba(0,0,0,0.45), 0 8px 32px rgba(127,255,212,0.08);
+  transform: translateY(-3px);
+}
+.team-photo {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid var(--border2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fd);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.2);
+  overflow: hidden;
+}
+.team-photo img { width: 100%; height: 100%; object-fit: cover; }
+.team-name {
+  font-family: var(--fd);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+.team-role {
+  font-size: 0.8rem;
+  color: var(--aqua);
+  font-weight: 500;
+  margin-bottom: 0.65rem;
+}
+.team-bio {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
 
 /* ══════════════════════════════════════
    FAQ
@@ -776,21 +777,6 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 12px 40px rgba(127,255,212,0.2);
 }
 
-.contact-info-title {
-  font-family: var(--fd);
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
-}
-.contact-info-sub {
-  font-size: 0.92rem;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
-}
 .contact-methods {
   display: flex;
   flex-direction: column;
@@ -865,7 +851,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* ══════════════════════════════════════
-   WHATSAPP FAB
+   WHATSAPP FAB & CLIMATE BADGE
 ══════════════════════════════════════ */
 .wa-fab {
   position: fixed;
@@ -891,9 +877,6 @@ img { display: block; max-width: 100%; }
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* ══════════════════════════════════════
-   STRIPE CLIMATE BADGE
-══════════════════════════════════════ */
 .climate-badge {
   position: fixed;
   bottom: 2rem;
@@ -909,49 +892,12 @@ img { display: block; max-width: 100%; }
   pointer-events: auto;
   transform: translateY(0);
 }
-.climate-badge iframe {
-  max-width: calc(100vw - 4rem);
-}
-
-/* ══════════════════════════════════════
-   LOGO GRID
-══════════════════════════════════════ */
-.logo-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem 2.5rem;
-  align-items: center;
-  padding: 0.5rem 0;
-}
-.logo-item {
-  width: 100px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.logo-mask {
-  width: 100%;
-  height: 100%;
-  background-image: var(--logo-url);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: grayscale(100%) brightness(1.5) opacity(0.4);
-  transition: all 0.3s ease;
-}
-.logo-item:hover .logo-mask {
-  filter: grayscale(0%) brightness(1) opacity(1);
-  transform: scale(1.08);
-}
+.climate-badge iframe { max-width: calc(100vw - 4rem); }
 
 /* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
 @media (max-width: 960px) {
-  .speed-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .testi-grid { grid-template-columns: 1fr; }
   .investora-inner { grid-template-columns: 1fr; gap: 3rem; }
   .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
@@ -970,15 +916,8 @@ img { display: block; max-width: 100%; }
   .team-card { flex-direction: column; padding: 1.75rem; }
   .footer-inner { flex-direction: column; text-align: center; gap: 0.75rem; }
   .hero-h1 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
-
-  .climate-badge {
-    bottom: 1rem;
-    left: 1rem;
-  }
-  .climate-badge iframe {
-    /* Verhindert Überlappungen mit dem WhatsApp Button auf kleinen Screens */
-    max-width: calc(100vw - 6.5rem);
-  }
+  .climate-badge { bottom: 1rem; left: 1rem; }
+  .climate-badge iframe { max-width: calc(100vw - 6.5rem); }
 }
 </style>
 </head>
@@ -986,9 +925,12 @@ img { display: block; max-width: 100%; }
 
 <!-- ══ HERO ══ -->
 <section class="hero" id="hero">
+  <div class="hero-bg">
+    <canvas id="particle-canvas"></canvas>
+  </div>
   <div class="hero-content">
-    <h1 class="hero-h1" data-de="Unser Unternehmen auf einem Blick" data-en="Our company at a glance">
-      Unser Unternehmen auf einem Blick
+    <h1 class="hero-h1" data-de="Ein Blick auf unsere Arbeit" data-en="A look at our work">
+      Ein Blick auf unsere Arbeit
     </h1>
     <a href="#stats" class="hero-scroll-btn" aria-label="Scroll down">
       <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -996,21 +938,13 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
-<!-- ══ HERO IMAGE (Rechteckig über Stats) ══ -->
-<div class="container" style="position: relative; z-index: 10; margin-top: -2rem; padding-bottom: 4rem;">
-  <div class="hero-image-wrapper" data-reveal style="max-width: 1000px; margin: 0 auto; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 32px 80px rgba(0,0,0,0.6); background: var(--card);">
-    <!-- Ersetze die URL mit deinem echten Hero-Bild -->
-    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="NetGains Dashboard" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
-  </div>
-</div>
-
 <!-- ══ STATS ══ -->
 <section class="stats" id="stats">
   <div class="container">
     <div class="stats-grid">
       <div class="stat-item" data-reveal>
-        <div class="stat-num" data-count="120">0</div>
-        <div class="stat-label" data-de="Zufriedene Kunden" data-en="Satisfied Clients">Zufriedene Kunden</div>
+        <div class="stat-num" data-count="8">0</div>
+        <div class="stat-label" data-de="Jahre Erfahrung" data-en="Years Experience">Jahre Erfahrung</div>
       </div>
       <div class="stat-item" data-reveal data-delay="2">
         <div class="stat-num" id="stat-views">7.000</div>
@@ -1056,6 +990,100 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
+<!-- ══ PSYCHOLOGISCH OPTIMIERTE LANDING PAGES ══ -->
+<section class="portfolio" style="background: var(--bg2);" id="referenzen">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow" data-reveal><div class="dot"></div><span data-de="High-Performance" data-en="High-Performance">High-Performance</span></div>
+      <h2 class="section-title" data-reveal data-delay="1" data-de="Psychologisch optimierte<br><em>Landing Pages</em>" data-en="Psychologically optimized<br><em>Landing Pages</em>">Psychologisch optimierte<br><em>Landing Pages</em></h2>
+      <div class="section-sub" data-reveal data-delay="2" style="max-width: 800px; display: flex; flex-direction: column; gap: 1rem;">
+        <p data-de="Herkömmliche Websites sind wie Leute die mit einem Flyer auf der Straße stehen und warten bis sie von Kunden angesprochen werden." data-en="Traditional websites are like people standing on the street with a flyer waiting to be approached by customers.">Herkömmliche Websites sind wie Leute die mit einem Flyer auf der Straße stehen und warten bis sie von Kunden angesprochen werden.</p>
+        <p><strong style="color: var(--text);" data-de="Unsere Landingpages nehmen die Kunden an die Hand und führen sie zum Kauf / zum Bestellen / zum Anrufen oder zum Buchen." data-en="Our landing pages take customers by the hand and lead them to buy / order / call or book.">Unsere Landingpages nehmen die Kunden an die Hand und führen sie zum Kauf / zum Bestellen / zum Anrufen oder zum Buchen.</strong></p>
+        <p data-de="Unsere Systeme dahinter sind wie Mitarbeiter, die mit den Kunden einen Termin ausmachen, und zwar nur dann wann sie Zeit haben. Unsere Systeme sind wie Mitarbeiter, die mit den Kunden die Zahlungen abwickeln und mahnen wenn Ihre Kunden nicht zahlen." data-en="Our systems behind them are like employees who make appointments with customers, and only when they have time. Our systems are like employees who process payments with customers and send reminders if your customers don't pay.">Unsere Systeme dahinter sind wie Mitarbeiter, die mit den Kunden einen Termin ausmachen, und zwar nur dann wann sie Zeit haben. Unsere Systeme sind wie Mitarbeiter die mit den Kunden die Zahlungen abwickeln und mahnen wenn Ihre Kunden nicht zahlen.</p>
+        <p style="color: var(--aqua); font-weight: 500;" data-de="Egal wie groß Ihr Unternehmen ist, unsere Websites lassen Sie im Netz wie der absolute Marktführer aussehen." data-en="No matter how big your company is, our websites make you look like the absolute market leader on the net.">Egal wie groß Ihr Unternehmen ist, unsere Websites lassen sie im Netz wie der absolute Marktführer aussehen.</p>
+      </div>
+    </div>
+    
+    <div class="portfolio-grid">
+      <!-- 1 -->
+      <a href="https://fm-masterclass.de" target="_blank" class="portfolio-card" data-reveal>
+        <div class="portfolio-thumb">
+          <img src="x10.webp" alt="fm-masterclass.de" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Finanzberater Landingpages</div>
+          <div class="portfolio-desc">Animierte Landingpages für Finanzberater<br><span>fm-masterclass.de</span></div>
+        </div>
+      </a>
+      <!-- 2 -->
+      <a href="https://investora-event.de/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
+        <div class="portfolio-thumb">
+          <img src="x12.webp" alt="investora-event.de" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Eventwebsites</div>
+          <div class="portfolio-desc">Eventwebsites und Ticketsysteme<br><span>investora-event.de</span></div>
+        </div>
+      </a>
+      <!-- 3 -->
+      <a href="https://lester-coach.com/" target="_blank" class="portfolio-card" data-reveal data-delay="2">
+        <div class="portfolio-thumb">
+          <img src="x13.webp" alt="lester-coach.com" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Coachingsysteme</div>
+          <div class="portfolio-desc">Coachingsysteme mit Terminbuchung, kostenpflichtiger Terminbuchung, und/oder Coaching Abo Buchungen mit monatlicher oder Vorabzahlung<br><span>lester-coach.com</span></div>
+        </div>
+      </a>
+      <!-- 4 -->
+      <a href="https://merzenich-heck.com/" target="_blank" class="portfolio-card" data-reveal>
+        <div class="portfolio-thumb">
+          <img src="x3.webp" alt="merzenich-heck.com" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Podcast Landing Page</div>
+          <div class="portfolio-desc">Podcast Landing Page<br><span>merzenich-heck.com</span></div>
+        </div>
+      </a>
+      <!-- 5 -->
+      <a href="https://sales-force-one.pages.dev" target="_blank" class="portfolio-card" data-reveal data-delay="1">
+        <div class="portfolio-thumb">
+          <img src="https://image.thum.io/get/width/800/crop/600/wait/8/https://sales-force-one.pages.dev" alt="Sales Force One" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Mitarbeiter Dashboards</div>
+          <div class="portfolio-desc">Mitarbeiter Dashboards, Rankings, und zugehörige Datenbanken<br><span>sales-force-one.pages.dev</span></div>
+        </div>
+      </a>
+      <!-- 6 -->
+      <a href="https://zusammenwachsen.live/" target="_blank" class="portfolio-card" data-reveal data-delay="2">
+        <div class="portfolio-thumb">
+          <img src="https://image.thum.io/get/width/800/crop/600/wait/8/https://zusammenwachsen.live/" alt="Zusammenwachsen" loading="lazy">
+          <div class="live-btn">Ansehen →</div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-name">Gemeinnützige Projekte</div>
+          <div class="portfolio-desc">Gemeinnützige Projekte<br><span>zusammenwachsen.live</span></div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Addendum -->
+    <div data-reveal data-delay="3" style="margin-top: 3.5rem; padding: 1.5rem 2rem; background: rgba(127,255,212,0.05); border: 1px solid rgba(127,255,212,0.15); border-radius: var(--radius); display: flex; align-items: flex-start; gap: 1rem;">
+      <div style="font-size: 1.5rem; line-height: 1;">🛡️</div>
+      <div>
+        <strong style="color: #fff; font-family: var(--fd); display: block; margin-bottom: 0.25rem;" data-de="Ergänzung" data-en="Addendum">Ergänzung</strong>
+            <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.5;" data-de="Bei allen Projekten, bei denen die Kunden über die Websites bei Ihnen bezahlen, bleibt <strong>100% der Kontrolle bei Ihnen</strong>." data-en="For all projects where customers pay you via the websites, <strong>100% of the control remains with you</strong>.">Bei allen Projekten, bei denen die Kunden über die Websites bei Ihnen bezahlen, bleibt <strong style="color: var(--text);">100% der Kontrolle bei Ihnen</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
 <!-- ══ INFRASTRUKTUR & TOOLS ══ -->
 <section style="background: var(--bg); padding: 4rem 0 2rem 0;" id="infrastruktur">
   <div class="container" style="text-align: center;" data-reveal>
@@ -1063,199 +1091,72 @@ img { display: block; max-width: 100%; }
       David hat in der Vergangenheit bereits die komplette Website-Infrastruktur einer Universität verwaltet, dadurch arbeiten wir mit Programmen, die auch für über 5.000 tägliche Besucher ausgerichtet sind.
     </p>
 
-    <!-- NEW LOGO SECTION -->
     <section class="logo-section" style="margin-top: 2rem;">
         <div class="container">
-            <!-- New Intro Text -->
             <p class="text-center" style="color: var(--muted); margin-bottom: 20px; font-size: 1.1rem; line-height: 1.6; font-weight: 500; max-width: 800px; margin-left: auto; margin-right: auto;">
                 Wir nutzen exakt dieselben skalierbaren High-Performance Software-Tools wie diese globalen Branchenführer:
             </p>
             
             <div class="logo-grid">
                 <!-- 1. Google -->
-                <div class="logo-item" style="--delay: 0s; --logo-url: url('images/google.svg');">
+                <div class="logo-item" style="--delay: 0s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 2. Unilever -->
-                <div class="logo-item" style="--delay: 0.2s; --logo-url: url('images/unilever.svg');">
+                <div class="logo-item" style="--delay: 0.2s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/8/82/Unilever_logo_2004.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 3. Visa -->
-                <div class="logo-item" style="--delay: 0.4s; --logo-url: url('images/visa.svg');">
+                <div class="logo-item" style="--delay: 0.4s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg');">
                     <div class="logo-mask"></div>
                 </div>
-                
                 <!-- 4. Microsoft -->
-                <div class="logo-item" style="--delay: 0.6s; --logo-url: url('images/microsoft.svg');">
+                <div class="logo-item" style="--delay: 0.6s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 5. Porsche -->
-                <div class="logo-item" style="--delay: 0.8s; --logo-url: url('images/porsche.svg');">
+                <div class="logo-item" style="--delay: 0.8s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/8/8c/Porsche_logo.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 6. OpenAI -->
-                <div class="logo-item" style="--delay: 1.0s; --logo-url: url('images/openai.svg');">
+                <div class="logo-item" style="--delay: 1.0s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg');">
                     <div class="logo-mask"></div>
                 </div>
-                
                 <!-- 7. Netlify -->
-                <div class="logo-item" style="--delay: 1.2s; --logo-url: url('images/netlify.svg');">
+                <div class="logo-item" style="--delay: 1.2s; --logo-url: url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/netlify.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 8. NordVPN -->
-                <div class="logo-item" style="--delay: 1.4s; --logo-url: url('images/nordvpn.svg');">
+                <div class="logo-item" style="--delay: 1.4s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/2/2f/NordVPN_logo_%282019%29.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 9. Cloudflare -->
-                <div class="logo-item" style="--delay: 1.6s; --logo-url: url('images/cloudflare.svg');">
+                <div class="logo-item" style="--delay: 1.6s; --logo-url: url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/cloudflare.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 10. NBC News -->
-                <div class="logo-item" style="--delay: 1.8s; --logo-url: url('images/nbcnews.svg');">
+                <div class="logo-item" style="--delay: 1.8s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/3/3f/NBC_logo.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 11. The Guardian -->
-                <div class="logo-item" style="--delay: 2.0s; --logo-url: url('images/theguardian.svg');">
+                <div class="logo-item" style="--delay: 2.0s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/7/75/The_Guardian_2018.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 12. Michelin -->
-                <div class="logo-item" style="--delay: 2.2s; --logo-url: url('images/michelin.svg');">
+                <div class="logo-item" style="--delay: 2.2s; --logo-url: url('https://upload.wikimedia.org/wikipedia/commons/b/b5/Michelin_Logo.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 13. Proton -->
-                <div class="logo-item" style="--delay: 2.4s; --logo-url: url('images/proton.svg');">
+                <div class="logo-item" style="--delay: 2.4s; --logo-url: url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/proton.svg');">
                     <div class="logo-mask"></div>
                 </div>
-
                 <!-- 14. Webflow -->
-                <div class="logo-item" style="--delay: 2.6s; --logo-url: url('images/webflow.svg');">
+                <div class="logo-item" style="--delay: 2.6s; --logo-url: url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/webflow.svg');">
                     <div class="logo-mask"></div>
                 </div>
             </div>
         </div>
     </section>
-  </div>
-</section>
-
-<!-- ══ WEBSITES SHOWCASE ══ -->
-<section class="portfolio" style="background: var(--bg2);" id="referenzen">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-eyebrow" data-reveal><div class="dot"></div><span data-de="Unsere Arbeiten" data-en="Our Work">Unsere Arbeiten</span></div>
-      <h2 class="section-title" data-reveal data-delay="1" data-de="Aktuelle <em>Projekte</em>" data-en="Recent <em>Projects</em>">Aktuelle <em>Projekte</em></h2>
-      <p class="section-sub" data-reveal data-delay="2" data-de="Einige unserer neuesten Website-Kreationen mit Fokus auf Performance und Design." data-en="Some of our latest website creations with a focus on performance and design.">Einige unserer neuesten Website-Kreationen mit Fokus auf Performance und Design.</p>
-    </div>
-    <div class="portfolio-grid">
-      <!-- 1 -->
-      <a href="https://testgains3.pages.dev/" target="_blank" class="portfolio-card" data-reveal>
-        <div class="portfolio-thumb">
-          <img src="x1.webp" alt="Finanzberater" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Finanzberater</div>
-          <div class="portfolio-type">3D Logo</div>
-        </div>
-      </a>
-      <!-- 2 -->
-      <a href="https://fliessen-kemmer.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
-        <div class="portfolio-thumb">
-          <img src="x2.webp" alt="Fliesen Kemmer" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Fliesen Kemmer</div>
-          <div class="portfolio-type">Handwerker Website</div>
-        </div>
-      </a>
-      <!-- 3 -->
-      <a href="https://merzenich-heck.pages.dev/#" target="_blank" class="portfolio-card" data-reveal data-delay="2">
-        <div class="portfolio-thumb">
-          <img src="x3.webp" alt="Merzenich & Heck" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Merzenich & Heck</div>
-          <div class="portfolio-type">Videohintergrund</div>
-        </div>
-      </a>
-      <!-- 4 -->
-      <a href="https://green-phantasies.pages.dev/" target="_blank" class="portfolio-card" data-reveal>
-        <div class="portfolio-thumb">
-          <img src="x4.webp" alt="Green Phantasies" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Green Phantasies</div>
-          <div class="portfolio-type">Moderner Headshop & Growshop</div>
-        </div>
-      </a>
-      <!-- 5 -->
-      <a href="https://eventus-productions.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
-        <div class="portfolio-thumb">
-          <img src="x5.webp" alt="Eventus Productions" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Eventus Productions</div>
-          <div class="portfolio-type">3D Hintergrund, Marketingfirma</div>
-        </div>
-      </a>
-      <!-- 6 -->
-      <a href="https://nuja-koenigsmassage.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="2">
-        <div class="portfolio-thumb">
-          <img src="x6.webp" alt="Nuja Königsmassage" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Nuja Königsmassage</div>
-          <div class="portfolio-type">Moderne Massagenwebsite</div>
-        </div>
-      </a>
-      <!-- 7 -->
-      <a href="https://eventus-masterclass.pages.dev/" target="_blank" class="portfolio-card" data-reveal>
-        <div class="portfolio-thumb">
-          <img src="x7.webp" alt="Eventus Masterclass" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Eventus Masterclass</div>
-          <div class="portfolio-type">Masterclass Plattform</div>
-        </div>
-      </a>
-      <!-- 8 -->
-      <a href="https://dj-merzix.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="1">
-        <div class="portfolio-thumb">
-          <img src="x8.webp" alt="DJ Merzix" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">DJ Merzix</div>
-          <div class="portfolio-type">DJ Website</div>
-        </div>
-      </a>
-      <!-- 9 -->
-      <a href="https://autoservice-simmern.pages.dev/" target="_blank" class="portfolio-card" data-reveal data-delay="2">
-        <div class="portfolio-thumb">
-          <img src="x9.webp" alt="Autoservice Simmern" loading="lazy">
-          <div class="live-btn">Ansehen →</div>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Autoservice Simmern</div>
-          <div class="portfolio-type">Praktischer Onepager</div>
-        </div>
-      </a>
-    </div>
   </div>
 </section>
 
@@ -1334,18 +1235,18 @@ img { display: block; max-width: 100%; }
       <div data-reveal>
         <div class="section-eyebrow"><div class="dot"></div><span data-de="App Showcase" data-en="App Showcase">App Showcase</span></div>
         <h2 class="section-title" data-de="Florians App:<br><em>INVESTORA</em>" data-en="Florian's App:<br><em>INVESTORA</em>">Florians App:<br><em>INVESTORA</em></h2>
-    <p class="section-sub" data-de="Für Florian haben wir INVESTORA entwickelt – eine maßgeschneiderte Plattform, die seine tägliche Arbeit drastisch reduziert und seinen Kunden ein Premium-Erlebnis bietet." data-en="For Florian we developed INVESTORA – a custom platform that drastically reduces his daily workload and offers his clients a premium experience.">Für Florian haben wir INVESTORA entwickelt – eine maßgeschneiderte Plattform, die seine tägliche Arbeit drastisch reduziert und seinen Kunden ein Premium-Erlebnis bietet.</p>
-    <div class="investora-features">
-      <div class="investora-feat" data-de="Direkt-Chat mit Florians Mitarbeitern" data-en="Direct chat with Florian's staff">Direkt-Chat mit Florians Mitarbeitern</div>
-      <div class="investora-feat" data-de="Lernplattform mit Videokursen" data-en="Learning platform with video courses">Lernplattform mit Videokursen</div>
-      <div class="investora-feat" data-de="Überblick über gekaufte Aktien" data-en="Overview of purchased stocks">Überblick über gekaufte Aktien</div>
-      <div class="investora-feat" data-de="Terminbuchungssystem" data-en="Appointment booking system">Terminbuchungssystem</div>
-      <div class="investora-feat" data-de="Registrierung und Anmeldung" data-en="Registration and login">Registrierung und Anmeldung</div>
-      <div class="investora-feat" data-de="Und das alles in einer App" data-en="And all this in one app">Und das alles in einer App</div>
-    </div>
-  </div>
-  <div class="investora-screens" data-reveal data-delay="2">
-    <div class="inv-screen inv-s1">
+        <p class="section-sub" data-de="Für Florian haben wir INVESTORA entwickelt – eine maßgeschneiderte Plattform, die seine tägliche Arbeit drastisch reduziert und seinen Kunden ein Premium-Erlebnis bietet." data-en="For Florian we developed INVESTORA – a custom platform that drastically reduces his daily workload and offers his clients a premium experience.">Für Florian haben wir INVESTORA entwickelt – eine maßgeschneiderte Plattform, die seine tägliche Arbeit drastisch reduziert und seinen Kunden ein Premium-Erlebnis bietet.</p>
+        <div class="investora-features">
+          <div class="investora-feat" data-de="Direkt-Chat mit Florians Mitarbeitern" data-en="Direct chat with Florian's staff">Direkt-Chat mit Florians Mitarbeitern</div>
+          <div class="investora-feat" data-de="Lernplattform mit Videokursen" data-en="Learning platform with video courses">Lernplattform mit Videokursen</div>
+          <div class="investora-feat" data-de="Überblick über gekaufte Aktien" data-en="Overview of purchased stocks">Überblick über gekaufte Aktien</div>
+          <div class="investora-feat" data-de="Terminbuchungssystem" data-en="Appointment booking system">Terminbuchungssystem</div>
+          <div class="investora-feat" data-de="Registrierung und Anmeldung" data-en="Registration and login">Registrierung und Anmeldung</div>
+          <div class="investora-feat" data-de="Und das alles in einer App" data-en="And all this in one app">Und das alles in einer App</div>
+        </div>
+      </div>
+      <div class="investora-screens" data-reveal data-delay="2">
+        <div class="inv-screen inv-s1">
           <div class="inv-screen-header">
             <div class="inv-screen-dot" style="background:#ff5f57"></div>
             <div class="inv-screen-dot" style="background:#febc2e"></div>
@@ -1417,13 +1318,38 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
+<!-- ══ LESTERS ZEITERSPARNIS (CASE STUDY) ══ -->
+<section class="investora" id="lester-automation" style="background: var(--bg);">
+  <div class="container">
+    <div class="investora-inner">
+      <div data-reveal>
+        <div class="section-eyebrow"><div class="dot"></div><span data-de="Automation Showcase" data-en="Automation Showcase">Automation Showcase</span></div>
+        <h2 class="section-title" data-de="Lesters<br><em>Zeitersparnis</em>" data-en="Lester's<br><em>Time Savings</em>">Lesters<br><em>Zeitersparnis</em></h2>
+        <p class="section-sub" data-de="Lester ist Bodybuilding & Biohacking Coach, er arbeitet viel mit Menschen. Durch sein neues System spart er massiv an Zeit:" data-en="Lester is a Bodybuilding & Biohacking Coach, he works a lot with people. With his new system he saves a massive amount of time:">Lester ist Bodybuilding & Biohacking Coach, er arbeitet viel mit Menschen. Durch sein neues System spart er massiv an Zeit:</p>
+        <div class="investora-features">
+          <div class="investora-feat" data-de="Kunden kommen auf die Landing Page" data-en="Clients land on the landing page">Kunden kommen auf die Landing Page</div>
+          <div class="investora-feat" data-de="Termin bei freien Terminen wählen und direkt bezahlen – ohne dass Lester etwas tun muss" data-en="Choose an available time slot and pay directly – without Lester doing anything">Wenn sie sich für ein Einzelgespräch entscheiden, können sie ohne das Lester etwas dafür tun muss, einen Termin bei seinen freien Terminen wählen und direkt bezahlen</div>
+          <div class="investora-feat" data-de="Lester spart sich das Entgegennehmen der Zahlung und das Terminvereinbaren, behält aber 100% Kontrolle" data-en="Lester avoids manual payment collection and scheduling, keeping 100% control">Lester spart sich das Entgegennehmen der Zahlung, behält aber 100% der Kontrolle, zudem spart er sich die Zeit einen Termin auszumachen</div>
+          <div class="investora-feat" data-de="Kunden können direkt mehrmonatige Coachings buchen und vorab zahlen" data-en="Clients can instantly book and prepay multi-month coaching">Außerdem können Kunden direkt ein mehrmonatiges Coaching buchen und gegebenenfalls vorab zahlen</div>
+        </div>
+      </div>
+      <div data-reveal data-delay="2" style="display: flex; justify-content: center; align-items: center; background: var(--glass-bg); border-radius: 2.5rem; aspect-ratio: 1.2; border: 1px solid var(--glass-border); text-align: center; padding: 2rem;">
+        <div>
+          <div style="font-family: var(--fd); color: var(--aqua); font-weight: 800; font-size: 2.5rem; margin-bottom: 0.5rem; scale: 1 1.15;">SYSTEM</div>
+          <div style="color: var(--muted); font-size: 0.9rem;">Automated Booking & Payments</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ TEAM ══ -->
-<section class="team" id="team" style="background: var(--bg);">
+<section class="team" id="team" style="background: var(--bg2);">
   <div class="container">
     <div class="section-header" style="text-align: center;">
       <div class="section-eyebrow" data-reveal style="margin: 0 auto 1.5rem;"><div class="dot"></div><span data-de="Das Team" data-en="The Team">Das Team</span></div>
       <h2 class="section-title" data-reveal data-delay="1" data-de="Die Köpfe hinter<br><em>NetGains</em>" data-en="The minds behind<br><em>NetGains</em>">Die Köpfe hinter<br><em>NetGains</em></h2>
-      <p class="section-sub" data-reveal data-delay="2" style="margin: 0 auto;" data-de="Ein eingespieltes Duo für technische Exzellenz und Strukturvertrieb." data-en="A well-rehearsed duo for technical excellence and structure sales.">Ein eingespieltes Duo für technische Exzellenz und Vertrieb.</p>
+      <p class="section-sub" data-reveal data-delay="2" style="margin: 0 auto;" data-de="Ein eingespieltes Duo für technische Exzellenz und digitale Skalierung." data-en="A well-rehearsed duo for technical excellence and digital scaling.">Ein eingespieltes Duo für technische Exzellenz und digitale Skalierung.</p>
     </div>
     <div class="team-grid" style="margin: 3.5rem auto 0; max-width: 900px;">
       <div class="team-card" data-reveal>
@@ -1447,7 +1373,7 @@ img { display: block; max-width: 100%; }
 </section>
 
 <!-- ══ FAQ ══ -->
-<section class="faq" style="background: var(--bg2);">
+<section class="faq" style="background: var(--bg);">
   <div class="container">
     <div class="section-eyebrow" data-reveal><div class="dot"></div><span data-de="Häufige Fragen" data-en="FAQ">Häufige Fragen</span></div>
     <h2 class="section-title" data-reveal data-delay="1" data-de="Noch Fragen?" data-en="Still have questions?">Noch Fragen?</h2>
@@ -1465,6 +1391,13 @@ img { display: block; max-width: 100%; }
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a"><div class="faq-a-inner" data-de="Mit einem Hosting-Paket übernehmen wir Updates, Sicherheit und laufenden Support. Ohne Hosting-Paket bekommst du alle Dateien und kannst frei entscheiden." data-en="With a hosting package we handle updates, security and ongoing support. Without a hosting package you get all files and can decide freely.">Mit einem Hosting-Paket übernehmen wir Updates, Sicherheit und laufenden Support. Ohne Hosting-Paket bekommst du alle Dateien und kannst frei entscheiden.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-text" data-de="Was ist der Unterschied zwischen Onepager und Smart Website?" data-en="What's the difference between a one-pager and a smart website?">Was ist der Unterschied zwischen Onepager und Smart Website?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner" data-de="Ein Onepager ist eine kompakte, performante Einzelseite. Die Smart Website bietet mehr Dynamik, erweiterte Funktionen und ist ideal für komplexere Anforderungen – z. B. mit interaktiven Elementen oder dynamischen Inhalten." data-en="A one-pager is a compact, high-performance single page. The Smart Website offers more dynamics, extended functionality and is ideal for more complex requirements – e.g. with interactive elements or dynamic content.">Ein Onepager ist eine kompakte, performante Einzelseite. Die Smart Website bietet mehr Dynamik, erweiterte Funktionen und ist ideal für komplexere Anforderungen – z. B. mit interaktiven Elementen oder dynamischen Inhalten.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
@@ -1498,7 +1431,7 @@ img { display: block; max-width: 100%; }
 </section>
 
 <!-- ══ CONTACT ══ -->
-<section class="contact" id="kontakt" style="background: var(--bg);">
+<section class="contact" id="kontakt" style="background: var(--bg2);">
   <div class="container">
     <div class="contact-inner">
       <div>
@@ -1563,7 +1496,7 @@ img { display: block; max-width: 100%; }
 </section>
 
 <!-- ══ FOOTER ══ -->
-<footer class="footer" style="background: var(--bg2);">
+<footer class="footer">
   <div class="container">
     <div class="footer-inner">
       <div class="footer-logo">Net<span>Gains</span></div>
@@ -1590,7 +1523,6 @@ img { display: block; max-width: 100%; }
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── LANGUAGE SYSTEM ──
-// Minimal logic for the rest of the page (forms, etc.)
 let currentLang = 'de';
 
 // ── FAQ ──
@@ -1614,35 +1546,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 document.body.classList.add('js-ready');
 document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-// ── SPEED ANIMATIONS (Fallback for stats ring if still present somewhere) ──
-const speedObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const speedFill = document.getElementById('speedFill');
-    if (speedFill) speedFill.classList.add('animated');
-    const barBad = document.getElementById('barBad');
-    if (barBad) barBad.classList.add('animated');
-    const barGood = document.getElementById('barGood');
-    if (barGood) barGood.classList.add('animated');
-    
-    const speedNum = document.getElementById('speedNum');
-    if (speedNum) {
-        let num = 0;
-        const target = 98;
-        const step = () => {
-          num = Math.min(num + 2, target);
-          speedNum.textContent = num;
-          if (num < target) requestAnimationFrame(step);
-        };
-        setTimeout(step, 200);
-    }
-    speedObserver.disconnect();
-  });
-}, { threshold: 0.4 });
-
-const speedSection = document.querySelector('.speed');
-if (speedSection) speedObserver.observe(speedSection);
-
 // ── COUNT UP STATS ──
 const countObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -1653,7 +1556,7 @@ const countObserver = new IntersectionObserver((entries) => {
       const increment = target / 40;
       const timer = setInterval(() => {
         current = Math.min(current + increment, target);
-        el.textContent = Math.floor(current) + '+';
+        el.textContent = Math.floor(current) + (target > 10 ? '+' : '');
         if (current >= target) clearInterval(timer);
       }, 30);
     });
@@ -1666,13 +1569,77 @@ if (statsSection) countObserver.observe(statsSection);
 // ── CLIMATE BADGE VISIBILITY ──
 const climateBadge = document.getElementById('climateBadge');
 window.addEventListener('scroll', () => {
-  // Wenn wir mehr als eine halbe Bildschirmhöhe nach unten scrollen (Hero-Section verlassen)
   if (window.scrollY > window.innerHeight * 0.5) {
     climateBadge.classList.add('visible');
   } else {
     climateBadge.classList.remove('visible');
   }
 }, { passive: true });
+
+// ── PARTICLES BACKGROUND ──
+const canvas = document.getElementById('particle-canvas');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let particlesArray;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    initParticles();
+  });
+  resizeCanvas();
+
+  class Particle {
+    constructor(x, y, directionX, directionY, size, color) {
+      this.x = x;
+      this.y = y;
+      this.directionX = directionX;
+      this.directionY = directionY;
+      this.size = size;
+      this.color = color;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+    update() {
+      if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+      if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+      this.x += this.directionX;
+      this.y += this.directionY;
+      this.draw();
+    }
+  }
+
+  function initParticles() {
+    particlesArray = [];
+    let numberOfParticles = (canvas.height * canvas.width) / 9000;
+    for (let i = 0; i < numberOfParticles; i++) {
+      let size = (Math.random() * 2) + 0.5;
+      let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+      let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+      let directionX = (Math.random() * 0.4) - 0.2;
+      let directionY = (Math.random() * 0.4) - 0.2;
+      let color = Math.random() > 0.5 ? 'rgba(127,255,212,0.4)' : 'rgba(167,139,250,0.4)';
+      particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+    }
+  }
+
+  function animateParticles() {
+    requestAnimationFrame(animateParticles);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].update();
+    }
+  }
+  initParticles();
+  animateParticles();
+}
 </script>
 </body>
 </html>
