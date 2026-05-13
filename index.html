@@ -79,38 +79,33 @@ img { display: block; max-width: 100%; }
 .section-sub.center { margin: 0 auto; text-align: center; }
 
 /* ══════════════════════════════════════
-   ANIMATION FRAMEWORK (DIFFERENT TYPES & SPEEDS)
+   ANIMATION FRAMEWORK
 ══════════════════════════════════════ */
 [data-anim] {
   opacity: 0;
   will-change: transform, opacity, filter;
 }
-/* Base Transition */
 .js-ready [data-anim] {
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Animation Types */
 [data-anim="fade-up"] { transform: translateY(40px); }
 [data-anim="fade-left"] { transform: translateX(-50px); }
 [data-anim="fade-right"] { transform: translateX(50px); }
 [data-anim="zoom-in"] { transform: scale(0.85); }
 [data-anim="blur-in"] { filter: blur(12px); transform: translateY(20px); }
 
-/* Visible State */
 .js-ready [data-anim].visible {
   opacity: 1;
   transform: none;
   filter: blur(0);
 }
 
-/* Delays */
 [data-delay="1"] { transition-delay: 0.15s; }
 [data-delay="2"] { transition-delay: 0.3s; }
 [data-delay="3"] { transition-delay: 0.45s; }
 [data-delay="4"] { transition-delay: 0.6s; }
 
-/* Speeds */
 [data-speed="fast"] { transition-duration: 0.5s !important; }
 [data-speed="slow"] { transition-duration: 1.2s !important; }
 
@@ -122,20 +117,20 @@ img { display: block; max-width: 100%; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 6rem 0 8rem 0;
-  overflow: hidden;
   background: var(--bg);
+  overflow: hidden;
 }
 
 .hero-glows { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero-glow-left {
-  position: absolute; top: -10%; left: -20%; width: 70vw; height: 70vw;
+  position: absolute; top: -10%; left: -10%; 
+  width: clamp(500px, 60vw, 900px); height: clamp(500px, 60vw, 900px);
   background: radial-gradient(circle, rgba(127, 255, 212, 0.15) 0%, transparent 60%);
   filter: blur(60px);
 }
 .hero-glow-right {
-  position: absolute; top: 10%; right: -20%; width: 80vw; height: 80vw;
+  position: absolute; top: 10%; right: -10%; 
+  width: clamp(600px, 70vw, 1000px); height: clamp(600px, 70vw, 1000px);
   background: radial-gradient(circle, rgba(167, 139, 250, 0.1) 0%, transparent 65%);
   filter: blur(60px);
 }
@@ -148,6 +143,9 @@ img { display: block; max-width: 100%; }
 .hero-grid {
   position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr;
   gap: 4rem; align-items: center; width: 100%;
+  flex-grow: 1; /* Ensures content stretches to push marquee down */
+  padding-top: 8rem;
+  padding-bottom: 4rem;
 }
 
 .hero-left { max-width: 580px; }
@@ -162,16 +160,13 @@ img { display: block; max-width: 100%; }
 .hero-pill .dot { width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; box-shadow: 0 0 10px var(--aqua); }
 
 .hero-title {
-  font-family: var(--fd); font-size: clamp(3rem, 5vw, 4.8rem); font-weight: 800;
+  font-family: var(--fd); font-size: clamp(2.5rem, 5vw, 4.8rem); font-weight: 800;
   line-height: 1.05; color: #fff; margin-bottom: 1.5rem; letter-spacing: -0.02em;
-  scale: 1 1.1; transform-origin: left bottom; min-height: 140px; /* Space for typing */
+  scale: 1 1.1; transform-origin: left bottom; min-height: 140px;
 }
-/* Typing Cursor */
 .hero-title.typing::after {
-  content: '|';
-  color: var(--aqua);
-  animation: blink 1s step-end infinite;
-  margin-left: 2px;
+  content: '|'; color: var(--aqua);
+  animation: blink 1s step-end infinite; margin-left: 2px;
 }
 @keyframes blink { 50% { opacity: 0; } }
 
@@ -206,8 +201,7 @@ img { display: block; max-width: 100%; }
 .trust-info { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
 .trust-info .stars { font-size: 0.85rem; margin-bottom: 0.2rem; display: block; color: var(--aqua);}
 
-/* Mockup Window */
-.hero-right { position: relative; }
+.hero-right { position: relative; width: 100%; max-width: 650px; margin: 0 auto; }
 .css-mockup-window {
   background: #0f0d15; border: 1px solid rgba(255,255,255,0.08); border-radius: 1rem;
   box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(127, 255, 212, 0.08);
@@ -233,7 +227,8 @@ img { display: block; max-width: 100%; }
    MARQUEE LOGOS
 ══════════════════════════════════════ */
 .tech-stack-band {
-  position: absolute; bottom: 0; left: 0; width: 100%; padding: 1.5rem 0;
+  position: relative; /* Fixed for 4K */
+  width: 100%; padding: 1.5rem 0;
   background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
   z-index: 10; display: flex; flex-direction: column; align-items: center; backdrop-filter: blur(10px);
 }
@@ -257,31 +252,23 @@ section { padding: 8rem 0; position: relative; }
 .stat-num { font-family: var(--fd); font-size: 3rem; font-weight: 800; color: var(--aqua); scale: 1 1.15; margin-bottom: 0.5rem; display: inline-block; }
 .stat-label { font-size: 0.85rem; color: var(--muted); }
 
-/* TURQUOISE CARD STYLE */
+/* SERVICES GRID */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .service-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 2.5rem 2rem; transition: 0.4s; }
 .service-card:hover { transform: translateY(-5px); border-color: var(--aqua); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-
-.card-aqua {
-  background: var(--aqua) !important;
-  color: #000 !important;
-  box-shadow: 0 20px 40px rgba(127,255,212,0.15) !important;
-  border: none !important;
-}
-.card-aqua:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 60px rgba(127,255,212,0.25) !important;
-}
-.card-aqua .service-icon { background: rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.1); }
-.card-aqua .service-title { color: #000; }
-.card-aqua .service-desc { color: rgba(0,0,0,0.75); font-weight: 500; }
-
 .service-icon { font-size: 1.5rem; margin-bottom: 1.5rem; width: 48px; height: 48px; background: rgba(127,255,212,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
 .service-title { font-family: var(--fd); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.65rem; }
 .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
 
-/* PORTFOLIO (LANDINGPAGES SHOWCASE) */
-.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+/* PORTFOLIO SHOWCASE */
+.portfolio { position: relative; overflow: hidden; }
+.portfolio-glow-bg {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at center, rgba(127,255,212,0.03) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; position: relative; z-index: 1; }
 .portfolio-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; transition: 0.4s cubic-bezier(.16,1,.3,1); text-decoration: none; display: block; }
 .portfolio-card:hover { transform: translateY(-8px); border-color: var(--aqua); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
 .portfolio-thumb { aspect-ratio: 16/10; overflow: hidden; background: #111; position: relative; }
@@ -308,6 +295,7 @@ section { padding: 8rem 0; position: relative; }
 /* TEAM & CTA */
 .personal-cta { background: var(--glass-bg); border: 1px solid rgba(127, 255, 212, 0.2); border-radius: var(--radius); padding: 3.5rem 2rem; text-align: center; margin: 5rem auto 0; max-width: 900px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
 .personal-cta-text { font-family: var(--fd); font-size: clamp(1.1rem, 2vw, 1.45rem); font-weight: 600; line-height: 1.7; color: #fff; scale: 1 1.05; }
+.personal-cta-text span { color: var(--aqua); }
 
 .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
 .team-card { background: var(--glass-bg); padding: 3rem; border-radius: var(--radius); border: 1px solid var(--glass-border); display: flex; gap: 2rem; transition: 0.3s; }
@@ -374,7 +362,7 @@ section { padding: 8rem 0; position: relative; }
     <div class="hero-left">
       <div class="hero-pill" data-anim="fade-up" data-speed="fast">
         <div class="dot"></div>
-        8+ Jahre Erfahrung
+        Design & Automation
       </div>
       
       <!-- Typewriter Container -->
@@ -400,7 +388,7 @@ section { padding: 8rem 0; position: relative; }
         </div>
         <div class="trust-info">
           <span class="stars">★★★★★</span>
-          <span data-de="Bewiesen durch 8+ Jahre Systemaufbau" data-en="Proven by 8+ years of system building">Bewiesen durch 8+ Jahre Systemaufbau</span>
+          <span data-de="Bewiesen durch 8+ Jahre Erfahrung" data-en="Proven by 8+ years of experience">Bewiesen durch 8+ Jahre Erfahrung</span>
         </div>
       </div>
     </div>
@@ -499,7 +487,7 @@ section { padding: 8rem 0; position: relative; }
   </div>
 </section>
 
-<!-- ══ WEBSITES SERVICES (AQUA CARDS) ══ -->
+<!-- ══ WEBSITES SERVICES ══ -->
 <section class="leistungen" id="websites" style="background: var(--bg2);">
   <div class="container">
     <div class="section-header" style="text-align: center;">
@@ -509,17 +497,17 @@ section { padding: 8rem 0; position: relative; }
     </div>
     
     <div class="services-grid">
-      <div class="service-card card-aqua" data-anim="fade-left">
+      <div class="service-card" data-anim="fade-left">
         <div class="service-icon">⚡</div>
         <div class="service-title">Onepager & Landingpages</div>
         <div class="service-desc">Kompakt und extrem schnell. Perfekt, um Besucher direkt in Leads zu verwandeln.</div>
       </div>
-      <div class="service-card card-aqua" data-anim="fade-up" data-delay="1">
+      <div class="service-card" data-anim="fade-up" data-delay="1">
         <div class="service-icon">🌐</div>
         <div class="service-title">Corporate Websites</div>
         <div class="service-desc">Umfangreiche Firmenauftritte mit mehreren Unterseiten und dynamischen Inhalten.</div>
       </div>
-      <div class="service-card card-aqua" data-anim="fade-right" data-delay="2">
+      <div class="service-card" data-anim="fade-right" data-delay="2">
         <div class="service-icon">🔗</div>
         <div class="service-title">Multi-Site Systeme</div>
         <div class="service-desc">Skalierbare Multi-Website-Lösungen, speziell entwickelt für skalierende Unternehmen.</div>
@@ -530,6 +518,7 @@ section { padding: 8rem 0; position: relative; }
 
 <!-- ══ PORTFOLIO / LANDINGPAGES SHOWCASE ══ -->
 <section class="portfolio" style="background: var(--bg);" id="projekte">
+  <div class="portfolio-glow-bg"></div>
   <div class="container">
     <div class="section-header" style="max-width: 900px;" data-anim="fade-right">
       <div class="section-eyebrow"><div class="dot"></div><span>Psychologisch optimiert</span></div>
@@ -607,7 +596,7 @@ section { padding: 8rem 0; position: relative; }
         <div class="portfolio-info">
           <div class="portfolio-url">sales-force-one.pages.dev</div>
           <div class="portfolio-name">Mitarbeiter Dashboards</div>
-          <div class="portfolio-type">Rankings, KPIs und voll integrierte Datenbanken.</div>
+          <div class="portfolio-type">Rankings, KPIs und integrierte Datenbanken.</div>
         </div>
       </a>
 
@@ -625,56 +614,16 @@ section { padding: 8rem 0; position: relative; }
       </a>
     </div>
 
-    <div data-anim="zoom-in" data-delay="3" style="margin-top: 3rem; text-align: center;">
-      <span style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(127,255,212,0.1); border: 1px solid rgba(127,255,212,0.3); padding: 0.75rem 1.5rem; border-radius: 99px; color: var(--aqua); font-weight: 700; font-family: var(--fd); font-size: 0.85rem;">
+    <div data-anim="zoom-in" data-delay="3" style="margin-top: 3rem; text-align: center; position: relative; z-index: 2;">
+      <span style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(127,255,212,0.1); border: 1px solid rgba(127,255,212,0.3); padding: 0.75rem 1.5rem; border-radius: 99px; color: var(--aqua); font-weight: 700; font-family: var(--fd); font-size: 0.85rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         🔒 Ergänzung: Bei allen Projekten, bei denen Kunden über die Website bezahlen, bleibt 100% der Kontrolle bei Ihnen.
       </span>
     </div>
   </div>
 </section>
 
-<!-- ══ FLORIANS SUITE ══ -->
-<section class="portfolio" style="background: var(--bg2);" id="florian-suite">
-  <div class="container">
-    <div class="section-header" style="text-align: center;">
-      <div class="section-eyebrow" data-anim="fade-up"><div class="dot"></div><span>Showcase</span></div>
-      <h2 class="section-title center" data-anim="fade-up" data-delay="1">Florians <em>Suite</em></h2>
-      <p class="section-sub center" data-anim="fade-up" data-delay="2">Ein Blick auf die High-Performance Plattformen, die wir für unseren Partner Florian entwickelt haben.</p>
-    </div>
-    <div class="portfolio-grid">
-      <div class="portfolio-card" data-anim="fade-left">
-        <div class="portfolio-thumb" style="background:linear-gradient(135deg,rgba(127,255,212,0.06),rgba(6,182,212,0.04))">
-          <span style="font-family:var(--fd);font-weight:800;font-size:1.2rem;color:rgba(127,255,212,0.25)">FL</span>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Florians Main Hub</div>
-          <div class="portfolio-type">Zentrale Anlaufstelle für Kunden</div>
-        </div>
-      </div>
-      <div class="portfolio-card" data-anim="fade-up" data-delay="1">
-        <div class="portfolio-thumb" style="background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(236,72,153,0.03))">
-          <span style="font-family:var(--fd);font-weight:800;font-size:1.2rem;color:rgba(167,139,250,0.25)">SF</span>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Sales Funnel System</div>
-          <div class="portfolio-type">Automatisierte Lead-Generierung</div>
-        </div>
-      </div>
-      <div class="portfolio-card" data-anim="fade-right" data-delay="2">
-        <div class="portfolio-thumb" style="background:linear-gradient(135deg,rgba(251,191,36,0.05),rgba(249,115,22,0.03))">
-          <span style="font-family:var(--fd);font-weight:800;font-size:1.2rem;color:rgba(251,191,36,0.25)">TR</span>
-        </div>
-        <div class="portfolio-info">
-          <div class="portfolio-name">Team Recruiting</div>
-          <div class="portfolio-type">Onboarding & Teamaufbau</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ══ APPS ══ -->
-<section class="leistungen" id="apps" style="background: var(--bg);">
+<section class="leistungen" id="apps" style="background: var(--bg2);">
   <div class="container">
     <div class="section-header" style="text-align: center;">
       <div class="section-eyebrow" data-anim="fade-up"><div class="dot"></div><span>Apps & Dashboards</span></div>
@@ -702,7 +651,7 @@ section { padding: 8rem 0; position: relative; }
 </section>
 
 <!-- ══ FLORIANS APP (INVESTORA) ══ -->
-<section class="investora" style="background: var(--bg2);" id="florian-app">
+<section class="investora" style="background: var(--bg);" id="florian-app">
   <div class="container">
     <div class="investora-inner">
       <div data-anim="fade-right">
@@ -747,7 +696,7 @@ section { padding: 8rem 0; position: relative; }
 </section>
 
 <!-- ══ MARKETING & AUTOMATION ══ -->
-<section class="leistungen" id="automation" style="background: var(--bg);">
+<section class="leistungen" id="automation" style="background: var(--bg2);">
   <div class="container">
     <div class="section-header" style="text-align: center;">
       <div class="section-eyebrow" data-anim="fade-up"><div class="dot"></div><span>Skalierung</span></div>
@@ -755,12 +704,12 @@ section { padding: 8rem 0; position: relative; }
       <p class="section-sub center" data-anim="fade-up" data-delay="2">Eine gute Website reicht nicht. Wir sorgen dafür, dass sie gefunden wird und die Prozesse dahinter vollautomatisch ablaufen.</p>
     </div>
     <div class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-      <div class="service-card card-aqua" data-anim="zoom-in">
+      <div class="service-card" data-anim="zoom-in">
         <div class="service-icon">🎯</div>
         <div class="service-title">Marketing für mehr Kunden</div>
         <div class="service-desc">Wir bauen Funnels und schalten Kampagnen, die kontinuierlich neue Leads für dein Unternehmen generieren.</div>
       </div>
-      <div class="service-card card-aqua" data-anim="zoom-in" data-delay="1">
+      <div class="service-card" data-anim="zoom-in" data-delay="1">
         <div class="service-icon">⚙️</div>
         <div class="service-title">Automatisierte Arbeitsabläufe</div>
         <div class="service-desc">Wir verbinden Systeme so, dass zeitraubende Handarbeit von der Erstkontaktaufnahme bis zum Onboarding entfällt.</div>
@@ -770,7 +719,7 @@ section { padding: 8rem 0; position: relative; }
 </section>
 
 <!-- ══ LESTERS ZEITERSPARNIS (CASE STUDY) ══ -->
-<section class="investora" id="lester-automation" style="background: var(--bg2);">
+<section class="investora" id="lester-automation" style="background: var(--bg);">
   <div class="container">
     <div class="investora-inner">
       <div data-anim="fade-right">
@@ -795,12 +744,12 @@ section { padding: 8rem 0; position: relative; }
 </section>
 
 <!-- ══ TEAM ══ -->
-<section class="team" id="team" style="background: var(--bg);">
+<section class="team" id="team" style="background: var(--bg2);">
   <div class="container">
     <div class="section-header" style="text-align: center;">
       <div class="section-eyebrow" data-anim="fade-up"><div class="dot"></div><span>Das Team</span></div>
       <h2 class="section-title center" data-anim="fade-up" data-delay="1">Die Köpfe hinter<br><em>NetGains</em></h2>
-      <p class="section-sub center" data-anim="fade-up" data-delay="2">Ein eingespieltes Duo für technische Exzellenz und Strukturvertrieb.</p>
+      <p class="section-sub center" data-anim="fade-up" data-delay="2">Ein eingespieltes Duo für technische Exzellenz und Vertrieb.</p>
     </div>
     <div class="team-grid">
       <div class="team-card" data-anim="fade-up">
@@ -824,7 +773,7 @@ section { padding: 8rem 0; position: relative; }
 </section>
 
 <!-- ══ FAQ ══ -->
-<section class="faq" style="background: var(--bg2);">
+<section class="faq" style="background: var(--bg);">
   <div class="container">
     <div class="section-eyebrow" data-anim="fade-right"><div class="dot"></div><span>Häufige Fragen</span></div>
     <h2 class="section-title" data-anim="fade-right" data-delay="1">Noch Fragen?</h2>
@@ -847,20 +796,14 @@ section { padding: 8rem 0; position: relative; }
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Wie sieht der Zahlungsprozess aus?</span><span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Alle Pakete laufen über Stripe – sicher, transparent und sofort. Nach dem Kauf melden wir uns innerhalb von 24 Stunden für den Start.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Alle Zahlungen laufen über Stripe – sicher, transparent und sofort. Nach dem Kauf melden wir uns innerhalb von 24 Stunden für den Start.</div></div>
       </div>
-    </div>
-    
-    <div class="personal-cta" data-anim="zoom-in" data-delay="3">
-      <p class="personal-cta-text">
-        <span>Lass uns einen Kaffee trinken</span> wenn du eine Website / ein System brauchst, lade mich für einen Tag in dein Unternehmen ein wenn du willst dass du und deine Mitarbeiter in kürzerer Zeit mehr gemacht bekommen.
-      </p>
     </div>
   </div>
 </section>
 
 <!-- ══ CONTACT ══ -->
-<section class="contact" id="kontakt" style="background: var(--bg);">
+<section class="contact" id="kontakt" style="background: var(--bg2);">
   <div class="container">
     <div class="contact-inner">
       <div data-anim="fade-right">
@@ -942,15 +885,12 @@ function typeWriter() {
   if (typeIndex < textToType.length) {
     heroTitle.innerHTML += textToType.charAt(typeIndex);
     typeIndex++;
-    // Leicht variierende Tipp-Geschwindigkeit für einen menschlichen Look
     const speed = Math.random() * 30 + 40; 
     setTimeout(typeWriter, speed);
   } else {
-    // Wenn fertig, Cursor entfernen
     setTimeout(() => { heroTitle.classList.remove('typing'); }, 2000);
   }
 }
-// Starte Typing-Animation leicht verzögert
 setTimeout(typeWriter, 600);
 
 // ── FAQ ──
@@ -961,7 +901,7 @@ function toggleFaq(btn) {
   if (!isOpen) item.classList.add('open');
 }
 
-// ── SCROLL REVEAL (NEW) ──
+// ── SCROLL REVEAL ──
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -981,7 +921,6 @@ const countObserver = new IntersectionObserver((entries) => {
     
     const counters = entry.target.querySelectorAll('[data-count]');
     counters.forEach((el, index) => {
-      // Stagger Effekt: Jeder Zähler startet 250ms nach dem vorherigen
       setTimeout(() => {
         const target = parseInt(el.getAttribute('data-count'));
         const isDot = el.getAttribute('data-format') === 'dot';
