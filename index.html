@@ -150,6 +150,8 @@ img { display: block; max-width: 100%; }
   background-size: 32px 32px;
   background-position: center;
   overflow: hidden;
+  padding-top: 0 !important; /* Blockiert das globale 8rem (130px) Section-Padding! */
+  padding-bottom: 0 !important;
 }
 
 .hero-glows { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
@@ -174,7 +176,7 @@ img { display: block; max-width: 100%; }
 .hero-grid {
   position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr;
   gap: 3rem; align-items: center; width: 100%;
-  margin-top: 8rem; /* Fester, garantierter Abstand unter dem Header */
+  margin-top: 7.5rem; /* Perfekter, knackiger Abstand direkt unter dem Header */
   margin-bottom: 4rem;
 }
 
@@ -363,7 +365,7 @@ section { padding: 8rem 0; position: relative; }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr; text-align: center; padding-top: 6rem; }
+  .hero-grid { grid-template-columns: 1fr; text-align: center; margin-top: 6.5rem; }
   .hero-left { margin: 0 auto; }
   .hero-buttons { justify-content: center; }
   .hero-trust { justify-content: center; }
@@ -379,8 +381,7 @@ section { padding: 8rem 0; position: relative; }
     left: 1rem;
     right: 1rem;
   }
-  .hero-blotato { min-height: auto; } /* Verhindert unnötige Lücken auf mobilen Geräten */
-  .hero-grid { margin-top: 6rem; margin-bottom: 3rem; gap: 2.5rem; }
+  .hero-grid { margin-top: 5.5rem; margin-bottom: 2rem; gap: 2.5rem; }
   .hero-title { font-size: 2.2rem; }
   .stats-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
