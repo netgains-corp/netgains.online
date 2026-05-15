@@ -1,0 +1,15 @@
+# robots.txt for CloudGains DC
+
+User-agent: *
+Allow: /
+
+# Verhindere das Crawlen von internen Systemen, falls später hinzugefügt
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+
+# Verhindere das Crawlen von parametrisierten URLs (verhindert Duplicate Content bei Filterungen/Tracking)
+Disallow: /*?*utm_
+
+# Gib den Pfad zur Sitemap an (MUSS absolute URL sein)
+Sitemap: https://www.cloudgains.de/sitemap.xml
