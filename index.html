@@ -38,12 +38,14 @@
   --glass-blur:     blur(24px) saturate(150%);
 }
 
-html { font-size: 16px; scroll-behavior: smooth; }
+html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: var(--fb);
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
   line-height: 1.65;
 }
 
@@ -170,7 +172,8 @@ img { display: block; max-width: 100%; }
   background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
   background-size: 32px 32px;
   background-position: center;
-  overflow: visible; 
+  overflow-x: clip; 
+  overflow-y: visible; 
   padding-top: 0 !important; 
   padding-bottom: 0 !important;
 }
@@ -494,6 +497,12 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   .team-card { flex-direction: column; text-align: center; align-items: center; }
   .climate-badge { bottom: 1rem; left: 1rem; }
   .climate-badge iframe { max-width: calc(100vw - 6.5rem); }
+  
+  /* Mobile Rechner-Korrekturen gegen verrutschende Zahlen */
+  .calc-label-flex { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .calc-val { align-self: flex-start; }
+  .result-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .result-row.highlight .result-val { font-size: 1.6rem; }
 }
 
 /* SECTION THEME OVERRIDES (ORANGE & PURPLE) */
@@ -872,7 +881,33 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   </div>
 </section>
 
-<section class="investora theme-orange-purple" id="lester-automation" style="background: var(--bg); padding-bottom: 2rem;">
+<!-- ══ FLORIANS APP (INVESTORA) ══ -->
+<section class="investora" style="background: var(--bg);" id="florian-app">
+  <div class="container">
+    <div class="investora-inner">
+      <div data-anim="fade-right">
+        <div class="section-eyebrow"><div class="dot"></div><span>App Showcase</span></div>
+        <h2 class="section-title">Florians App:<br><em>INVESTORA</em></h2>
+        <p class="section-sub">Für Florian haben wir INVESTORA entwickelt – eine maßgeschneiderte Plattform, die seine tägliche Arbeit drastisch reduziert und seinen Kunden ein Premium-Erlebnis bietet.</p>
+        <div class="investora-features">
+          <div class="investora-feat">Direkt-Chat mit Florians Mitarbeitern</div>
+          <div class="investora-feat">Lernplattform mit Videokursen</div>
+          <div class="investora-feat">Überblick über gekaufte Aktien</div>
+          <div class="investora-feat">Terminbuchungssystem</div>
+          <div class="investora-feat">Registrierung und Anmeldung</div>
+          <div class="investora-feat">Und das alles in einer App</div>
+        </div>
+      </div>
+      
+      <div data-anim="fade-left" data-delay="2" style="position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(127, 255, 212, 0.15); border: 1px solid var(--glass-border); background: #000;">
+        <iframe src="https://www.youtube.com/embed/dFqgKg8cj94?rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LESTERS ZEITERSPARNIS (CASE STUDY) ══ -->
+<section class="investora theme-orange-purple" id="lester-automation" style="background: var(--bg2); padding-bottom: 2rem;">
   <div class="container">
     <div class="investora-inner">
       <div data-anim="fade-right">
@@ -888,7 +923,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       </div>
       
       <div data-anim="fade-left" data-delay="2" style="position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(167, 139, 250, 0.15); border: 1px solid var(--glass-border); background: #000;">
-        <iframe src="https://www.youtube.com/embed/F6u-xkclJ84?rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/v7W9vbM6Nf8?rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
       
     </div>
@@ -1044,11 +1079,11 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
         <h2 class="section-title">Lass uns<br><em>reden.</em></h2>
         <p class="contact-info-sub">Schildere uns kurz dein Projekt – wir melden uns innerhalb von 24 Stunden mit einem konkreten Vorschlag.</p>
         <div class="contact-methods">
-          <a href="/cdn-cgi/l/email-protection#8ce2e9f8ebede5e2ffa2efe3e2f8edeff8ccfcfee3f8e3e2a2e1e9" class="contact-method">
+          <a href="mailto:kontakt@cloudgains.de" class="contact-method">
             <div class="contact-method-icon email">✉️</div>
             <div class="contact-method-text">
               <div class="contact-method-label">E-Mail</div>
-              <div class="contact-method-val"><span class="__cf_email__" data-cfemail="6b050e1f0c0a020518450804051f0a081f2b1b19041f040545060e">[email&#160;protected]</span></div>
+              <div class="contact-method-val">kontakt@cloudgains.de</div>
             </div>
           </a>
           <a href="https://wa.me/015202315946" target="_blank" class="contact-method">
@@ -1061,7 +1096,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
         </div>
       </div>
       <div data-anim="fade-left" data-delay="1">
-        <form class="contact-form" action="mailto:netgains.contact@proton.me" method="post" enctype="text/plain">
+        <form class="contact-form" action="mailto:kontakt@cloudgains.de" method="post" enctype="text/plain">
           <div class="form-group"><label class="form-label">Dein Name</label><input class="form-input" type="text" name="name" placeholder="Max Mustermann" required></div>
           <div class="form-group"><label class="form-label">E-Mail-Adresse</label><input class="form-input" type="email" name="email" placeholder="max@beispiel.de" required></div>
           <div class="form-group"><label class="form-label">Interesse an</label>
@@ -1104,7 +1139,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   <iframe width="380" height="38" style="border:0;" src="https://climate.stripe.com/badge/fCgl1N?theme=dark&size=small&locale=de-DE"></iframe>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 // ── HERO LOAD ANIMATION SEQUENCE ──
 document.addEventListener('DOMContentLoaded', () => {
