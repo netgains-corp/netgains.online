@@ -36,6 +36,8 @@
   --glass-bg-h:     rgba(255,255,255,0.06);
   --glass-border:   rgba(255,255,255,0.08);
   --glass-blur:     blur(24px) saturate(150%);
+  
+  --orange:         #ff9800; /* Farbe für steuerlich absetzbar */
 }
 
 html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; }
@@ -147,7 +149,9 @@ img { display: block; max-width: 100%; }
 /* Hero Staggered Load Animations */
 .hero-load-anim { opacity: 0; will-change: transform, opacity; }
 .hero-loaded .anim-pill { animation: heroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.hero-loaded .anim-title { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
 .hero-loaded .anim-mockup { animation: heroSlideRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
+.hero-loaded .anim-free { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 .hero-loaded .anim-desc { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
 .hero-loaded .anim-btns { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; }
 .hero-loaded .anim-trust { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.0s forwards; }
@@ -216,13 +220,23 @@ img { display: block; max-width: 100%; }
 }
 .hero-pill .dot { width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; box-shadow: 0 0 10px var(--aqua); }
 
+.tax-deductible-line {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--fd); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--orange);
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.25);
+  padding: 0.5rem 1.2rem; border-radius: 99px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 15px rgba(255, 152, 0, 0.1);
+}
+
 .hero-title {
   font-family: var(--fd); 
   font-size: clamp(2.5rem, 4.5vw, 4.2rem); 
   font-weight: 800;
   line-height: 1.05; color: #fff; margin-bottom: 1.25rem; letter-spacing: -0.03em;
   scale: 1 1.05; transform-origin: left bottom;
-  min-height: 2.2em; /* Fixiert die Höhe während des Tippens, damit nichts springt */
 }
 .hero-title .text-gradient {
   background: linear-gradient(90deg, var(--aqua), #60a5fa, var(--violet));
@@ -230,15 +244,6 @@ img { display: block; max-width: 100%; }
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-}
-#type-cursor {
-  color: var(--aqua);
-  font-weight: 400;
-  animation: blinkCursor 0.8s infinite;
-}
-@keyframes blinkCursor {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
 }
 
 .hero-desc {
@@ -565,7 +570,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 </head>
 <body>
 
-<!-- Der Header bleibt immer oben, sofort sichtbar (ohne Intro-Animation) -->
 <nav class="liquid-header">
   <div class="header-logo">
     <div class="header-logo-icon">CG</div>
@@ -581,7 +585,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 </nav>
 
 <section class="hero-blotato" id="hero">
-  <!-- Glows mit Load-Animation -->
   <div class="hero-glows hero-load-anim anim-bg">
     <div class="hero-glow-left"></div>
     <div class="hero-glow-right"></div>
@@ -589,29 +592,29 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   <div class="container hero-grid">
     <div class="hero-left">
-      <!-- Pill Lade-Animation -->
       <div class="hero-pill hero-load-anim anim-pill">
         <div class="dot"></div>
         15 Jahre IT Erfahrung
       </div>
       
-      <!-- Typwriter Container -->
-      <h1 class="hero-title" id="hero-title-anim">
-        <!-- Wird per JS gefüllt -->
+      <h1 class="hero-title hero-load-anim anim-title">
+          Mehr Kunden.<br>
+          Mehr Zeit. <span class="text-gradient">Mehr Geld.</span>
       </h1>
       
-      <!-- Subtext Lade-Animation -->
+      <div class="tax-deductible-line hero-load-anim anim-free">
+          ✓ 100% steuerlich absetzbar
+      </div>
+      
       <p class="hero-desc hero-load-anim anim-desc">
         Wir bauen High-Performance Websites und digitale Systeme. Einmal einrichten, dauerhaft mehr Kunden und Automatisierung genießen.
       </p>
       
-      <!-- Buttons Lade-Animation -->
       <div class="hero-buttons hero-load-anim anim-btns">
         <a href="#kontakt" class="btn-glow">Kostenlos anfragen →</a>
         <a href="#projekte" class="btn-outline">Projekte ansehen</a>
       </div>
       
-      <!-- Trust Lade-Animation -->
       <div class="hero-trust hero-load-anim anim-trust">
         <div class="avatars">
           <div class="avatar"><img src="https://i.pravatar.cc/100?img=12" alt="User"></div>
@@ -626,7 +629,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       </div>
     </div>
     
-    <!-- Mockup Lade-Animation (Fliegt von rechts ein) -->
     <div class="hero-right hero-load-anim anim-mockup">
       <div class="css-mockup-window">
         <div class="mockup-header">
@@ -656,7 +658,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     </div>
   </div>
 
-  <!-- Tech Stack Slideshow mit Lade-Animation -->
   <div class="tech-stack-band hero-load-anim anim-bg">
     <div class="tech-stack-title">Plays nicely with your stack</div>
     <div class="marquee-container">
@@ -923,7 +924,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   </div>
 </section>
 
-<!-- ══ FLORIANS APP (INVESTORA) ══ -->
 <section class="investora" style="background: var(--bg);" id="florian-app">
   <div class="container">
     <div class="investora-inner">
@@ -948,7 +948,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   </div>
 </section>
 
-<!-- ══ LESTERS ZEITERSPARNIS (CASE STUDY) ══ -->
 <section class="investora theme-orange-purple" id="lester-automation" style="background: var(--bg2); padding-bottom: 2rem;">
   <div class="container">
     <div class="investora-inner">
@@ -1186,43 +1185,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 document.addEventListener('DOMContentLoaded', () => {
   const hero = document.getElementById('hero');
   if (hero) hero.classList.add('hero-loaded');
-  
-  // Fast Typewriter Effect
-  const titleEl = document.getElementById('hero-title-anim');
-  if (titleEl) {
-    const text1 = "Mehr Kunden.";
-    const text2 = "Mehr Zeit sparen.";
-    let charIndex = 0;
-    let isTypingText2 = false;
-    
-    titleEl.innerHTML = '<span id="type-line1"></span><br><span id="type-line2" class="text-gradient"></span><span id="type-cursor">|</span>';
-    const line1El = document.getElementById('type-line1');
-    const line2El = document.getElementById('type-line2');
-    const cursor = document.getElementById('type-cursor');
-    
-    function type() {
-      if (!isTypingText2) {
-        if (charIndex < text1.length) {
-          line1El.textContent += text1.charAt(charIndex);
-          charIndex++;
-          setTimeout(type, 40); // Verlangsamt von 20ms auf 40ms
-        } else {
-          isTypingText2 = true;
-          charIndex = 0;
-          setTimeout(type, 80); // Verlangsamt von 40ms auf 80ms
-        }
-      } else {
-        if (charIndex < text2.length) {
-          line2El.textContent += text2.charAt(charIndex);
-          charIndex++;
-          setTimeout(type, 40); // Verlangsamt von 20ms auf 40ms
-        } else {
-          cursor.style.display = 'none'; // Cursor ausblenden wenn fertig
-        }
-      }
-    }
-    setTimeout(type, 100); // Start 100ms nach Laden
-  }
   
   // Initialize Calculators
   updateCalculator();
