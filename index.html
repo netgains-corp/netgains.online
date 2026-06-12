@@ -51,7 +51,7 @@ body {
   line-height: 1.65;
 }
 
-h1,h2,h3,h4,h5 { font-family: var(--fd); word-break: break-word; hyphens: auto; }
+h1,h2,h3,h4,h5 { font-family: var(--fd); }
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
 
@@ -513,9 +513,19 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .hero-grid { margin-top: 5.5rem; margin-bottom: 2rem; gap: 2rem; }
   
-  /* Schriftgrößen-Limits gegen horizontalen Ausbruch */
-  .hero-title { font-size: 2.2rem !important; min-height: auto; }
-  .section-title { font-size: 1.8rem !important; }
+  /* Schriftgrößen-Limits gegen horizontalen Ausbruch UND Wort-Abschneiden */
+  .hero-title { 
+    font-size: clamp(1.9rem, 10vw, 2.4rem) !important; 
+    min-height: auto; 
+    word-break: keep-all; /* Hält die Wörter als Ganzes zusammen */
+    hyphens: none;
+    letter-spacing: -0.04em; /* Verdichtet leicht für mehr Wucht */
+  }
+  .section-title { 
+    font-size: clamp(1.6rem, 8vw, 2rem) !important; 
+    word-break: keep-all; 
+    hyphens: none; 
+  }
   
   /* Mockup-Fixes */
   .css-mockup-window { min-height: 250px; }
