@@ -482,6 +482,8 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .form-submit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(127, 255, 212, 0.5);}
 
 /* CLIMATE & WHATSAPP */
+.climate-toggle { display: none; } /* Auf Desktop unsichtbar */
+
 .climate-badge { position: fixed; bottom: 2rem; left: 2rem; z-index: 890; opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.4s; }
 .climate-badge.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .climate-badge iframe { width: 100% !important; max-width: 380px; }
@@ -554,7 +556,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   /* Rechner Korrekturen */
   .calc-card { padding: 1.5rem 1rem; }
 
-  /* KORREKTUR: Erzwingt manuellen Umbruch nur am weichen Trennzeichen (Umsatz-potenzial) */
+  /* KORREKTUR 1: Manuelle Trennung für Umsatzpotenzial an gewünschter Stelle */
   .calc-header h2 { 
     font-size: clamp(1.3rem, 7vw, 1.8rem); 
     word-break: normal; 
@@ -570,18 +572,55 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .contact-inner { grid-template-columns: 1fr; }
   
-  /* KORREKTUR: Stripe Banner skaliert sauber, stoppt VOR dem WA Button und verdeckt nichts */
+  /* KORREKTUR 2: Die elegante Schubladen-Logik für das Badge auf Mobile */
   .climate-badge { 
     bottom: 1.5rem; 
     left: 1rem; 
-    width: 380px; /* Natürliche iFrame Breite als Basis */
+    width: auto; 
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Abstand zwischen iFrame und Button */
     transform-origin: left bottom;
-    /* Skaliert die 380px so weit runter, dass mind. 90px für den WA-Button & Abstand übrig bleiben */
-    transform: translateY(20px) scale(min(1, calc((100vw - 90px) / 380)));
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+    /* Skaliert leicht, basierend auf Breite 432px (380 iframe + 8 gap + 44 btn) */
+    transform: translateY(20px) scale(min(1, calc((100vw - 90px) / 432)));
   }
   .climate-badge.visible {
-    transform: translateY(0) scale(min(1, calc((100vw - 90px) / 380))); 
+    transform: translateY(0) scale(min(1, calc((100vw - 90px) / 432))); 
   }
+  .climate-badge.visible.collapsed {
+    /* Schiebt Iframe und Lücke aus dem Screen raus. Nur die 44px vom Button bleiben da. */
+    transform: translateX(calc(-100% + 44px)) translateY(0) scale(min(1, calc((100vw - 90px) / 432)));
+  }
+
+  .climate-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(10, 10, 15, 0.8);
+    border: 1px solid rgba(127, 255, 212, 0.3);
+    border-radius: 12px;
+    color: var(--aqua);
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .climate-toggle:hover, .climate-toggle:active {
+    background: rgba(127, 255, 212, 0.1);
+    border-color: rgba(127, 255, 212, 0.5);
+  }
+  .climate-toggle svg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .climate-badge.collapsed .climate-toggle svg {
+    transform: rotate(180deg); /* Pfeil dreht sich, wenn eingeklappt */
+  }
+
   .climate-badge iframe { 
     width: 380px !important; 
     max-width: none !important; 
@@ -789,7 +828,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div class="calc-content">
         <div class="calc-header">
           <div class="section-eyebrow"><div class="dot"></div><span>System Performance</span></div>
-          <!-- KORREKTUR: Unsichtbares weiches Trennzeichen &shy; genau hier, wo du trennen willst -->
           <h2>Ungenutztes Umsatz&shy;potenzial</h2>
         </div>
 
@@ -1218,6 +1256,9 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
 <div id="climateBadge" class="climate-badge">
   <iframe width="380" height="38" style="border:0;" src="https://climate.stripe.com/badge/fCgl1N?theme=dark&size=small&locale=de-DE"></iframe>
+  <button class="climate-toggle" onclick="toggleClimateBadge()" aria-label="Stripe Banner minimieren">
+    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
 </div>
 
 <script>
@@ -1346,6 +1387,12 @@ window.addEventListener('scroll', () => {
     climateBadge.classList.remove('visible');
   }
 }, { passive: true });
+
+// KORREKTUR 2: Schubladen-Funktion für das Stripe-Badge
+function toggleClimateBadge() {
+  const badge = document.getElementById('climateBadge');
+  badge.classList.toggle('collapsed');
+}
 </script>
 </body>
 </html>
