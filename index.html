@@ -573,16 +573,16 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .contact-inner { grid-template-columns: 1fr; }
   
-  /* KORREKTUR 2: Die bombensichere Schubladen-Logik für Mobile */
+  /* KORREKTUR 2: Dynamische Skalierung für Schubladen-Menü - Basis-Handys */
   .climate-badge { 
-    bottom: 5.5rem !important; /* Bleibt sicher über WA */
+    bottom: 5.5rem !important; 
     left: 1rem !important; 
-    width: auto !important; 
+    width: max-content !important; 
     display: flex;
     align-items: center;
     gap: 12px;
     transform-origin: left bottom;
-    /* Skaliert leicht für bessere Optik */
+    /* Basis Skalierung für normale Handys */
     transform: translateY(20px) scale(0.85) !important;
   }
   .climate-badge.visible {
@@ -603,7 +603,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     pointer-events: none;
   }
 
-  /* Der neue Toggle-Button (X und Pfeil) */
+  /* Der Toggle-Button (X und Pfeil) */
   .climate-toggle {
     display: flex;
     align-items: center;
@@ -626,9 +626,32 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   .svg-open { display: none; }
   .climate-badge.collapsed .svg-close { display: none; }
   .climate-badge.collapsed .svg-open { display: block; }
+
+  .climate-badge iframe { 
+    width: 380px !important; 
+    max-width: none !important; 
+  }
   
   .wa-fab { bottom: 1.5rem; right: 1rem; width: 50px; height: 50px; }
   .wa-fab svg { width: 24px; height: 24px; }
+}
+
+/* Anpassung für kleinere Bildschirme (< 450px) */
+@media (max-width: 450px) {
+  .climate-badge { transform: translateY(20px) scale(0.75) !important; }
+  .climate-badge.visible { transform: translateY(0) scale(0.75) !important; }
+}
+
+/* Anpassung für noch kleinere Bildschirme (z.B. schmale Samsungs < 390px) */
+@media (max-width: 390px) {
+  .climate-badge { transform: translateY(20px) scale(0.65) !important; }
+  .climate-badge.visible { transform: translateY(0) scale(0.65) !important; }
+}
+
+/* Extrem schmale Bildschirme (< 340px) */
+@media (max-width: 340px) {
+  .climate-badge { transform: translateY(20px) scale(0.55) !important; }
+  .climate-badge.visible { transform: translateY(0) scale(0.55) !important; }
 }
 
 /* SECTION THEME OVERRIDES (ORANGE & PURPLE) */
