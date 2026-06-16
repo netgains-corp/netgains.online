@@ -553,7 +553,13 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   /* Rechner Korrekturen */
   .calc-card { padding: 1.5rem 1rem; }
-  .calc-header h2 { font-size: clamp(1.3rem, 7vw, 1.8rem); } /* Schützt vor abgeschnittenem "Umsatzpotenzial" auf extrem kleinen Handys */
+  .calc-header h2 { 
+    font-size: clamp(1.3rem, 7vw, 1.8rem); 
+    word-break: break-word; 
+    overflow-wrap: break-word; 
+    hyphens: auto; 
+    -webkit-hyphens: auto; 
+  }
   .calc-label-flex { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .calc-val { align-self: flex-start; }
   .result-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
@@ -562,7 +568,8 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   .contact-inner { grid-template-columns: 1fr; }
   
   /* Climate Badge & WhatsApp Fix */
-  .climate-badge { bottom: 1.5rem; left: 1rem; width: calc(100vw - 90px); }
+  .climate-badge { bottom: 1.5rem; left: 1rem; width: auto; }
+  .climate-badge iframe { width: 380px !important; max-width: none !important; transform-origin: left bottom; transform: scale(min(1, calc((100vw - 80px) / 380))); }
   .wa-fab { bottom: 1.5rem; right: 1rem; width: 50px; height: 50px; }
   .wa-fab svg { width: 24px; height: 24px; }
 }
