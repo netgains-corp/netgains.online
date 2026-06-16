@@ -484,7 +484,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 /* CLIMATE & WHATSAPP */
 .climate-badge { position: fixed; bottom: 2rem; left: 2rem; z-index: 890; opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.4s; }
 .climate-badge.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.climate-badge iframe { max-width: calc(100vw - 4rem); }
+.climate-badge iframe { width: 100% !important; max-width: 380px; }
 .wa-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 900; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: 0.25s; }
 .wa-fab:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 15px 40px rgba(37,211,102,0.5); }
 .wa-fab svg { width: 28px; height: 28px; fill: #fff; }
@@ -528,9 +528,11 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   }
   
   /* Mockup-Fixes */
-  .css-mockup-window { min-height: 250px; }
-  .mockup-header { gap: 4px; padding: 0.75rem; }
-  .mockup-url { transform: none !important; margin: 0; width: 100%; text-align: center; }
+  .css-mockup-window { min-height: auto; aspect-ratio: 4/3; }
+  .mockup-header { gap: 4px; padding: 0.6rem; }
+  .mockup-url { transform: none !important; margin: 0; width: 100%; text-align: center; font-size: 0.65rem; }
+  .mockup-sidebar { display: none; } /* Sidebar ausblenden für ein sauberes Mobile-Mockup */
+  .mockup-content { padding: 0.75rem; }
   .mockup-grid { grid-template-columns: 1fr; }
   
   /* Grids & Cards */
@@ -558,8 +560,10 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .contact-inner { grid-template-columns: 1fr; }
   
-  .climate-badge { bottom: 1rem; left: 1rem; }
-  .climate-badge iframe { max-width: calc(100vw - 6.5rem); }
+  /* Climate Badge & WhatsApp Fix */
+  .climate-badge { bottom: 1.5rem; left: 1rem; width: calc(100vw - 90px); }
+  .wa-fab { bottom: 1.5rem; right: 1rem; width: 50px; height: 50px; }
+  .wa-fab svg { width: 24px; height: 24px; }
 }
 
 /* SECTION THEME OVERRIDES (ORANGE & PURPLE) */
@@ -760,7 +764,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div class="calc-content">
         <div class="calc-header">
           <div class="section-eyebrow"><div class="dot"></div><span>System Performance</span></div>
-          <h2>Ungenutztes Umsatz-Potenzial</h2>
+          <h2>Ungenutztes Umsatzpotenzial</h2>
         </div>
 
         <div class="calc-body">
