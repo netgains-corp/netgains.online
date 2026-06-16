@@ -367,7 +367,7 @@ section { padding: 8rem 0; position: relative; }
 }
 .calc-content { position: relative; z-index: 1; }
 .calc-header { text-align: center; margin-bottom: 2.5rem; }
-.calc-header h2 { font-family: var(--fd); font-size: 2rem; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 0.5rem; }
+.calc-header h2 { font-family: var(--fd); font-size: clamp(1.4rem, 6vw, 2rem); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 0.5rem; word-break: keep-all; }
 
 .calc-row { margin-bottom: 2rem; }
 .calc-label-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
@@ -553,6 +553,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   /* Rechner Korrekturen */
   .calc-card { padding: 1.5rem 1rem; }
+  .calc-header h2 { font-size: clamp(1.3rem, 7vw, 1.8rem); } /* Schützt vor abgeschnittenem "Umsatzpotenzial" auf extrem kleinen Handys */
   .calc-label-flex { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .calc-val { align-self: flex-start; }
   .result-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
