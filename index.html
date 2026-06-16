@@ -573,45 +573,38 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .contact-inner { grid-template-columns: 1fr; }
   
-  /* KORREKTUR 2: Die bombensichere Schubladen-Logik für Mobile */
+  /* KORREKTUR 2: Schubladen-Logik mit sicheren, festen Skalierungs-Stufen */
   .climate-badge { 
-    bottom: 5.5rem !important; /* Bleibt sicher über WA */
-    left: 1rem !important; 
-    width: max-content !important; 
+    bottom: 5.5rem; 
+    left: 1rem; 
+    width: max-content; 
     display: flex;
     align-items: center;
     gap: 12px;
     transform-origin: left bottom;
-    /* Berechnung: Nutzt exakt den Platz von linker Kante bis rechter Kante */
-    transform: translateY(20px) scale(0.85) !important; /* Fallback für alte Browser */
-    transform: translateY(20px) scale(min(1, calc((100vw - 2.5rem) / 432))) !important; 
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), gap 0.4s ease;
+    transform: translateY(20px) scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
   }
   .climate-badge.visible {
-    transform: translateY(0) scale(0.85) !important; /* Fallback */
-    transform: translateY(0) scale(min(1, calc((100vw - 2.5rem) / 432))) !important; 
+    transform: translateY(0) scale(0.9); 
   }
 
-  /* Spalt verschwindet, wenn der Banner eingeklappt ist */
-  .climate-badge.collapsed {
-    gap: 0px;
-  }
-
-  /* Der Container um das iFrame, der sich bei Klick zusammenfaltet */
+  /* Container um das iFrame */
   .climate-iframe-container {
-    width: 380px; /* Feste Basis-Breite sorgt dafür, dass Stripe den Text nicht bricht */
+    width: 380px;
     overflow: hidden;
     transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out;
   }
   
-  /* Wenn die "collapsed" Klasse aktiv ist, schrumpft der Container auf 0 */
   .climate-badge.collapsed .climate-iframe-container {
     width: 0px;
     opacity: 0;
     pointer-events: none;
   }
+  
+  .climate-badge.collapsed { gap: 0; }
 
-  /* Der Toggle-Button (X und Pfeil) */
+  /* Toggle-Button */
   .climate-toggle {
     display: flex;
     align-items: center;
@@ -630,7 +623,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   }
   .climate-toggle svg { width: 20px; height: 20px; }
   
-  /* SVG Switcher */
   .svg-open { display: none; }
   .climate-badge.collapsed .svg-close { display: none; }
   .climate-badge.collapsed .svg-open { display: block; }
@@ -643,6 +635,24 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .wa-fab { bottom: 1.5rem; right: 1rem; width: 50px; height: 50px; }
   .wa-fab svg { width: 24px; height: 24px; }
+}
+
+/* KORREKTUR 3: Breakpoints für perfekte Darstellung auf allen Geräten */
+@media (max-width: 440px) {
+  .climate-badge { transform: translateY(20px) scale(0.85); }
+  .climate-badge.visible { transform: translateY(0) scale(0.85); }
+}
+@media (max-width: 400px) {
+  .climate-badge { transform: translateY(20px) scale(0.78); }
+  .climate-badge.visible { transform: translateY(0) scale(0.78); }
+}
+@media (max-width: 370px) {
+  .climate-badge { transform: translateY(20px) scale(0.72); }
+  .climate-badge.visible { transform: translateY(0) scale(0.72); }
+}
+@media (max-width: 340px) {
+  .climate-badge { transform: translateY(20px) scale(0.65); }
+  .climate-badge.visible { transform: translateY(0) scale(0.65); }
 }
 
 /* SECTION THEME OVERRIDES (ORANGE & PURPLE) */
