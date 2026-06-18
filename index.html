@@ -597,14 +597,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   /* Rechner Korrekturen */
   .calc-card { padding: 1.5rem 1rem; }
-  /* Worttrennung komplett verbieten und flüssig skalieren lassen */
-  .calc-header h2 { 
-    font-size: clamp(1.15rem, 6.5vw, 1.6rem); 
-    word-break: keep-all; 
-    overflow-wrap: normal;
-    hyphens: none; 
-    -webkit-hyphens: none; 
-  }
+  .calc-header h2 { font-size: clamp(1.25rem, 6.5vw, 1.8rem); word-break: normal; overflow-wrap: normal; hyphens: manual; -webkit-hyphens: manual; }
   .calc-label-flex { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .calc-val { align-self: flex-start; }
   .result-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
@@ -830,7 +823,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div class="calc-content">
         <div class="calc-header">
           <div class="section-eyebrow"><div class="dot"></div><span>System Performance</span></div>
-          <h2>Ungenutztes Umsatzpotenzial</h2>
+          <h2>Ungenutztes Umsatz&shy;potenzial</h2>
         </div>
 
         <div class="calc-body">
