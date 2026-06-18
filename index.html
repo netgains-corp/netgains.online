@@ -502,11 +502,20 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .climate-toggle:hover { border-color: var(--aqua); transform: scale(1.05); }
 .climate-toggle svg { width: 28px; height: 28px; }
 
+/* Wrapper für den iframe, um Clipping zu steuern */
 .climate-iframe-container {
   width: 380px; max-width: 380px; overflow: hidden;
   transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
   opacity: 1; border-radius: 6px;
+  display: flex; justify-content: flex-end; /* Inhalt bündig an den Toggle-Button pinnen */
 }
+
+/* Neuer Scaler-Container: Hält die physische Größe für Transform */
+.climate-scaler {
+  width: 380px; flex-shrink: 0;
+  transform-origin: right center;
+}
+
 .climate-badge iframe { width: 380px !important; display: block; max-width: none !important; }
 
 /* Collapsed State */
@@ -588,7 +597,14 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   /* Rechner Korrekturen */
   .calc-card { padding: 1.5rem 1rem; }
-  .calc-header h2 { font-size: clamp(1.3rem, 7vw, 1.8rem); word-break: normal; overflow-wrap: break-word; hyphens: manual; -webkit-hyphens: manual; }
+  /* Worttrennung komplett verbieten und flüssig skalieren lassen */
+  .calc-header h2 { 
+    font-size: clamp(1.15rem, 6.5vw, 1.6rem); 
+    word-break: keep-all; 
+    overflow-wrap: normal;
+    hyphens: none; 
+    -webkit-hyphens: none; 
+  }
   .calc-label-flex { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .calc-val { align-self: flex-start; }
   .result-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
@@ -604,16 +620,15 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   .climate-toggle { width: 50px; height: 50px; }
   .climate-toggle svg { width: 24px; height: 24px; }
   
-  /* Stripe Banner runterskalieren statt abschneiden */
+  /* Perfekte Skalierung des Stripe Banners auf Mobile */
   .climate-iframe-container {
     width: 258px; max-width: 258px;
   }
-  .climate-badge iframe {
-    transform: scale(0.68);
-    transform-origin: right center;
-  }
   .climate-badge:not(.collapsed) .climate-iframe-container {
     max-width: 258px; 
+  }
+  .climate-scaler {
+    transform: scale(0.68);
   }
 }
 
@@ -815,7 +830,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div class="calc-content">
         <div class="calc-header">
           <div class="section-eyebrow"><div class="dot"></div><span>System Performance</span></div>
-          <h2>Ungenutztes Umsatz&shy;potenzial</h2>
+          <h2>Ungenutztes Umsatzpotenzial</h2>
         </div>
 
         <div class="calc-body">
@@ -1246,7 +1261,9 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     <svg class="svg-close" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
   </button>
   <div class="climate-iframe-container">
-    <iframe width="380" height="38" style="border:0;" src="https://climate.stripe.com/badge/fCgl1N?theme=dark&size=small&locale=de-DE"></iframe>
+    <div class="climate-scaler">
+      <iframe width="380" height="38" style="border:0;" src="https://climate.stripe.com/badge/fCgl1N?theme=dark&size=small&locale=de-DE"></iframe>
+    </div>
   </div>
 </div>
 
