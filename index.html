@@ -481,14 +481,46 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .form-submit { width: 100%; padding: 1rem; border-radius: 99px; background: var(--aqua); color: #000; font-family: var(--fd); font-weight: 800; border: none; cursor: pointer; transition: 0.2s; box-shadow: 0 8px 25px rgba(127, 255, 212, 0.3); }
 .form-submit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(127, 255, 212, 0.5);}
 
-/* CLIMATE & WHATSAPP */
-.climate-toggle { display: none; } /* Standardmäßig auf Desktop ausblenden */
-
-.climate-badge { position: fixed; bottom: 2rem; left: 2rem; z-index: 890; opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.4s; }
+/* CLIMATE BADGE & WHATSAPP (Schubladen-Logik & Stacking) */
+.climate-badge { 
+  position: fixed; bottom: 6.625rem; right: 2rem; left: auto; z-index: 890; 
+  opacity: 0; pointer-events: none; transform: translateY(20px); 
+  transition: 0.4s;
+  display: flex; align-items: center; gap: 12px;
+  flex-direction: row-reverse; /* Schublade öffnet sich nach links */
+}
 .climate-badge.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.climate-badge iframe { width: 100% !important; max-width: 380px; }
 
-.wa-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 900; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: 0.25s; }
+.climate-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: var(--card2); border: 1px solid var(--border2);
+  color: var(--aqua); cursor: pointer; flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+.climate-toggle:hover { border-color: var(--aqua); transform: scale(1.05); }
+.climate-toggle svg { width: 28px; height: 28px; }
+
+.climate-iframe-container {
+  width: 380px; max-width: 380px; overflow: hidden;
+  transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+  opacity: 1; border-radius: 6px;
+}
+.climate-badge iframe { width: 380px !important; display: block; max-width: none !important; }
+
+/* Collapsed State */
+.climate-badge.collapsed .climate-iframe-container { max-width: 0px; opacity: 0; pointer-events: none; }
+.climate-badge.collapsed { gap: 0; }
+
+/* Icons im Button Toggle */
+.svg-close { display: none; }
+.svg-open { display: block; }
+.climate-badge:not(.collapsed) .svg-close { display: block; }
+.climate-badge:not(.collapsed) .svg-open { display: none; }
+
+/* WhatsApp FAB (Direkt darunter, exakt gleich groß) */
+.wa-fab { position: fixed; bottom: 2rem; right: 2rem; left: auto; z-index: 900; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: 0.25s; }
 .wa-fab:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 15px 40px rgba(37,211,102,0.5); }
 .wa-fab svg { width: 28px; height: 28px; fill: #fff; }
 
@@ -556,16 +588,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   /* Rechner Korrekturen */
   .calc-card { padding: 1.5rem 1rem; }
-
-  /* KORREKTUR 1: Manuelle Trennung für Umsatzpotenzial an gewünschter Stelle */
-  .calc-header h2 { 
-    font-size: clamp(1.3rem, 7vw, 1.8rem); 
-    word-break: normal; 
-    overflow-wrap: break-word; 
-    hyphens: manual; 
-    -webkit-hyphens: manual; 
-  }
-
+  .calc-header h2 { font-size: clamp(1.3rem, 7vw, 1.8rem); word-break: break-word; overflow-wrap: break-word; hyphens: auto; }
   .calc-label-flex { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .calc-val { align-self: flex-start; }
   .result-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
@@ -573,86 +596,18 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   
   .contact-inner { grid-template-columns: 1fr; }
   
-  /* KORREKTUR 2: Schubladen-Logik mit sicheren, festen Skalierungs-Stufen */
-  .climate-badge { 
-    bottom: 5.5rem; 
-    left: 1rem; 
-    width: max-content; 
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transform-origin: left bottom;
-    transform: translateY(20px) scale(0.9);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
-  }
-  .climate-badge.visible {
-    transform: translateY(0) scale(0.9); 
-  }
-
-  /* Container um das iFrame */
-  .climate-iframe-container {
-    width: 380px;
-    overflow: hidden;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out;
-  }
-  
-  .climate-badge.collapsed .climate-iframe-container {
-    width: 0px;
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  .climate-badge.collapsed { gap: 0; }
-
-  /* Toggle-Button */
-  .climate-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(10, 10, 15, 0.85);
-    border: 1px solid rgba(127, 255, 212, 0.3);
-    border-radius: 10px;
-    color: var(--aqua);
-    cursor: pointer;
-    flex-shrink: 0;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  }
-  .climate-toggle svg { width: 20px; height: 20px; }
-  
-  .svg-open { display: none; }
-  .climate-badge.collapsed .svg-close { display: none; }
-  .climate-badge.collapsed .svg-open { display: block; }
-
-  .climate-badge iframe { 
-    width: 380px !important; 
-    max-width: none !important; 
-    display: block;
-  }
-  
-  .wa-fab { bottom: 1.5rem; right: 1rem; width: 50px; height: 50px; }
+  /* Climate Badge & WhatsApp Stack (Mobile) */
+  .wa-fab { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; }
   .wa-fab svg { width: 24px; height: 24px; }
-}
-
-/* KORREKTUR 3: Breakpoints für perfekte Darstellung auf allen Geräten */
-@media (max-width: 440px) {
-  .climate-badge { transform: translateY(20px) scale(0.85); }
-  .climate-badge.visible { transform: translateY(0) scale(0.85); }
-}
-@media (max-width: 400px) {
-  .climate-badge { transform: translateY(20px) scale(0.78); }
-  .climate-badge.visible { transform: translateY(0) scale(0.78); }
-}
-@media (max-width: 370px) {
-  .climate-badge { transform: translateY(20px) scale(0.72); }
-  .climate-badge.visible { transform: translateY(0) scale(0.72); }
-}
-@media (max-width: 340px) {
-  .climate-badge { transform: translateY(20px) scale(0.65); }
-  .climate-badge.visible { transform: translateY(0) scale(0.65); }
+  
+  .climate-badge { bottom: 5.125rem; right: 1.25rem; left: auto; width: auto; max-width: calc(100vw - 2.5rem); }
+  .climate-toggle { width: 50px; height: 50px; }
+  .climate-toggle svg { width: 24px; height: 24px; }
+  
+  /* Dynamischer Cutoff auf Mobile: Verhindert Überschneiden mit dem linken Rand */
+  .climate-badge:not(.collapsed) .climate-iframe-container {
+    max-width: calc(100vw - 2.5rem - 50px - 12px); 
+  }
 }
 
 /* SECTION THEME OVERRIDES (ORANGE & PURPLE) */
@@ -853,7 +808,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div class="calc-content">
         <div class="calc-header">
           <div class="section-eyebrow"><div class="dot"></div><span>System Performance</span></div>
-          <h2>Ungenutztes Umsatz&shy;potenzial</h2>
+          <h2>Ungenutztes Umsatzpotenzial</h2>
         </div>
 
         <div class="calc-body">
@@ -1279,15 +1234,17 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- NEU: Container mit Button für die Schubladen-Logik -->
-<div id="climateBadge" class="climate-badge">
+<!-- Container mit Button für die Schubladen-Logik -->
+<div id="climateBadge" class="climate-badge collapsed">
+  <button class="climate-toggle" onclick="toggleClimateBadge()" aria-label="Stripe Banner minimieren">
+    <!-- Umwelt Leaf Icon (geschlossen) -->
+    <svg class="svg-open" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><line x1="2" y1="22" x2="11" y2="13"></line></svg>
+    <!-- X Icon (geöffnet) -->
+    <svg class="svg-close" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
   <div class="climate-iframe-container">
     <iframe width="380" height="38" style="border:0;" src="https://climate.stripe.com/badge/fCgl1N?theme=dark&size=small&locale=de-DE"></iframe>
   </div>
-  <button class="climate-toggle" onclick="toggleClimateBadge()" aria-label="Stripe Banner minimieren">
-    <svg class="svg-close" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    <svg class="svg-open" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
-  </button>
 </div>
 
 <script>
@@ -1407,7 +1364,7 @@ function updateTimeCalculator() {
   document.getElementById('saved-wages').innerText = '+ ' + savedWages.toLocaleString('de-DE') + ' €';
 }
 
-// ── CLIMATE BADGE VISIBILITY ──
+// ── CLIMATE BADGE VISIBILITY & TOGGLE ──
 const climateBadge = document.getElementById('climateBadge');
 window.addEventListener('scroll', () => {
   if (window.scrollY > window.innerHeight * 0.5) {
@@ -1417,7 +1374,7 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// ── NEU: Toggle-Funktion für das Schubladen-Menü ──
+// Toggle-Funktion für das Schubladen-Menü
 function toggleClimateBadge() {
   const badge = document.getElementById('climateBadge');
   badge.classList.toggle('collapsed');
