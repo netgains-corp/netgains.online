@@ -494,29 +494,29 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .climate-toggle {
   display: flex; align-items: center; justify-content: center;
   width: 58px; height: 58px; border-radius: 50%;
-  background: var(--card2); border: 1px solid var(--border2);
-  color: var(--aqua); cursor: pointer; flex-shrink: 0;
+  background: #0d0d1a; border: 1px solid rgba(255,255,255,0.12);
+  color: #7FFFD4; cursor: pointer; flex-shrink: 0;
   box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   transition: 0.3s;
 }
-.climate-toggle:hover { border-color: var(--aqua); transform: scale(1.05); }
+.climate-toggle:hover { border-color: #7FFFD4; transform: scale(1.05); }
 .climate-toggle svg { width: 28px; height: 28px; }
 
-/* Wrapper für den iframe, um Clipping zu steuern */
+/* Container für den iframe, gibt die physische Endgröße vor */
 .climate-iframe-container {
-  width: 380px; max-width: 380px; overflow: hidden;
+  width: 380px; height: 38px;
+  max-width: 380px; overflow: hidden;
   transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
   opacity: 1; border-radius: 6px;
-  display: flex; justify-content: flex-end; /* Inhalt bündig an den Toggle-Button pinnen */
 }
 
-/* Neuer Scaler-Container: Hält die physische Größe für Transform */
+/* Scaler-Container: Hält die originale iFrame Größe und skaliert sie runter */
 .climate-scaler {
-  width: 380px; flex-shrink: 0;
-  transform-origin: right center;
+  width: 380px; height: 38px;
+  transform-origin: top left;
 }
 
-.climate-badge iframe { width: 380px !important; display: block; max-width: none !important; }
+.climate-badge iframe { width: 380px !important; height: 38px !important; display: block; max-width: none !important; }
 
 /* Collapsed State */
 .climate-badge.collapsed .climate-iframe-container { max-width: 0px; opacity: 0; pointer-events: none; }
@@ -528,7 +528,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .climate-badge:not(.collapsed) .svg-close { display: block; }
 .climate-badge:not(.collapsed) .svg-open { display: none; }
 
-/* WhatsApp FAB (Direkt darunter, exakt gleich groß) */
+/* WhatsApp FAB (Direkt darunter) */
 .wa-fab { position: fixed; bottom: 2rem; right: 2rem; left: auto; z-index: 900; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: 0.25s; }
 .wa-fab:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 15px 40px rgba(37,211,102,0.5); }
 .wa-fab svg { width: 28px; height: 28px; fill: #fff; }
@@ -613,9 +613,9 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   .climate-toggle { width: 50px; height: 50px; }
   .climate-toggle svg { width: 24px; height: 24px; }
   
-  /* Perfekte Skalierung des Stripe Banners auf Mobile */
+  /* Perfekte Skalierung des Stripe Banners auf Mobile (Verhindert das Abschneiden!) */
   .climate-iframe-container {
-    width: 258px; max-width: 258px;
+    width: 258px; height: 26px; /* 380 * 0.68 = 258.4px */
   }
   .climate-badge:not(.collapsed) .climate-iframe-container {
     max-width: 258px; 
@@ -680,7 +680,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       </div>
       
       <p class="hero-desc hero-load-anim anim-desc">
-        Wir bauen High-Performance Websites und digitale Systeme. Einmal einrichten, dauerhaft mehr Kunden und Automatisierung genießen.
+        Wir bauen High-Performance Websites und smarte digitale Systeme. Einmal eingerichtet, profitierst du dauerhaft von mehr Kunden und nahtloser Automatisierung.
       </p>
       
       <div class="hero-buttons hero-load-anim anim-btns">
@@ -732,7 +732,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   </div>
 
   <div class="tech-stack-band hero-load-anim anim-bg">
-    <div class="tech-stack-title">Plays nicely with your stack</div>
+    <div class="tech-stack-title">Wir nutzen die gleichen Skalierbaren Softwareentwicklungsplattformen wie:</div>
     <div class="marquee-container">
       <div class="marquee-track">
         <div class="marquee-content">
@@ -878,13 +878,13 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div class="section-eyebrow"><div class="dot"></div><span>Psychologisch optimiert</span></div>
       <h2 class="section-title">Landing Pages, die <br><em>Kunden an die Hand nehmen</em></h2>
       <p class="section-sub" style="max-width: 100%; margin-bottom: 1rem;">
-        Herkömmliche Websites sind wie Leute, die mit einem Flyer auf der Straße stehen und warten, bis sie von Kunden angesprochen werden. Unsere Landingpages nehmen die Kunden an die Hand und führen sie zum Kauf, zum Bestellen, zum Anrufen oder zum Buchen.
+        Herkömmliche Websites sind wie stumme Flyer-Verteiler in der Fußgängerzone: Sie hoffen darauf, dass jemand stehen bleibt. Unsere Landingpages hingegen nehmen deine Besucher aktiv an die Hand und führen sie direkt zum Ziel – ob Kauf, Buchung oder Anruf.
       </p>
       <p class="section-sub" style="max-width: 100%; margin-bottom: 1rem;">
-        Unsere Systeme dahinter sind wie Mitarbeiter, die mit den Kunden einen Termin ausmachen – und zwar nur dann, wann sie Zeit haben. Sie wickeln Zahlungen ab und mahnen, wenn Kunden nicht zahlen.
+        Die Systeme dahinter arbeiten wie digitale Mitarbeiter. Sie vereinbaren Termine (passend zu deinem Kalender), wickeln Zahlungen ab und versenden vollautomatisch Mahnungen an deine Kunden, wenn diese nicht zahlen.
       </p>
       <p class="section-sub" style="max-width: 100%; color: #fff; font-weight: 500;">
-        Egal wie groß dein Unternehmen ist, unsere Websites lassen dich im Netz wie den absoluten Marktführer aussehen.
+        Egal wie groß dein Unternehmen heute ist: Deine neue Website lässt dich im Netz wie den absoluten Marktführer aussehen.
       </p>
     </div>
 
@@ -964,7 +964,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
     <div data-anim="zoom-in" data-delay="3" style="margin-top: 3rem; text-align: center; position: relative; z-index: 2;">
       <span class="security-note">
-        🔒 Ergänzung: Bei allen Projekten, bei denen Kunden über die Website bezahlen, bleibt 100% der Kontrolle bei Ihnen.
+        🔒 Ergänzung: Bei allen Projekten, bei denen Kunden über die Website bezahlen, behältst du zu 100% die Kontrolle.
       </span>
     </div>
   </div>
@@ -1030,8 +1030,8 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
         <p class="section-sub">Lester ist Bodybuilding & Biohacking Coach, er arbeitet viel mit Menschen. Durch sein neues System spart er massiv an Zeit:</p>
         <div class="investora-features">
           <div class="investora-feat">Kunden kommen auf die Landing Page</div>
-          <div class="investora-feat">Wenn sie sich für ein Einzelgespräch entscheiden, können sie ohne das Lester etwas dafür tun muss, einen Termin bei seinen freien Terminen wählen und direkt bezahlen</div>
-          <div class="investora-feat">Lester spart sich das Entgegennehmen der Zahlung, behält aber 100% der Kontrolle, zudem spart er sich die Zeit einen Termin auszumachen</div>
+          <div class="investora-feat">Entscheidet sich ein Kunde für ein Einzelgespräch, bucht und bezahlt er den Termin völlig eigenständig – exakt in den freien Zeitfenstern, die Lester vorher definiert hat.</div>
+          <div class="investora-feat">Lester spart sich das manuelle Schreiben von Rechnungen und die Terminfindung per E-Mail. Er behält jederzeit die 100%ige Kontrolle über sein Business – verbringt seine Zeit nun aber mit Coaching statt mit Orga.</div>
           <div class="investora-feat">Außerdem können Kunden direkt ein mehrmonatiges Coaching buchen und gegebenenfalls vorab zahlen</div>
         </div>
       </div>
@@ -1149,7 +1149,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
         <div class="team-info">
           <div class="team-name">Cansin Gülal</div>
           <div class="team-role">Co-Founder & Vertrieb</div>
-          <div class="team-bio">Unser Experte für Kundenbeziehungen. Cansin sorgt dafür, dass unsere digitalen Lösungen exakt auf eure Business-Ziele und Prozesse einzahlen.</div>
+          <div class="team-bio">Unser Experte für Kundenbeziehungen. Cansin sorgt dafür, dass sich unsere digitalen Lösungen bei deinen Business-Zielen und Prozessen auszahlen.</div>
         </div>
       </div>
     </div>
@@ -1229,7 +1229,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     </div>
     <div class="personal-cta" data-anim="zoom-in" data-delay="2" style="background: transparent; border-top-width: 2px;">
       <p class="personal-cta-text">
-        <span>Lass uns einen Kaffee trinken</span> wenn du eine Website / ein System brauchst, lade mich für einen Tag in dein Unternehmen ein wenn du willst dass du und deine Mitarbeiter in kürzerer Zeit mehr gemacht bekommen.
+        <span>Lass uns unverbindlich einen Kaffee trinken,</span> wenn du eine neue Website oder ein smartes System brauchst. Oder lade mich für einen Tag in dein Unternehmen ein, wenn du möchtest, dass dein Team in Zukunft deutlich effizienter arbeitet.
       </p>
     </div>
   </div>
@@ -1248,10 +1248,10 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 <!-- Container mit Button für die Schubladen-Logik -->
 <div id="climateBadge" class="climate-badge collapsed">
   <button class="climate-toggle" onclick="toggleClimateBadge()" aria-label="Stripe Banner minimieren">
-    <!-- Umwelt Leaf Icon (geschlossen) -->
-    <svg class="svg-open" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><line x1="2" y1="22" x2="11" y2="13"></line></svg>
+    <!-- Umwelt Globe Icon (geschlossen) -->
+    <svg class="svg-open" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
     <!-- X Icon (geöffnet) -->
-    <svg class="svg-close" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    <svg class="svg-close" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
   </button>
   <div class="climate-iframe-container">
     <div class="climate-scaler">
