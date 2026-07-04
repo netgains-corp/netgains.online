@@ -4,18 +4,18 @@
 
 ## Leistungen
 
-- [Websites & Onepager](https://www.cloudgains.de/#websites): Digitale Auftritte, die überzeugen — schnell, modern, konversionsstark
-- [Apps & Dashboards](https://www.cloudgains.de/#apps): Software, die arbeitet — von der Kunden-App bis zum internen Dashboard
-- [Marketing & Automationen](https://www.cloudgains.de/#automation): Systeme, die manuelle Arbeit eliminieren und Leads automatisch verarbeiten
+- [Websites & Onepager](https://cloudgains.de/#websites): Digitale Auftritte, die überzeugen — schnell, modern, konversionsstark
+- [Apps & Dashboards](https://cloudgains.de/#apps): Software, die arbeitet — von der Kunden-App bis zum internen Dashboard
+- [Marketing & Automationen](https://cloudgains.de/#automation): Systeme, die manuelle Arbeit eliminieren und Leads automatisch verarbeiten
 
 ## Referenzen
 
-- [Projekte](https://www.cloudgains.de/#projekte): Landing Pages und Systeme für Finanzberater, Coaches, Events und mehr
-- [INVESTORA App](https://www.cloudgains.de/#florian-app): Kunden-App mit Lernplattform, Chat und Terminbuchung
-- [Automation Showcase](https://www.cloudgains.de/#lester-automation): Terminbuchung und Zahlung komplett automatisiert
+- [Projekte](https://cloudgains.de/#projekte): Landing Pages und Systeme für Finanzberater, Coaches, Events und mehr
+- [INVESTORA App](https://cloudgains.de/#florian-app): Kunden-App mit Lernplattform, Chat und Terminbuchung
+- [Automation Showcase](https://cloudgains.de/#lester-automation): Terminbuchung und Zahlung komplett automatisiert
 
 ## Kontakt
 
-- [Kontaktformular](https://www.cloudgains.de/#kontakt): Kostenlose Anfrage — Antwort innerhalb von 24 Stunden
-- [Team](https://www.cloudgains.de/#team): Die Köpfe hinter CloudGains DC
-- [FAQ](https://www.cloudgains.de/#faq): Antworten zu Ablauf, Bearbeitung, Paketen und Zahlung
+- [Kontaktformular](https://cloudgains.de/#kontakt): Kostenlose Anfrage — Antwort innerhalb von 24 Stunden
+- [Team](https://cloudgains.de/#team): Die Köpfe hinter CloudGains DC
+- [FAQ](https://cloudgains.de/#faq): Antworten zu Ablauf, Bearbeitung, Paketen und Zahlung

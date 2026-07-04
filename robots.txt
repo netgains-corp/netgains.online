@@ -12,4 +12,4 @@ Disallow: /private/
 Disallow: /*?*utm_
 
 # Gib den Pfad zur Sitemap an (MUSS absolute URL sein)
-Sitemap: https://www.cloudgains.de/sitemap.xml
+Sitemap: https://cloudgains.de/sitemap.xml
