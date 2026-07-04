@@ -181,14 +181,16 @@ img { display: block; max-width: 100%; }
 
 /* Hero Staggered Load Animations */
 .hero-load-anim { opacity: 0; will-change: transform, opacity; }
-.hero-loaded .anim-pill { animation: heroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.hero-loaded .anim-title { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
-.hero-loaded .anim-mockup { animation: heroSlideRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
-.hero-loaded .anim-free { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-.hero-loaded .anim-desc { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
-.hero-loaded .anim-btns { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; }
-.hero-loaded .anim-trust { animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.0s forwards; }
-.hero-loaded .anim-bg { animation: heroFadeIn 1.2s ease 1.2s forwards; }
+/* h1 = LCP-Element: ab dem ersten Frame sichtbar, nur Transform animieren */
+.hero-load-anim.anim-title { opacity: 1; transform: translateY(20px); }
+.hero-loaded .anim-pill { animation: heroFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.hero-loaded .anim-title { animation: heroRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+.hero-loaded .anim-mockup { animation: heroSlideRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards; }
+.hero-loaded .anim-free { animation: heroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+.hero-loaded .anim-desc { animation: heroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
+.hero-loaded .anim-btns { animation: heroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+.hero-loaded .anim-trust { animation: heroFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+.hero-loaded .anim-bg { animation: heroFadeIn 0.8s ease 0.6s forwards; }
 
 @keyframes heroSlideRight {
     from { opacity: 0; transform: translateX(80px); }
@@ -201,6 +203,9 @@ img { display: block; max-width: 100%; }
 @keyframes heroFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+@keyframes heroRise {
+    to { transform: translateY(0); }
 }
 
 /* ══════════════════════════════════════
