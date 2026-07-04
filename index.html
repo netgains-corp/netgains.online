@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="CloudGains DC – Premium Websites & digitale Produkte. Onepager, Smart Websites, Apps & mehr aus einer Hand.">
 <title>CloudGains DC – Premium Websites & Digital Products</title>
+<link rel="canonical" href="https://www.cloudgains.de/">
 <link rel="icon" href="vor7_webp.webp" type="image/webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/syne-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dmsans-latin.woff2" crossorigin>
@@ -886,7 +887,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <span class="calc-label"><span class="tiny-dot"></span> Kundenwert (Ø Umsatz)</span>
               <span class="calc-val" id="val-rev">500 €</span>
             </div>
-            <input type="range" id="slider-rev" min="10" max="10000" step="10" value="500" oninput="updateCalculator()">
+            <input type="range" id="slider-rev" aria-label="Kundenwert: durchschnittlicher Umsatz pro Kunde" min="10" max="10000" step="10" value="500">
           </div>
 
           <div class="calc-row">
@@ -894,7 +895,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <span class="calc-label"><span class="tiny-dot"></span> Neukunden / Monat</span>
               <span class="calc-val" id="val-cust">50</span>
             </div>
-            <input type="range" id="slider-cust" min="0" max="16" step="1" value="7" oninput="updateCalculator()">
+            <input type="range" id="slider-cust" aria-label="Neukunden pro Monat" min="0" max="16" step="1" value="7">
           </div>
 
           <div class="calc-result-box">
@@ -945,7 +946,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     <div class="portfolio-grid">
       <a href="https://fm-masterclass.de" target="_blank" class="portfolio-card" data-anim="blur-in">
         <div class="portfolio-thumb">
-          <img src="x10.webp" alt="Finanzberater" loading="lazy">
+          <img src="x10.webp" alt="Finanzberater" width="860" height="473" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
@@ -957,7 +958,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       
       <a href="https://investora-event.de/" target="_blank" class="portfolio-card" data-anim="blur-in" data-delay="1">
         <div class="portfolio-thumb">
-          <img src="x11.webp" alt="Eventwebsite" loading="lazy">
+          <img src="x11.webp" alt="Eventwebsite" width="860" height="459" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
@@ -969,7 +970,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       
       <a href="https://lester-coach.com/" target="_blank" class="portfolio-card" data-anim="blur-in" data-delay="2">
         <div class="portfolio-thumb">
-          <img src="x13.webp" alt="Coachingsystem" loading="lazy">
+          <img src="x13.webp" alt="Coachingsystem" width="860" height="469" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
@@ -981,7 +982,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
       <a href="https://merzenich-heck.com/" target="_blank" class="portfolio-card" data-anim="blur-in">
         <div class="portfolio-thumb">
-          <img src="x3.webp" alt="Podcast" loading="lazy">
+          <img src="x3.webp" alt="Podcast" width="860" height="432" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
@@ -1005,7 +1006,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
       <a href="https://zusammenwachsen.live/" target="_blank" class="portfolio-card" data-anim="blur-in" data-delay="2">
         <div class="portfolio-thumb">
-          <img src="x14.webp" alt="Gemeinnützig" loading="lazy">
+          <img src="x14.webp" alt="Gemeinnützig" width="860" height="412" loading="lazy">
           <div class="live-btn">Ansehen →</div>
         </div>
         <div class="portfolio-info">
@@ -1119,7 +1120,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <span class="calc-label"><span class="tiny-dot"></span> Teamgröße</span>
               <span class="calc-val" id="val-team">12</span>
             </div>
-            <input type="range" id="slider-team" min="1" max="50" step="1" value="12" oninput="updateTimeCalculator()">
+            <input type="range" id="slider-team" aria-label="Teamgröße" min="1" max="50" step="1" value="12">
           </div>
 
           <div class="calc-row">
@@ -1127,7 +1128,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <span class="calc-label"><span class="tiny-dot"></span> Manuelle Std. pro Woche / Mitarbeiter</span>
               <span class="calc-val" id="val-hours">12 Std.</span>
             </div>
-            <input type="range" id="slider-hours" min="1" max="40" step="1" value="12" oninput="updateTimeCalculator()">
+            <input type="range" id="slider-hours" aria-label="Manuelle Stunden pro Woche und Mitarbeiter" min="1" max="40" step="1" value="12">
           </div>
 
           <div class="calc-row">
@@ -1135,7 +1136,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <span class="calc-label"><span class="tiny-dot"></span> Ø Stundenlohn (inkl. Lohnnebenkosten)</span>
               <span class="calc-val" id="val-wage">40 €</span>
             </div>
-            <input type="range" id="slider-wage" min="15" max="150" step="5" value="40" oninput="updateTimeCalculator()">
+            <input type="range" id="slider-wage" aria-label="Durchschnittlicher Stundenlohn inklusive Lohnnebenkosten" min="15" max="150" step="5" value="40">
           </div>
 
           <div class="calc-result-box">
@@ -1222,23 +1223,23 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     <h2 class="section-title" data-anim="fade-right" data-delay="1">Noch Fragen?</h2>
     <div class="faq-list" data-anim="fade-up" data-delay="2">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Wie lange dauert die Umsetzung einer Website?</span><span class="faq-icon">+</span></button>
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Wie lange dauert die Umsetzung einer Website?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Onepager sind in der Regel in 5–10 Werktagen fertig. Größere Projekte wie Multi-Page Websites oder Apps besprechen wir individuell.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Was passiert nach dem Launch meiner Website?</span><span class="faq-icon">+</span></button>
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Was passiert nach dem Launch meiner Website?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Mit einem Hosting-Paket übernehmen wir Updates, Sicherheit und laufenden Support. Ohne Hosting-Paket bekommst du alle Dateien und kannst frei entscheiden.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Kann ich die Website nach dem Launch selbst bearbeiten?</span><span class="faq-icon">+</span></button>
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Kann ich die Website nach dem Launch selbst bearbeiten?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Ja, auf Wunsch richten wir ein einfaches CMS ein. Alternativ übernehmen wir Änderungen für dich – unkompliziert und schnell.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Welches Paket passt für mein Unternehmen?</span><span class="faq-icon">+</span></button>
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Welches Paket passt für mein Unternehmen?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Schreib uns kurz – wir analysieren deine Situation und empfehlen ehrlich das Paket, das wirklich zu dir passt. Kein Upselling, keine unnötigen Extras.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Wie sieht der Zahlungsprozess aus?</span><span class="faq-icon">+</span></button>
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">Wie sieht der Zahlungsprozess aus?</span><span class="faq-icon">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Alle Zahlungen laufen über Stripe – sicher, transparent und sofort. Nach dem Kauf melden wir uns innerhalb von 24 Stunden für den Start.</div></div>
       </div>
     </div>
@@ -1271,10 +1272,10 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       </div>
       <div data-anim="fade-left" data-delay="1">
         <form class="contact-form" action="mailto:kontakt@cloudgains.de" method="post" enctype="text/plain">
-          <div class="form-group"><label class="form-label">Dein Name</label><input class="form-input" type="text" name="name" placeholder="Max Mustermann" required></div>
-          <div class="form-group"><label class="form-label">E-Mail-Adresse</label><input class="form-input" type="email" name="email" placeholder="max@beispiel.de" required></div>
-          <div class="form-group"><label class="form-label">Interesse an</label>
-            <select class="form-select form-input" name="paket">
+          <div class="form-group"><label class="form-label" for="contact-name">Dein Name</label><input class="form-input" id="contact-name" type="text" name="name" placeholder="Max Mustermann" required></div>
+          <div class="form-group"><label class="form-label" for="contact-email">E-Mail-Adresse</label><input class="form-input" id="contact-email" type="email" name="email" placeholder="max@beispiel.de" required></div>
+          <div class="form-group"><label class="form-label" for="contact-paket">Interesse an</label>
+            <select class="form-select form-input" id="contact-paket" name="paket">
               <option>Websites & Onepager</option>
               <option>Apps & Dashboards</option>
               <option>Marketing & Automation</option>
@@ -1282,7 +1283,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <option>Beratung / Noch unsicher</option>
             </select>
           </div>
-          <div class="form-group"><label class="form-label">Deine Nachricht</label><textarea class="form-textarea" name="nachricht" placeholder="Erzähl uns von deinem Projekt..." required></textarea></div>
+          <div class="form-group"><label class="form-label" for="contact-nachricht">Deine Nachricht</label><textarea class="form-textarea" id="contact-nachricht" name="nachricht" placeholder="Erzähl uns von deinem Projekt..." required></textarea></div>
           <button type="submit" class="form-submit"><span>Nachricht senden</span><span>→</span></button>
         </form>
       </div>
@@ -1309,7 +1310,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
 <!-- Container mit Button für die Schubladen-Logik -->
 <div id="climateBadge" class="climate-badge collapsed">
-  <button class="climate-toggle" onclick="toggleClimateBadge()" aria-label="Stripe Banner minimieren">
+  <button class="climate-toggle" aria-label="Stripe Banner minimieren">
     <!-- Umwelt Globe Icon (geschlossen) -->
     <svg class="svg-open" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
     <!-- X Icon (geöffnet) -->
@@ -1326,152 +1327,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<script>
-// ── YOUTUBE FACADE: iframe erst bei Klick laden ──
-document.querySelectorAll('.yt-facade').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id = btn.getAttribute('data-yt');
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0&autoplay=1';
-    iframe.title = btn.getAttribute('aria-label') || 'YouTube Video';
-    iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none;';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.allowFullscreen = true;
-    btn.replaceWith(iframe);
-  });
-});
-
-// ── HERO LOAD ANIMATION SEQUENCE ──
-document.addEventListener('DOMContentLoaded', () => {
-  const hero = document.getElementById('hero');
-  if (hero) hero.classList.add('hero-loaded');
-  
-  // Initialize Calculators
-  updateCalculator();
-  updateTimeCalculator();
-});
-
-// ── LIQUID HEADER SCROLL EFFECT ──
-const header = document.querySelector('.liquid-header');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
-    header.style.background = 'rgba(255, 255, 255, 0.05)';
-    header.style.boxShadow = '0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15)';
-  } else {
-    header.style.background = 'rgba(255, 255, 255, 0.02)';
-    header.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)';
-  }
-}, { passive: true });
-
-// ── FAQ ──
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
-
-// ── SCROLL REVEAL (Restliche Seite) ──
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-document.body.classList.add('js-ready');
-// Nur Elemente überwachen, die nicht zur Hero-Start-Sequenz gehören
-document.querySelectorAll('[data-anim]').forEach(el => revealObserver.observe(el));
-
-// ── COUNT UP STATS ──
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    
-    const counters = entry.target.querySelectorAll('[data-count]');
-    counters.forEach((el, index) => {
-      setTimeout(() => {
-        const target = parseInt(el.getAttribute('data-count'));
-        const isDot = el.getAttribute('data-format') === 'dot';
-        const prefix = el.getAttribute('data-prefix') || '';
-        const suffix = el.getAttribute('data-suffix') || '';
-        let current = 0;
-        
-        const increment = Math.max(target / 40, 1); 
-        
-        const timer = setInterval(() => {
-          current = Math.min(current + increment, target);
-          let displayVal = Math.floor(current);
-          if (isDot && displayVal >= 1000) displayVal = displayVal.toLocaleString('de-DE');
-          el.textContent = prefix + displayVal + suffix;
-          if (current >= target) clearInterval(timer);
-        }, 30);
-      }, index * 250);
-    });
-    countObserver.disconnect();
-  });
-}, { threshold: 0.4 });
-const statsSection = document.querySelector('.stats');
-if (statsSection) countObserver.observe(statsSection);
-
-// ── ROI CALCULATOR (REVENUE) LOGIC ──
-const customerSteps = [5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250, 300, 400, 500];
-
-function updateCalculator() {
-  const revInput = document.getElementById('slider-rev').value;
-  const custIndex = document.getElementById('slider-cust').value;
-  
-  const revVal = parseInt(revInput);
-  const custVal = customerSteps[custIndex];
-  
-  document.getElementById('val-rev').innerText = revVal.toLocaleString('de-DE') + ' €';
-  document.getElementById('val-cust').innerText = custVal;
-  
-  const addedCustomers = Math.max(1, Math.round(custVal * 0.30));
-  const addedRevMonthly = addedCustomers * revVal;
-  const addedRevYearly = addedRevMonthly * 12;
-  
-  document.getElementById('lost-leads').innerText = '+ ' + addedCustomers;
-  document.getElementById('lost-revenue').innerText = '+ ' + addedRevMonthly.toLocaleString('de-DE') + ' €';
-  document.getElementById('lost-revenue-year').innerText = '+ ' + addedRevYearly.toLocaleString('de-DE') + ' €';
-}
-
-// ── ROI CALCULATOR (TIME SAVINGS) LOGIC ──
-function updateTimeCalculator() {
-  const team = parseInt(document.getElementById('slider-team').value);
-  const hours = parseInt(document.getElementById('slider-hours').value);
-  const wage = parseInt(document.getElementById('slider-wage').value);
-  
-  document.getElementById('val-team').innerText = team;
-  document.getElementById('val-hours').innerText = hours + ' Std.';
-  document.getElementById('val-wage').innerText = wage + ' €';
-  
-  const lostHours = Math.round(team * hours * 4.33);
-  const lostWages = lostHours * wage;
-  const savedWages = Math.round(lostWages * 0.80);
-  
-  document.getElementById('lost-hours').innerText = lostHours.toLocaleString('de-DE') + ' Std.';
-  document.getElementById('lost-wages').innerText = lostWages.toLocaleString('de-DE') + ' €';
-  document.getElementById('saved-wages').innerText = '+ ' + savedWages.toLocaleString('de-DE') + ' €';
-}
-
-// ── CLIMATE BADGE VISIBILITY & TOGGLE ──
-const climateBadge = document.getElementById('climateBadge');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > window.innerHeight * 0.5) {
-    climateBadge.classList.add('visible');
-  } else {
-    climateBadge.classList.remove('visible');
-  }
-}, { passive: true });
-
-// Toggle-Funktion für das Schubladen-Menü
-function toggleClimateBadge() {
-  const badge = document.getElementById('climateBadge');
-  badge.classList.toggle('collapsed');
-}
-</script>
+<script src="assets/app.js" defer></script>
 </body>
 </html>
