@@ -496,6 +496,15 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .pagespeed-proof-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
 .pagespeed-proof-shot { border-radius: 1.5rem; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(127, 255, 212, 0.15); }
 .pagespeed-proof-shot img { width: 100%; height: auto; display: block; }
+.pagespeed-compare { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.pagespeed-compare-label { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+.pagespeed-compare-btns { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.pagespeed-compare-btns a {
+  font-family: var(--fd); font-size: 0.8rem; font-weight: 700; color: var(--faint);
+  background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 999px;
+  padding: 0.45rem 1rem; text-decoration: none; transition: all 0.2s ease;
+}
+.pagespeed-compare-btns a:hover { background: var(--glass-bg-h); border-color: var(--aqua); color: var(--aqua); }
 .investora-feat { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 0.95rem; color: var(--faint); line-height: 1.5; }
 .investora-feat::before { content: '✓'; color: var(--aqua); font-weight: bold; font-family: var(--fd); flex-shrink: 0; text-shadow: 0 0 10px var(--aqua); }
 .inv-screen { background: var(--card); border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; flex-shrink: 0; }
@@ -1218,9 +1227,19 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
         <h2 class="section-title">Auf dem Papier<br><em>die Besten.</em></h2>
         <p class="section-sub">Wir haben über 1.000 Websites mit Google PageSpeed Insights analysiert – dem offiziellen Performance-Messtool von Google selbst. Das Ergebnis: Keine der getesteten Seiten erreicht einen so hohen Wert wie unsere – nicht einmal die von Apple, Google, Facebook, Instagram, Notion, Mercedes oder Porsche.</p>
         <p class="section-sub" style="margin-top: 1rem;">Das ist kein Marketing-Versprechen, sondern ein reproduzierbarer, öffentlich einsehbarer Messwert. Jeder kann unser Ergebnis selbst nachprüfen.</p>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
-          <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fcloudgains.de" target="_blank" rel="noopener" class="btn-outline" style="display: inline-flex;">Selbst nachprüfen →</a>
-          <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.apple.com" target="_blank" rel="noopener" class="btn-outline" style="display: inline-flex;">Apple.com testen →</a>
+        <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fcloudgains.de" target="_blank" rel="noopener" class="btn-outline" style="display: inline-flex; margin-top: 1.5rem;">Unser Ergebnis selbst nachprüfen →</a>
+
+        <div class="pagespeed-compare">
+          <span class="pagespeed-compare-label">Zum Vergleich selbst testen:</span>
+          <div class="pagespeed-compare-btns">
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.apple.com" target="_blank" rel="noopener">Apple</a>
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.google.com" target="_blank" rel="noopener">Google</a>
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.facebook.com" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.notion.com" target="_blank" rel="noopener">Notion</a>
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.mercedes-benz.de" target="_blank" rel="noopener">Mercedes</a>
+            <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fwww.porsche.com" target="_blank" rel="noopener">Porsche</a>
+          </div>
         </div>
       </div>
       <div data-anim="fade-left" data-delay="1" class="pagespeed-proof-shot">
