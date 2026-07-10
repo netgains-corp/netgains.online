@@ -505,6 +505,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .cgc-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
 .cgc-shot { border-radius: 1.25rem; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(127, 255, 212, 0.12); }
 .cgc-shot img { width: 100%; height: auto; display: block; }
+.cgc-shot-caption { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-top: 1.25rem; }
 .cgc-features { margin-top: 1.5rem; }
 .cgc-feat { font-size: 0.88rem; color: var(--faint); line-height: 1.6; margin-bottom: 0.7rem; }
 .cgc-feat-title { font-family: var(--fd); font-weight: 700; color: #fff; }
@@ -1259,7 +1260,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div data-anim="fade-right">
         <div class="section-eyebrow"><div class="dot"></div><span>Unser eigenes System</span></div>
         <h2 class="section-title">CloudGains Cloud:<br><em>alles in einem Dashboard.</em></h2>
-        <p class="section-sub">Egal ob unsere Vertriebler ihre Umsätze sehen, unsere Mitarbeiter ihr zugewiesenes Kundenprojekt oder die Buchhalter das Kassenbuch: Alles läuft in einem einzigen Dashboard, der CloudGains Cloud, der allumfassenden Business Suite für Unternehmen mit Visionen.</p>
         <div class="cgc-features">
           <div class="cgc-feat"><span class="cgc-feat-title">SEO-Toolkit:</span> automatische Generierung von robots.txt, sitemap.xml, JSON-LD-Schema, security.txt, llms.txt; Per-Page-Meta-Editor mit Vorschau</div>
           <div class="cgc-feat"><span class="cgc-feat-title">PageSpeed-Monitoring:</span> Google-PSI-Anbindung, Health-Übersicht pro Projekt</div>
@@ -1271,8 +1271,11 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
           <div class="cgc-feat"><span class="cgc-feat-title">Rollenbasierter Zugriff:</span> Admin/Team-Bereiche klar getrennt, mobil & Desktop optimiert (eigenes Rail/Bottom-Nav-Design), Dark/Light Mode</div>
         </div>
       </div>
-      <div data-anim="fade-left" data-delay="1" class="cgc-shot">
-        <img src="assets/img/cloudgains-cloud.webp" alt="CloudGains Cloud Dashboard: Lead-Radar-Modul MR. LEAD mit Deutschlandkarte und verifizierten Business-Leads" width="1100" height="600" loading="lazy">
+      <div data-anim="fade-left" data-delay="1">
+        <div class="cgc-shot">
+          <img src="assets/img/cloudgains-cloud.webp" alt="CloudGains Cloud Dashboard: Lead-Radar-Modul MR. LEAD mit Deutschlandkarte und verifizierten Business-Leads" width="1100" height="600" loading="lazy">
+        </div>
+        <p class="cgc-shot-caption">Egal ob unsere Vertriebler ihre Umsätze sehen, unsere Mitarbeiter ihr zugewiesenes Kundenprojekt oder die Buchhalter das Kassenbuch: Alles läuft in einem einzigen Dashboard, der CloudGains Cloud, der allumfassenden Business Suite für Unternehmen mit Visionen.</p>
       </div>
     </div>
   </div>
