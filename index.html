@@ -6,6 +6,7 @@
 <meta name="description" content="CloudGains DC: Premium Websites & digitale Produkte. Onepager, Smart Websites, Apps & mehr aus einer Hand.">
 <title>CloudGains DC | Premium Websites & Digital Products</title>
 <link rel="canonical" href="https://cloudgains.de/">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <link rel="icon" href="vor7_webp.webp" type="image/webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/syne-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dmsans-latin.woff2" crossorigin>
@@ -542,6 +543,9 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .form-input:focus, .form-textarea:focus { border-color: var(--aqua); box-shadow: 0 0 15px rgba(127,255,212,0.1); }
 .form-submit { width: 100%; padding: 1rem; border-radius: 99px; background: var(--aqua); color: #000; font-family: var(--fd); font-weight: 800; border: none; cursor: pointer; transition: 0.2s; box-shadow: 0 8px 25px rgba(127, 255, 212, 0.3); }
 .form-submit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(127, 255, 212, 0.5);}
+.form-status { font-size: 0.85rem; margin-top: 0.75rem; min-height: 1.2em; }
+.form-status.is-success { color: var(--aqua); }
+.form-status.is-error { color: #ff5f57; }
 
 /* CLIMATE BADGE & WHATSAPP (Schubladen-Logik & Stacking) */
 .climate-badge { 
@@ -1356,7 +1360,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
         </div>
       </div>
       <div data-anim="fade-left" data-delay="1">
-        <!--email_off--><form class="contact-form" action="mailto:kontakt@cloudgains.de" method="post" enctype="text/plain">
+        <!--email_off--><form class="contact-form" id="contact-form">
           <div class="form-group"><label class="form-label" for="contact-name">Dein Name</label><input class="form-input" id="contact-name" type="text" name="name" placeholder="Max Mustermann" required></div>
           <div class="form-group"><label class="form-label" for="contact-email">E-Mail-Adresse</label><input class="form-input" id="contact-email" type="email" name="email" placeholder="max@beispiel.de" required></div>
           <div class="form-group"><label class="form-label" for="contact-paket">Interesse an</label>
@@ -1369,7 +1373,9 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
             </select>
           </div>
           <div class="form-group"><label class="form-label" for="contact-nachricht">Deine Nachricht</label><textarea class="form-textarea" id="contact-nachricht" name="nachricht" placeholder="Erzähl uns von deinem Projekt..." required></textarea></div>
+          <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY" data-theme="dark"></div>
           <button type="submit" class="form-submit"><span>Nachricht senden</span><span>→</span></button>
+          <p class="form-status" id="contact-form-status" role="status" aria-live="polite"></p>
         </form><!--/email_off-->
       </div>
     </div>

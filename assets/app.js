@@ -12,6 +12,57 @@ document.querySelectorAll('.yt-facade').forEach(btn => {
   });
 });
 
+// ── KONTAKTFORMULAR ──
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  const statusEl = document.getElementById('contact-form-status');
+  const submitBtn = contactForm.querySelector('.form-submit');
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.textContent = '';
+    statusEl.className = 'form-status';
+
+    const turnstileToken = contactForm.querySelector('[name="cf-turnstile-response"]')?.value;
+    if (!turnstileToken) {
+      statusEl.textContent = 'Bitte warte, bis die Spam-Prüfung geladen ist, und versuche es erneut.';
+      statusEl.classList.add('is-error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.6';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: contactForm.querySelector('#contact-name').value,
+          email: contactForm.querySelector('#contact-email').value,
+          paket: contactForm.querySelector('#contact-paket').value,
+          nachricht: contactForm.querySelector('#contact-nachricht').value,
+          turnstileToken,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Unbekannter Fehler.');
+
+      statusEl.textContent = 'Danke! Deine Nachricht ist angekommen, wir melden uns innerhalb von 24 Stunden.';
+      statusEl.classList.add('is-success');
+      contactForm.reset();
+      if (window.turnstile) window.turnstile.reset();
+    } catch (err) {
+      statusEl.textContent = err.message || 'Versand fehlgeschlagen. Bitte versuche es später erneut.';
+      statusEl.classList.add('is-error');
+      if (window.turnstile) window.turnstile.reset();
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '';
+    }
+  });
+}
+
 // ── HERO LOAD ANIMATION SEQUENCE ──
 document.addEventListener('DOMContentLoaded', () => {
   const hero = document.getElementById('hero');
