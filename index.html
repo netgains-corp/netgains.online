@@ -499,6 +499,21 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .pagespeed-compare-btns { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
 .pagespeed-compare-btns .btn-glow, .pagespeed-compare-btns .btn-outline { font-size: 0.9rem; padding: 0.85rem 1.5rem; }
 .pagespeed-compare-note { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; }
+
+/* CLOUDGAINS CLOUD SUITE */
+.cgc-shot {
+  margin: 3rem 0; border-radius: 1.5rem; overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(127, 255, 212, 0.12);
+}
+.cgc-shot img { width: 100%; height: auto; display: block; }
+.cgc-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 3rem; }
+.cgc-feat-title {
+  font-family: var(--fd); font-weight: 700; font-size: 1rem; color: #fff;
+  margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.cgc-feat-title::before { content: '✓'; color: var(--aqua); font-weight: bold; text-shadow: 0 0 10px var(--aqua); flex-shrink: 0; }
+.cgc-feat-desc { font-size: 0.9rem; color: var(--faint); line-height: 1.6; padding-left: 1.5rem; }
 .investora-feat { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 0.95rem; color: var(--faint); line-height: 1.5; }
 .investora-feat::before { content: '✓'; color: var(--aqua); font-weight: bold; font-family: var(--fd); flex-shrink: 0; text-shadow: 0 0 10px var(--aqua); }
 .inv-screen { background: var(--card); border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; flex-shrink: 0; }
@@ -598,7 +613,8 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
   .investora-inner { grid-template-columns: 1fr; gap: 4rem; }
   .pagespeed-proof-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .header-nav { display: none; } 
+  .cgc-features { grid-template-columns: 1fr; gap: 1.5rem; }
+  .header-nav { display: none; }
   .calc-card { padding: 2rem; }
 }
 
@@ -1235,6 +1251,55 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       </div>
       <div data-anim="fade-left" data-delay="1" class="pagespeed-proof-shot">
         <img src="assets/img/pagespeed-100.webp" alt="Google PageSpeed Insights Ergebnis für cloudgains.de: 100 Punkte in Performance, Accessibility, Best Practices und SEO (mobile)" width="1000" height="789" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgc-suite" id="cloudgains-cloud" style="background: var(--bg2);">
+  <div class="container">
+    <div class="section-header" style="text-align: center;">
+      <div class="section-eyebrow" data-anim="fade-up"><div class="dot"></div><span>Unser eigenes System</span></div>
+      <h2 class="section-title center" data-anim="fade-up" data-delay="1">CloudGains Cloud —<br><em>alles in einem Dashboard.</em></h2>
+      <p class="section-sub center" data-anim="fade-up" data-delay="2">Egal ob unsere Vertriebler ihre Umsätze sehen können, unsere Mitarbeiter ihr zugewiesenes Kundenprojekt, oder die Buchhalter das Kassenbuch – alles in einem Dashboard in der CloudGains Cloud, der allumfassenden Business Suite für Unternehmen mit Visionen.</p>
+    </div>
+
+    <div class="cgc-shot" data-anim="zoom-in" data-delay="1">
+      <img src="assets/img/cloudgains-cloud.webp" alt="CloudGains Cloud Dashboard: Lead-Radar-Modul MR. LEAD mit Deutschlandkarte und verifizierten Business-Leads" width="1100" height="600" loading="lazy">
+    </div>
+
+    <div class="cgc-features">
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">SEO-Toolkit</div>
+        <div class="cgc-feat-desc">Automatische Generierung von robots.txt, sitemap.xml, JSON-LD-Schema, security.txt, llms.txt; Per-Page-Meta-Editor mit Vorschau</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">PageSpeed-Monitoring</div>
+        <div class="cgc-feat-desc">Google-PSI-Anbindung, Health-Übersicht pro Projekt</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">Vertrieb & Provisionen</div>
+        <div class="cgc-feat-desc">Partnerstruktur mit Upline/Provisions-Engine, Deals- & Kommissions-Verwaltung, MRR-Trigger, Excel-Export, 3D-Netzwerkgraph der Struktur</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">Management-Dashboard</div>
+        <div class="cgc-feat-desc">Rollen-Matrix, Provisions-Simulator, Rechte-Verwaltung</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">E-Mail-System</div>
+        <div class="cgc-feat-desc">Templates, Composer mit Branding, Massen-Versand über Resend</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">Buchhaltung</div>
+        <div class="cgc-feat-desc">Kassenbuch, MRR-Verwaltung</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">Lead-Generierung</div>
+        <div class="cgc-feat-desc">Automatisierter Firmen-Scan (Telefonnummer-Pflicht), Bundesland-weise Abdeckung, gezielte Zuweisung an Vertriebler</div>
+      </div>
+      <div class="cgc-feat">
+        <div class="cgc-feat-title">Rollenbasierter Zugriff</div>
+        <div class="cgc-feat-desc">Admin/Team-Bereiche klar getrennt, mobil & Desktop optimiert (eigenes Rail/Bottom-Nav-Design), Dark/Light Mode</div>
       </div>
     </div>
   </div>
