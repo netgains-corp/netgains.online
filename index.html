@@ -527,7 +527,11 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; position: relative; z-index: 2; }
 .team-card { background: var(--glass-bg); padding: 3rem; border-radius: var(--radius); border: 1px solid var(--glass-border); display: flex; gap: 2rem; transition: 0.3s; }
 .team-card:hover { border-color: var(--violet); box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 25px rgba(167, 139, 250, 0.15); transform: translateY(-3px); }
-.team-photo { width: 85px; height: 85px; border-radius: 50%; background: #1a1a2e; border: 2px solid var(--border2); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: var(--fd); color: #fff; flex-shrink: 0; }
+.team-photo { width: 85px; height: 85px; border-radius: 50%; background: #1a1a2e; border: 2px solid var(--border2); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: var(--fd); color: #fff; flex-shrink: 0; overflow: hidden; }
+.team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.team-name { font-family: var(--fd); font-weight: 800; font-size: 1.1rem; color: #fff; margin-bottom: 0.35rem; }
+.team-role { font-family: var(--fd); font-weight: 700; font-size: 0.85rem; color: var(--aqua); margin-bottom: 0.75rem; }
+.team-bio { font-size: 0.9rem; color: var(--faint); line-height: 1.6; }
 
 /* FAQ */
 .faq-list { max-width: 800px; margin: 4rem auto 0; border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; background: var(--glass-bg); position: relative; z-index: 2; }
@@ -1291,18 +1295,18 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
     </div>
     <div class="team-grid">
       <div class="team-card" data-anim="fade-up">
-        <div class="team-photo">DL</div>
+        <div class="team-photo"><img src="assets/img/team-david.webp" alt="David Leipi" width="300" height="300" loading="lazy"></div>
         <div class="team-info">
           <div class="team-name">David Leipi</div>
-          <div class="team-role">Co-Founder & Systemarchitekt</div>
-          <div class="team-bio">Baut und optimiert leidenschaftlich gerne die technischen Systeme, Apps und Automationen, die den Arbeitsalltag unserer Kunden drastisch erleichtern.</div>
+          <div class="team-role">Gesellschafter, Geschäftsführer und Systemarchitekt</div>
+          <div class="team-bio">Programmiert seitdem er 10 ist und baut leidenschaftlich gerne die technischen Systeme, Apps, Automationen und Datenbanken, die den Arbeitsalltag unserer Kunden drastisch erleichtern.</div>
         </div>
       </div>
       <div class="team-card" data-anim="fade-up" data-delay="1">
-        <div class="team-photo">CG</div>
+        <div class="team-photo"><img src="assets/img/team-cansin.webp" alt="Cansin Gülal" width="300" height="300" loading="lazy"></div>
         <div class="team-info">
           <div class="team-name">Cansin Gülal</div>
-          <div class="team-role">Co-Founder & Vertrieb</div>
+          <div class="team-role">Gesellschafter, Geschäftsleitung und Vertriebsdirektor</div>
           <div class="team-bio">Unser Experte für Kundenbeziehungen. Cansin sorgt dafür, dass sich unsere digitalen Lösungen bei deinen Business-Zielen und Prozessen auszahlen.</div>
         </div>
       </div>
