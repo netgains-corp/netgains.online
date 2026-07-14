@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudGains Funnels – Visueller Funnel-Baukasten & Simulator</title>
+<meta name="description" content="Baue deinen Marketing-Funnel per Drag &amp; Drop und simuliere Besucher, Kunden und Umsatz in Echtzeit – kostenlos, von CloudGains DC.">
+<link rel="icon" href="assets/img/logo.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Mobile / small screen notice (shown instead of the builder below ~900px) -->
+<div id="mobile-block" class="mobile-block">
+  <span class="header-logo-mark"><img src="assets/img/logo.webp" alt="CloudGains Logo"></span>
+  <p class="mobile-word">CloudGains <strong>Funnels</strong></p>
+  <p class="mobile-text">CloudGains Funnels ist ein visueller Baukasten und aktuell für Desktop-Bildschirme optimiert. Öffne diese Seite an einem Computer, um deinen Funnel zu bauen.</p>
+  <a class="btn-outline" href="https://cloudgains.de">← Zurück zu cloudgains.de</a>
+</div>
+
+<div id="app-shell" class="app-shell">
+
+  <header class="site-header">
+    <a class="site-header-brand" href="https://cloudgains.de" target="_blank" rel="noopener">
+      <span class="header-logo-mark"><img src="assets/img/logo.webp" alt="CloudGains Logo"></span>
+      <span class="site-header-word">CloudGains <strong>Funnels</strong></span>
+    </a>
+    <div class="site-header-right">
+      <button id="btn-help" class="icon-btn" type="button" title="Kurzanleitung anzeigen" aria-label="Kurzanleitung anzeigen">?</button>
+      <a class="site-header-back" href="https://cloudgains.de" target="_blank" rel="noopener">← cloudgains.de</a>
+      <a class="btn-glow btn-small" href="https://cloudgains.de/#kontakt" target="_blank" rel="noopener">Kostenlos anfragen</a>
+    </div>
+  </header>
+
+  <div id="app" class="app">
+
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-heading">Bausteine</div>
+      <div class="sidebar-content" id="sidebar-items"></div>
+      <div class="sidebar-footer">
+        <button id="theme-toggle" class="theme-toggle" type="button" title="Hell-/Dunkelmodus umschalten" aria-label="Hell-/Dunkelmodus umschalten">🌙</button>
+      </div>
+    </aside>
+
+    <div id="workspace" class="workspace">
+
+      <div class="empty-hint" id="empty-hint">
+        <p>Ziehe links ein Element auf die Fläche, um deinen ersten Baustein zu platzieren.</p>
+      </div>
+
+      <div id="toolbar" class="toolbar">
+        <button id="btn-example" class="btn toolbar-btn toolbar-btn-accent" type="button">Beispiel-Funnel laden</button>
+        <button id="btn-clear-connections" class="btn toolbar-btn" type="button">Verbindungen lösen</button>
+        <button id="btn-center-view" class="btn toolbar-btn" type="button" title="Ansicht zentrieren">Ansicht zentrieren</button>
+
+        <div class="stat-badge" id="stat-badge">Baue deinen ersten Funnel, um die Simulation zu sehen.</div>
+
+        <div class="my-funnels" id="my-funnels">
+          <button id="btn-my-funnels" class="btn toolbar-btn" type="button" aria-expanded="false">Meine Funnels ▾</button>
+          <div class="my-funnels-panel" id="my-funnels-panel" hidden>
+            <button id="btn-save-as" class="panel-action" type="button">Speichern unter…</button>
+            <div class="panel-list" id="snapshot-list"></div>
+            <div class="panel-empty" id="snapshot-empty">Noch keine gespeicherten Funnels.</div>
+            <div class="panel-divider"></div>
+            <button id="btn-export" class="panel-action" type="button">Exportieren (JSON)</button>
+            <button id="btn-import" class="panel-action" type="button">Importieren (JSON)</button>
+            <input type="file" id="file-import" accept="application/json" hidden>
+          </div>
+        </div>
+      </div>
+
+      <svg id="connections-layer" class="connections-layer">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7"></polygon>
+          </marker>
+          <marker id="arrowhead-hover" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7"></polygon>
+          </marker>
+        </defs>
+        <g id="paths-container"></g>
+      </svg>
+
+      <div id="nodes-layer" class="nodes-layer"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal: rename a node / adjust its numbers -->
+<div id="modal-overlay" class="modal-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title">Baustein bearbeiten</h3>
+    <div class="input-group">
+      <label for="inp-label">Bezeichnung</label>
+      <input type="text" id="inp-label" maxlength="60">
+    </div>
+    <div class="input-group" id="metric-group">
+      <label id="lbl-metric" for="inp-metric">Wert</label>
+      <input type="number" id="inp-metric" min="0" step="0.1">
+    </div>
+    <div class="input-group" id="ordervalue-group" hidden>
+      <label for="inp-ordervalue">Ø Bestellwert (€)</label>
+      <input type="number" id="inp-ordervalue" min="0" step="1">
+    </div>
+    <div class="modal-actions">
+      <button id="btn-modal-cancel" class="btn-secondary" type="button">Abbrechen</button>
+      <button id="btn-modal-save" class="btn-primary" type="button">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- Onboarding overlay -->
+<div id="onboarding-overlay" class="modal-overlay" hidden>
+  <div class="modal onboarding-modal" role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+    <button id="btn-onboarding-close-x" class="onboarding-x" type="button" aria-label="Schließen">×</button>
+    <h3 id="onboarding-title">Willkommen bei CloudGains Funnels</h3>
+    <ol class="onboarding-steps">
+      <li>
+        <strong>Was ist ein Funnel?</strong>
+        <p>Der Weg, den ein Interessent von der ersten Begegnung mit deinem Angebot bis zum Kauf durchläuft – Schritt für Schritt, Seite für Seite.</p>
+      </li>
+      <li>
+        <strong>Bausteine platzieren</strong>
+        <p>Ziehe links aus der Liste ein Element (z. B. Traffic-Quelle oder Opt-in-Seite) auf die Fläche.</p>
+      </li>
+      <li>
+        <strong>Bausteine verbinden</strong>
+        <p>Zieh vom Punkt rechts an einem Baustein zum Punkt links am nächsten Baustein, um beide zu verbinden. Doppelklick auf einen Baustein öffnet die Detailansicht zum Umbenennen.</p>
+      </li>
+      <li>
+        <strong>Live-Zahlen verstehen</strong>
+        <p>Jeder Baustein zeigt live, wie viele Besucher ankommen und wie viele weiterziehen – trag Werte direkt im Baustein ein. Oben in der Toolbar siehst du die Gesamtzahlen deines Funnels.</p>
+      </li>
+    </ol>
+    <div class="modal-actions">
+      <button id="btn-onboarding-close" class="btn-primary" type="button">Los geht's!</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

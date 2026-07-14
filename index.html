@@ -509,6 +509,94 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 .cgc-shot-caption { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-top: 1.25rem; }
 .cgc-features { margin-top: 1.5rem; }
 .cgc-feat { font-size: 0.88rem; color: var(--faint); line-height: 1.6; margin-bottom: 0.7rem; }
+
+.funnels-cta { margin-top: 2rem; }
+.funnels-mock-canvas {
+  position: relative;
+  background-color: #0d0d16;
+  background-image:
+    linear-gradient(rgba(127,255,212,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127,255,212,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 12% 15%, rgba(167,139,250,0.16), transparent 45%),
+    radial-gradient(circle at 88% 85%, rgba(127,255,212,0.12), transparent 45%);
+  background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%;
+  padding: 3.25rem 1.5rem 2.5rem;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+}
+.funnels-mock-badge {
+  position: absolute;
+  top: 1.1rem;
+  left: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--fb);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--aqua);
+  background: rgba(127,255,212,0.08);
+  border: 1px solid rgba(127,255,212,0.25);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+}
+.funnels-mock-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--aqua); box-shadow: 0 0 8px var(--aqua);
+  animation: funnels-mock-pulse 1.8s ease-in-out infinite;
+}
+@keyframes funnels-mock-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.funnels-mock-row { display: flex; align-items: center; justify-content: center; width: 100%; }
+.funnels-mock-node {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 100px;
+  text-align: center;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.85rem;
+  padding: 0.9rem 0.85rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+.funnels-mock-node--accent { border-color: rgba(127,255,212,0.35); box-shadow: 0 10px 25px rgba(0,0,0,0.35), 0 0 20px rgba(127,255,212,0.15); }
+.funnels-mock-node--violet { border-color: rgba(167,139,250,0.4); box-shadow: 0 10px 25px rgba(0,0,0,0.35), 0 0 20px rgba(167,139,250,0.18); }
+.funnels-mock-node-label { font-family: var(--fd); font-size: 0.7rem; font-weight: 700; color: #fff; white-space: nowrap; }
+.funnels-mock-node-metric { font-family: var(--fd); font-size: 1.2rem; font-weight: 800; color: var(--aqua); }
+.funnels-mock-node--violet .funnels-mock-node-metric { color: var(--violet); }
+.funnels-mock-connector {
+  flex: 0 0 40px;
+  height: 2px;
+  margin: 0 0.25rem;
+  position: relative;
+  background: linear-gradient(90deg, rgba(127,255,212,0.55), rgba(167,139,250,0.55));
+}
+.funnels-mock-connector::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid rgba(167,139,250,0.85);
+}
+.funnels-mock-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+.funnels-mock-stat { font-size: 0.72rem; color: var(--muted); }
+.funnels-mock-stat b { font-family: var(--fd); color: #fff; }
+@media (max-width: 480px) {
+  .funnels-mock-node { min-width: 82px; padding: 0.7rem 0.5rem; }
+  .funnels-mock-node-label { font-size: 0.62rem; }
+  .funnels-mock-node-metric { font-size: 1rem; }
+  .funnels-mock-connector { flex-basis: 22px; }
+}
 .cgc-feat-title { font-family: var(--fd); font-weight: 700; color: #fff; }
 .investora-feat { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 0.95rem; color: var(--faint); line-height: 1.5; }
 .investora-feat::before { content: '✓'; color: var(--aqua); font-weight: bold; font-family: var(--fd); flex-shrink: 0; text-shadow: 0 0 10px var(--aqua); }
@@ -747,6 +835,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   <div class="header-nav">
     <a href="#projekte">Projekte</a>
     <a href="#apps">Apps</a>
+    <a href="#funnels">Funnels</a>
     <a href="#team">Team</a>
     <a href="#faq">FAQ</a>
   </div>
@@ -1281,6 +1370,55 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
           <img src="assets/img/cloudgains-cloud.webp" alt="CloudGains Cloud Dashboard: Lead-Radar-Modul MR. LEAD mit Deutschlandkarte und verifizierten Business-Leads" width="1100" height="600" loading="lazy">
         </div>
         <p class="cgc-shot-caption">Egal ob unsere Vertriebler ihre Umsätze sehen, unsere Mitarbeiter ihr zugewiesenes Kundenprojekt oder die Buchhalter das Kassenbuch: Alles läuft in einem einzigen Dashboard, der CloudGains Cloud, der allumfassenden Business Suite für Unternehmen mit Visionen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgc-suite funnels-suite" id="funnels" style="background: var(--bg);">
+  <div class="container">
+    <div class="cgc-inner">
+      <div data-anim="fade-right">
+        <div class="section-eyebrow"><div class="dot"></div><span>Neu: Kostenloses Tool</span></div>
+        <h2 class="section-title">CloudGains Funnels:<br><em>dein Funnel sichtbar in Minuten.</em></h2>
+        <div class="cgc-features">
+          <div class="cgc-feat"><span class="cgc-feat-title">Drag &amp; Drop Baukasten:</span> Traffic Source, Opt-in, Webinar, Sales Page, Checkout, Upsell, Terminbuchung, Thank You und E-Mail als fertige Bausteine, einfach anordnen und verbinden</div>
+          <div class="cgc-feat"><span class="cgc-feat-title">Live-Simulation:</span> echte Kaskaden-Berechnung von Traffic bis Umsatz über die tatsächlichen Verbindungen deines Funnels, keine Dummy-Zahlen</div>
+          <div class="cgc-feat"><span class="cgc-feat-title">Für Einsteiger gemacht:</span> jeder Baustein erklärt sich selbst, inklusive Beispiel-Funnel zum Erkunden</div>
+          <div class="cgc-feat"><span class="cgc-feat-title">Automatisch gespeichert:</span> Autosave, benannte Funnel-Bibliothek, JSON-Export/Import</div>
+          <div class="cgc-feat"><span class="cgc-feat-title">100% kostenlos:</span> voller Funktionsumfang nutzbar, kein Account nötig</div>
+        </div>
+        <div class="funnels-cta">
+          <a href="https://funnels.cloudgains.de" target="_blank" rel="noopener" class="btn-glow">Kostenlos ausprobieren →</a>
+        </div>
+      </div>
+      <div data-anim="fade-left" data-delay="1">
+        <div class="cgc-shot">
+          <div class="funnels-mock-canvas">
+            <div class="funnels-mock-badge"><span class="funnels-mock-badge-dot"></span>Live-Simulation</div>
+            <div class="funnels-mock-row">
+              <div class="funnels-mock-node funnels-mock-node--accent">
+                <span class="funnels-mock-node-label">Traffic Source</span>
+                <span class="funnels-mock-node-metric">1.240</span>
+              </div>
+              <div class="funnels-mock-connector"></div>
+              <div class="funnels-mock-node funnels-mock-node--violet">
+                <span class="funnels-mock-node-label">Opt-in</span>
+                <span class="funnels-mock-node-metric">612</span>
+              </div>
+              <div class="funnels-mock-connector"></div>
+              <div class="funnels-mock-node funnels-mock-node--accent">
+                <span class="funnels-mock-node-label">Checkout</span>
+                <span class="funnels-mock-node-metric">89</span>
+              </div>
+            </div>
+            <div class="funnels-mock-stats">
+              <span class="funnels-mock-stat">Conversion gesamt <b>7,2%</b></span>
+              <span class="funnels-mock-stat">Umsatz-Vorschau <b>4.180&nbsp;€</b></span>
+            </div>
+          </div>
+        </div>
+        <p class="cgc-shot-caption">Traffic, Opt-in und Checkout live verbunden: Jede Zahl entsteht aus der tatsächlichen Kaskade deines Funnels, so siehst du in Echtzeit, wo Besucher aussteigen und wo Umsatz entsteht.</p>
       </div>
     </div>
   </div>
