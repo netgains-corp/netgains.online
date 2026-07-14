@@ -10,14 +10,6 @@
 </head>
 <body>
 
-<!-- Mobile / small screen notice (shown instead of the builder below ~900px) -->
-<div id="mobile-block" class="mobile-block">
-  <span class="header-logo-mark"><img src="assets/img/logo.webp" alt="CloudGains Logo"></span>
-  <p class="mobile-word">CloudGains <strong>Funnels</strong></p>
-  <p class="mobile-text">CloudGains Funnels ist ein visueller Baukasten und aktuell für Desktop-Bildschirme optimiert. Öffne diese Seite an einem Computer, um deinen Funnel zu bauen.</p>
-  <a class="btn-outline" href="https://cloudgains.de">← Zurück zu cloudgains.de</a>
-</div>
-
 <div id="app-shell" class="app-shell">
 
   <header class="site-header">
@@ -45,13 +37,27 @@
     <div id="workspace" class="workspace">
 
       <div class="empty-hint" id="empty-hint">
-        <p>Ziehe links ein Element auf die Fläche, um deinen ersten Baustein zu platzieren.</p>
+        <p>Zieh einen Baustein aus der Liste auf die Fläche oder tippe ihn an, um deinen ersten Baustein zu platzieren.</p>
       </div>
 
       <div id="toolbar" class="toolbar">
-        <button id="btn-example" class="btn toolbar-btn toolbar-btn-accent" type="button">Beispiel-Funnel laden</button>
+        <div class="my-funnels" id="templates-menu">
+          <button id="btn-templates" class="btn toolbar-btn toolbar-btn-accent" type="button" aria-expanded="false">Vorlage laden ▾</button>
+          <div class="my-funnels-panel" id="templates-panel" hidden>
+            <button class="panel-action" type="button" data-template="webinar" title="Traffic → Opt-in → Webinar → Sales Page → Checkout, plus E-Mail-Nurture und Upsell.">Webinar-Funnel</button>
+            <button class="panel-action" type="button" data-template="tripwire" title="Traffic direkt auf ein günstiges Einstiegsangebot, danach Upsell — klassischer Tripwire-Funnel.">Tripwire-Funnel</button>
+            <button class="panel-action" type="button" data-template="beratung" title="Freebie sammelt Leads, die dann direkt ein Erstgespräch buchen — typisch für Agenturen & Berater.">Beratungs-Funnel</button>
+            <button class="panel-action" type="button" data-template="leadmagnet" title="Der einfachste Einstieg: Freebie gegen E-Mail-Adresse, danach automatisierter Follow-up.">Lead-Magnet-Funnel</button>
+          </div>
+        </div>
         <button id="btn-clear-connections" class="btn toolbar-btn" type="button">Verbindungen lösen</button>
         <button id="btn-center-view" class="btn toolbar-btn" type="button" title="Ansicht zentrieren">Ansicht zentrieren</button>
+
+        <div class="zoom-controls">
+          <button id="btn-zoom-out" class="btn toolbar-btn zoom-btn" type="button" aria-label="Rauszoomen" title="Rauszoomen">−</button>
+          <span id="zoom-label" class="zoom-label">100%</span>
+          <button id="btn-zoom-in" class="btn toolbar-btn zoom-btn" type="button" aria-label="Reinzoomen" title="Reinzoomen">+</button>
+        </div>
 
         <div class="stat-badge" id="stat-badge">Baue deinen ersten Funnel, um die Simulation zu sehen.</div>
 

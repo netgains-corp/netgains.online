@@ -97,8 +97,12 @@ var state = {
   nodes: [],
   connections: [],
   pan: { x: 0, y: 0 },
+  zoom: 1,
   nextId: 1
 };
+
+var ZOOM_MIN = 0.3;
+var ZOOM_MAX = 2.5;
 
 var nodeDomRefs = Object.create(null); /* id -> { el, incoming, outgoing, revenue, rateInput, orderInput, reached } */
 var connDomRefs = Object.create(null); /* id -> { g, line, hit, del } */
@@ -108,6 +112,7 @@ var selection = { nodeId: null, connectionId: null };
 var dragState = { active: false, nodeId: null, offsetX: 0, offsetY: 0, moved: false };
 var connectState = { active: false, sourceNodeId: null };
 var panState = { candidate: false, active: false, startClientX: 0, startClientY: 0, startPanX: 0, startPanY: 0 };
+var touchState = { mode: null, nodeId: null, offsetX: 0, offsetY: 0, startDist: 0, startZoom: 1, startClientX: 0, startClientY: 0, startPanX: 0, startPanY: 0 };
 var editState = { nodeId: null };
 
 var autosaveTimer = null;
@@ -128,9 +133,14 @@ function init() {
   dom.themeToggle = document.getElementById('theme-toggle');
   dom.btnHelp = document.getElementById('btn-help');
 
-  dom.btnExample = document.getElementById('btn-example');
+  dom.templatesMenu = document.getElementById('templates-menu');
+  dom.btnTemplates = document.getElementById('btn-templates');
+  dom.templatesPanel = document.getElementById('templates-panel');
   dom.btnClearConnections = document.getElementById('btn-clear-connections');
   dom.btnCenterView = document.getElementById('btn-center-view');
+  dom.btnZoomIn = document.getElementById('btn-zoom-in');
+  dom.btnZoomOut = document.getElementById('btn-zoom-out');
+  dom.zoomLabel = document.getElementById('zoom-label');
 
   dom.myFunnels = document.getElementById('my-funnels');
   dom.btnMyFunnels = document.getElementById('btn-my-funnels');
@@ -161,6 +171,7 @@ function init() {
   renderSidebar();
   bindEvents();
   loadFromStorage();
+  updateZoomLabel();
   renderSnapshotList();
 
   if (!localStorage.getItem(LS_INTRO)) {
@@ -172,13 +183,13 @@ function init() {
 function initTheme() {
   var saved = null;
   try { saved = localStorage.getItem(LS_THEME); } catch (e) {}
-  var theme = saved === 'light' ? 'light' : 'dark';
+  var theme = saved === 'dark' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', theme);
   dom.themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
 }
 function toggleTheme() {
-  var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-  var next = current === 'light' ? 'dark' : 'light';
+  var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  var next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   dom.themeToggle.textContent = next === 'dark' ? '🌙' : '☀️';
   try { localStorage.setItem(LS_THEME, next); } catch (e) {}
@@ -215,6 +226,9 @@ function renderSidebar() {
       e.dataTransfer.effectAllowed = 'copy';
     });
 
+    /* Tippen fügt den Baustein in die Canvas-Mitte ein (Touch-Fallback für Drag&Drop) */
+    el.addEventListener('click', function () { addNodeToViewCenter(tool.type); });
+
     dom.sidebarItems.appendChild(el);
   });
 }
@@ -222,11 +236,35 @@ function renderSidebar() {
 /* ================= Coordinate helpers ================= */
 function screenToCanvas(clientX, clientY) {
   var rect = dom.workspace.getBoundingClientRect();
-  return { x: clientX - rect.left - state.pan.x, y: clientY - rect.top - state.pan.y };
+  return {
+    x: (clientX - rect.left - state.pan.x) / state.zoom,
+    y: (clientY - rect.top - state.pan.y) / state.zoom
+  };
 }
 function applyPanTransform() {
-  dom.nodesLayer.style.transform = 'translate(' + state.pan.x + 'px,' + state.pan.y + 'px)';
-  dom.pathsContainer.setAttribute('transform', 'translate(' + state.pan.x + ',' + state.pan.y + ')');
+  var z = state.zoom;
+  dom.nodesLayer.style.transform = 'translate(' + state.pan.x + 'px,' + state.pan.y + 'px) scale(' + z + ')';
+  dom.pathsContainer.setAttribute('transform', 'translate(' + state.pan.x + ',' + state.pan.y + ') scale(' + z + ')');
+}
+
+/* Zoom auf einen Bildschirmpunkt (Client-Koordinaten). Ohne Punkt: Mitte des Canvas. */
+function setZoom(newZoom, clientX, clientY) {
+  newZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, newZoom));
+  var rect = dom.workspace.getBoundingClientRect();
+  if (clientX == null) { clientX = rect.left + rect.width / 2; clientY = rect.top + rect.height / 2; }
+  /* Canvas-Punkt unter dem Cursor bleibt fix */
+  var canvasX = (clientX - rect.left - state.pan.x) / state.zoom;
+  var canvasY = (clientY - rect.top - state.pan.y) / state.zoom;
+  state.zoom = newZoom;
+  state.pan.x = clientX - rect.left - canvasX * newZoom;
+  state.pan.y = clientY - rect.top - canvasY * newZoom;
+  applyPanTransform();
+  updateZoomLabel();
+  scheduleAutosave();
+}
+
+function updateZoomLabel() {
+  if (dom.zoomLabel) dom.zoomLabel.textContent = Math.round(state.zoom * 100) + '%';
 }
 
 /* ================= Node creation / rendering ================= */
@@ -737,13 +775,41 @@ function bindEvents() {
   dom.btnOnboardingClose.addEventListener('click', closeOnboarding);
   dom.btnOnboardingCloseX.addEventListener('click', closeOnboarding);
 
-  dom.btnExample.addEventListener('click', loadExampleFunnel);
+  dom.btnTemplates.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var isHidden = dom.templatesPanel.hasAttribute('hidden');
+    if (isHidden) { dom.templatesPanel.removeAttribute('hidden'); dom.btnTemplates.setAttribute('aria-expanded', 'true'); }
+    else { dom.templatesPanel.setAttribute('hidden', ''); dom.btnTemplates.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('click', function (e) {
+    if (!dom.templatesPanel.hasAttribute('hidden') && !dom.templatesMenu.contains(e.target)) {
+      dom.templatesPanel.setAttribute('hidden', '');
+      dom.btnTemplates.setAttribute('aria-expanded', 'false');
+    }
+  });
+  dom.templatesPanel.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var btn = e.target.closest('[data-template]');
+    if (btn) loadTemplate(btn.dataset.template);
+  });
   dom.btnClearConnections.addEventListener('click', clearAllConnections);
   dom.btnCenterView.addEventListener('click', function () {
-    state.pan.x = 0; state.pan.y = 0;
+    state.pan.x = 0; state.pan.y = 0; state.zoom = 1;
     applyPanTransform();
+    updateZoomLabel();
     scheduleAutosave();
   });
+
+  dom.btnZoomIn.addEventListener('click', function () { setZoom(state.zoom * 1.2); });
+  dom.btnZoomOut.addEventListener('click', function () { setZoom(state.zoom / 1.2); });
+
+  dom.workspace.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    var factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+    setZoom(state.zoom * factor, e.clientX, e.clientY);
+  }, { passive: false });
+
+  bindTouchEvents();
 
   dom.btnMyFunnels.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -774,6 +840,14 @@ function handleDrop(e) {
   var type = e.dataTransfer.getData('text/plain');
   if (!type) return;
   var pt = screenToCanvas(e.clientX, e.clientY);
+  createNode(type, pt.x - 115, pt.y - 45);
+  recomputeAndRender();
+  scheduleAutosave();
+}
+
+function addNodeToViewCenter(type) {
+  var rect = dom.workspace.getBoundingClientRect();
+  var pt = screenToCanvas(rect.left + rect.width / 2, rect.top + rect.height / 2);
   createNode(type, pt.x - 115, pt.y - 45);
   recomputeAndRender();
   scheduleAutosave();
@@ -909,6 +983,112 @@ function handleKeydown(e) {
   }
 }
 
+/* ================= Touch: 1 Finger = ziehen/schieben, 2 Finger = zoomen ================= */
+function bindTouchEvents() {
+  dom.workspace.addEventListener('touchstart', handleTouchStart, { passive: false });
+  dom.workspace.addEventListener('touchmove', handleTouchMove, { passive: false });
+  dom.workspace.addEventListener('touchend', handleTouchEnd);
+  dom.workspace.addEventListener('touchcancel', handleTouchEnd);
+}
+
+function touchDist(touches) {
+  var dx = touches[0].clientX - touches[1].clientX;
+  var dy = touches[0].clientY - touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+function touchMid(touches) {
+  return { x: (touches[0].clientX + touches[1].clientX) / 2, y: (touches[0].clientY + touches[1].clientY) / 2 };
+}
+
+function handleTouchStart(e) {
+  if (e.touches.length === 2) {
+    touchState.mode = 'pinch';
+    touchState.startDist = touchDist(e.touches);
+    touchState.startZoom = state.zoom;
+    e.preventDefault();
+    return;
+  }
+  if (e.touches.length !== 1) return;
+
+  var t = e.touches[0];
+  var target = document.elementFromPoint(t.clientX, t.clientY) || e.target;
+  /* Eingaben, Löschen und Verbindungs-Handles: normalen Touch zulassen (Fokus/Tap) */
+  if (target.closest && target.closest('input, .metric-input, .node-delete, .handle, .connection-group')) {
+    touchState.mode = null;
+    return;
+  }
+
+  var nodeEl = target.closest && target.closest('.node');
+  if (nodeEl) {
+    var node = state.nodes.find(function (n) { return n.id === nodeEl.dataset.id; });
+    if (node) {
+      var pt = screenToCanvas(t.clientX, t.clientY);
+      touchState.mode = 'drag';
+      touchState.nodeId = node.id;
+      touchState.offsetX = pt.x - node.x;
+      touchState.offsetY = pt.y - node.y;
+      clearSelection();
+      selection.nodeId = node.id;
+      nodeEl.classList.add('selected');
+      e.preventDefault();
+      return;
+    }
+  }
+
+  clearSelection();
+  touchState.mode = 'pan';
+  touchState.startClientX = t.clientX;
+  touchState.startClientY = t.clientY;
+  touchState.startPanX = state.pan.x;
+  touchState.startPanY = state.pan.y;
+}
+
+function handleTouchMove(e) {
+  if (touchState.mode === 'pinch' && e.touches.length === 2) {
+    var d = touchDist(e.touches);
+    var mid = touchMid(e.touches);
+    if (touchState.startDist > 0) setZoom(touchState.startZoom * (d / touchState.startDist), mid.x, mid.y);
+    e.preventDefault();
+    return;
+  }
+  if (touchState.mode === 'drag' && e.touches.length === 1) {
+    var t = e.touches[0];
+    var pt = screenToCanvas(t.clientX, t.clientY);
+    var node = state.nodes.find(function (n) { return n.id === touchState.nodeId; });
+    if (!node) return;
+    node.x = pt.x - touchState.offsetX;
+    node.y = pt.y - touchState.offsetY;
+    var el = document.getElementById(touchState.nodeId);
+    if (el) { el.style.left = node.x + 'px'; el.style.top = node.y + 'px'; }
+    updateConnectionsForNode(touchState.nodeId);
+    e.preventDefault();
+    return;
+  }
+  if (touchState.mode === 'pan' && e.touches.length === 1) {
+    var t2 = e.touches[0];
+    state.pan.x = touchState.startPanX + (t2.clientX - touchState.startClientX);
+    state.pan.y = touchState.startPanY + (t2.clientY - touchState.startClientY);
+    applyPanTransform();
+    e.preventDefault();
+  }
+}
+
+function handleTouchEnd(e) {
+  if (e.touches.length === 0) {
+    if (touchState.mode === 'drag' || touchState.mode === 'pan' || touchState.mode === 'pinch') scheduleAutosave();
+    touchState.mode = null;
+    touchState.nodeId = null;
+  } else if (e.touches.length === 1 && touchState.mode === 'pinch') {
+    /* Von zwei auf einen Finger: nahtlos ins Schieben wechseln */
+    var t = e.touches[0];
+    touchState.mode = 'pan';
+    touchState.startClientX = t.clientX;
+    touchState.startClientY = t.clientY;
+    touchState.startPanX = state.pan.x;
+    touchState.startPanY = state.pan.y;
+  }
+}
+
 /* ================= Edit modal ================= */
 function openEditModal(nodeId) {
   var node = state.nodes.find(function (n) { return n.id === nodeId; });
@@ -989,32 +1169,91 @@ function closeOnboarding() {
   try { localStorage.setItem(LS_INTRO, '1'); } catch (e) {}
 }
 
-/* ================= Example funnel ================= */
-function loadExampleFunnel() {
+/* ================= Vorgefertigte Funnel-Vorlagen ================= */
+var TEMPLATES = {
+  webinar: function () {
+    var traffic = createNode('traffic', 40, 260, { visitors: 1000 });
+    var optin = createNode('optin', 340, 260, { rate: 40 });
+    var email = createNode('email', 340, 470, { rate: 30 });
+    var webinar = createNode('webinar', 640, 260, { rate: 50 });
+    var sales = createNode('sales', 940, 260, { rate: 50 });
+    var checkout = createNode('checkout', 1240, 260, { rate: 42, orderValue: 100 });
+    var thankyou = createNode('thankyou', 1540, 140);
+    var upsell = createNode('upsell', 1540, 420, { rate: 25, orderValue: 147 });
+    return {
+      pairs: [
+        [traffic, optin], [optin, email], [optin, webinar], [webinar, sales],
+        [sales, checkout], [checkout, thankyou], [checkout, upsell]
+      ]
+    };
+  },
+  tripwire: function () {
+    var traffic = createNode('traffic', 40, 260, { visitors: 1200 });
+    var sales = createNode('sales', 340, 260, { rate: 35 });
+    var checkout = createNode('checkout', 640, 260, { rate: 60, orderValue: 27 });
+    var email = createNode('email', 640, 470, { rate: 25 });
+    var upsell = createNode('upsell', 940, 260, { rate: 30, orderValue: 197 });
+    var thankyou = createNode('thankyou', 1240, 260);
+    return {
+      pairs: [
+        [traffic, sales], [sales, checkout], [checkout, email],
+        [checkout, upsell], [upsell, thankyou]
+      ]
+    };
+  },
+  beratung: function () {
+    var traffic = createNode('traffic', 40, 260, { visitors: 800 });
+    var optin = createNode('optin', 340, 260, { rate: 45, label: 'Freebie / Quiz' });
+    var email = createNode('email', 340, 470, { rate: 35 });
+    var booking = createNode('booking', 640, 260, { rate: 15 });
+    var thankyou = createNode('thankyou', 940, 260);
+    return {
+      pairs: [
+        [traffic, optin], [optin, email], [optin, booking], [booking, thankyou]
+      ]
+    };
+  },
+  leadmagnet: function () {
+    var traffic = createNode('traffic', 40, 260, { visitors: 600 });
+    var optin = createNode('optin', 340, 260, { rate: 50, label: 'Freebie-Landingpage' });
+    var email = createNode('email', 640, 260, { rate: 40 });
+    var thankyou = createNode('thankyou', 340, 470);
+    return {
+      pairs: [
+        [traffic, optin], [optin, thankyou], [optin, email]
+      ]
+    };
+  }
+};
+
+var TEMPLATE_NAMES = {
+  webinar: 'Webinar-Funnel',
+  tripwire: 'Tripwire-Funnel',
+  beratung: 'Beratungs-Funnel',
+  leadmagnet: 'Lead-Magnet-Funnel'
+};
+
+function loadTemplate(key) {
+  var build = TEMPLATES[key];
+  if (!build) return;
+
   if (state.nodes.length > 0) {
-    var ok = window.confirm('Der aktuelle Funnel wird überschrieben. Beispiel-Funnel jetzt laden?');
+    var ok = window.confirm('Der aktuelle Funnel wird überschrieben. "' + (TEMPLATE_NAMES[key] || key) + '" jetzt laden?');
     if (!ok) return;
   }
   resetCanvas();
 
-  var traffic = createNode('traffic', 40, 260, { visitors: 1000 });
-  var optin = createNode('optin', 340, 260, { rate: 40 });
-  var email = createNode('email', 340, 470, { rate: 30 });
-  var webinar = createNode('webinar', 640, 260, { rate: 50 });
-  var sales = createNode('sales', 940, 260, { rate: 50 });
-  var checkout = createNode('checkout', 1240, 260, { rate: 42, orderValue: 100 });
-  var thankyou = createNode('thankyou', 1540, 140);
-  var upsell = createNode('upsell', 1540, 420, { rate: 25, orderValue: 147 });
+  var result = build();
+  result.pairs.forEach(function (pair) { createConnection(pair[0].id, pair[1].id); });
 
-  [
-    [traffic, optin], [optin, email], [optin, webinar], [webinar, sales],
-    [sales, checkout], [checkout, thankyou], [checkout, upsell]
-  ].forEach(function (pair) { createConnection(pair[0].id, pair[1].id); });
-
-  state.pan.x = 0; state.pan.y = 0;
+  state.pan.x = 0; state.pan.y = 0; state.zoom = 1;
   applyPanTransform();
+  updateZoomLabel();
   recomputeAndRender();
   scheduleAutosave();
+
+  dom.templatesPanel.setAttribute('hidden', '');
+  dom.btnTemplates.setAttribute('aria-expanded', 'false');
 }
 
 /* ================= Reset / rebuild canvas ================= */
@@ -1057,6 +1296,7 @@ function rebuildCanvasFrom(loadedState) {
   resetCanvas();
   state.nextId = loadedState.nextId || 1;
   state.pan = loadedState.pan || { x: 0, y: 0 };
+  state.zoom = loadedState.zoom || 1;
 
   (loadedState.nodes || []).forEach(function (n) {
     var node = { id: n.id, type: n.type, x: n.x, y: n.y, data: n.data };
@@ -1070,6 +1310,7 @@ function rebuildCanvasFrom(loadedState) {
   });
 
   applyPanTransform();
+  updateZoomLabel();
   updateEmptyHint();
   recomputeAndRender();
   return true;
@@ -1088,6 +1329,7 @@ function serializeState() {
     nodes: state.nodes.map(function (n) { return { id: n.id, type: n.type, x: n.x, y: n.y, data: n.data }; }),
     connections: state.connections.map(function (c) { return { id: c.id, source: c.source, target: c.target }; }),
     pan: state.pan,
+    zoom: state.zoom,
     nextId: state.nextId
   };
 }
