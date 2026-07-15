@@ -777,15 +777,9 @@ function bindEvents() {
 
   dom.btnTemplates.addEventListener('click', function (e) {
     e.stopPropagation();
-    var isHidden = dom.templatesPanel.hasAttribute('hidden');
-    if (isHidden) { dom.templatesPanel.removeAttribute('hidden'); dom.btnTemplates.setAttribute('aria-expanded', 'true'); }
-    else { dom.templatesPanel.setAttribute('hidden', ''); dom.btnTemplates.setAttribute('aria-expanded', 'false'); }
-  });
-  document.addEventListener('click', function (e) {
-    if (!dom.templatesPanel.hasAttribute('hidden') && !dom.templatesMenu.contains(e.target)) {
-      dom.templatesPanel.setAttribute('hidden', '');
-      dom.btnTemplates.setAttribute('aria-expanded', 'false');
-    }
+    var willOpen = dom.templatesPanel.hasAttribute('hidden');
+    closeMenus();
+    if (willOpen) { dom.templatesPanel.removeAttribute('hidden'); dom.btnTemplates.setAttribute('aria-expanded', 'true'); }
   });
   dom.templatesPanel.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -813,17 +807,17 @@ function bindEvents() {
 
   dom.btnMyFunnels.addEventListener('click', function (e) {
     e.stopPropagation();
-    var isHidden = dom.myFunnelsPanel.hasAttribute('hidden');
-    if (isHidden) { dom.myFunnelsPanel.removeAttribute('hidden'); dom.btnMyFunnels.setAttribute('aria-expanded', 'true'); }
-    else { dom.myFunnelsPanel.setAttribute('hidden', ''); dom.btnMyFunnels.setAttribute('aria-expanded', 'false'); }
-  });
-  document.addEventListener('click', function (e) {
-    if (!dom.myFunnelsPanel.hasAttribute('hidden') && !dom.myFunnels.contains(e.target)) {
-      dom.myFunnelsPanel.setAttribute('hidden', '');
-      dom.btnMyFunnels.setAttribute('aria-expanded', 'false');
-    }
+    var willOpen = dom.myFunnelsPanel.hasAttribute('hidden');
+    closeMenus();
+    if (willOpen) { dom.myFunnelsPanel.removeAttribute('hidden'); dom.btnMyFunnels.setAttribute('aria-expanded', 'true'); }
   });
   dom.myFunnelsPanel.addEventListener('click', function (e) { e.stopPropagation(); });
+
+  /* Klick irgendwo außerhalb schließt beide Menüs */
+  document.addEventListener('click', function (e) {
+    if (dom.templatesMenu.contains(e.target) || dom.myFunnels.contains(e.target)) return;
+    closeMenus();
+  });
 
   dom.btnSaveAs.addEventListener('click', saveSnapshotAs);
   dom.btnExport.addEventListener('click', exportJson);
@@ -833,6 +827,13 @@ function bindEvents() {
   dom.btnModalCancel.addEventListener('click', closeModal);
   dom.btnModalSave.addEventListener('click', saveModal);
   dom.modalOverlay.addEventListener('click', function (e) { if (e.target === dom.modalOverlay) closeModal(); });
+}
+
+function closeMenus() {
+  dom.templatesPanel.setAttribute('hidden', '');
+  dom.btnTemplates.setAttribute('aria-expanded', 'false');
+  dom.myFunnelsPanel.setAttribute('hidden', '');
+  dom.btnMyFunnels.setAttribute('aria-expanded', 'false');
 }
 
 function handleDrop(e) {

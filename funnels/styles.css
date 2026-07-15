@@ -185,14 +185,18 @@ a { color: inherit; }
 .zoom-btn { font-size: 1.1rem; line-height: 1; padding: 0.3rem 0.6rem; min-width: 2rem; }
 .zoom-label { font-family: var(--fd); font-weight: 700; font-size: 0.75rem; color: var(--faint); min-width: 3rem; text-align: center; }
 
-/* ---------- My funnels panel ---------- */
+/* ---------- Dropdown-Menüs (Vorlagen & Meine Funnels) ---------- */
 .my-funnels { position: relative; }
 .my-funnels-panel {
-  position: absolute; top: calc(100% + 0.5rem); right: 0; width: 260px;
-  background: var(--card); border: 1px solid var(--border2); border-radius: 0.85rem;
-  box-shadow: var(--node-shadow); padding: 0.6rem; z-index: 200;
+  position: absolute; top: calc(100% + 0.4rem); right: 0; width: 240px;
+  background: var(--bg2); border: 1px solid var(--border2); border-radius: 0.85rem;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--border); padding: 0.5rem; z-index: 300;
   display: flex; flex-direction: column; gap: 0.35rem;
 }
+/* Vorlagen-Menü sitzt links in der Toolbar → linksbündig ausklappen */
+#templates-menu { position: relative; }
+#templates-panel { right: auto; left: 0; }
+#templates-panel .panel-action { font-family: var(--fd); font-weight: 700; }
 .panel-action {
   text-align: left; background: transparent; border: 1px solid var(--border); color: var(--text);
   font-family: var(--fb); font-size: 0.82rem; padding: 0.5rem 0.6rem; border-radius: 0.55rem; cursor: pointer;
