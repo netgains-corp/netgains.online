@@ -6,7 +6,6 @@
 <meta name="description" content="CloudGains DC: Premium Websites & digitale Produkte. Onepager, Smart Websites, Apps & mehr aus einer Hand.">
 <title>CloudGains DC | Premium Websites & Digital Products</title>
 <link rel="canonical" href="https://cloudgains.de/">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <link rel="icon" href="vor7_webp.webp" type="image/webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/syne-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dmsans-latin.woff2" crossorigin>
@@ -503,6 +502,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
 /* CLOUDGAINS CLOUD SUITE */
 .cgc-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.cgc-inner > div { min-width: 0; } /* verhindert, dass Inhalte die Grid-Spur breiter als den Viewport ziehen */
 .cgc-suite .section-eyebrow { margin-bottom: 2.25rem; }
 .cgc-shot { border-radius: 1.25rem; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(127, 255, 212, 0.12); }
 .cgc-shot img { width: 100%; height: auto; display: block; }
@@ -588,14 +588,18 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   border-bottom: 4px solid transparent;
   border-left: 6px solid rgba(167,139,250,0.85);
 }
+.funnels-mock-canvas { max-width: 100%; overflow: hidden; }
 .funnels-mock-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
 .funnels-mock-stat { font-size: 0.72rem; color: var(--muted); }
 .funnels-mock-stat b { font-family: var(--fd); color: #fff; }
 @media (max-width: 480px) {
-  .funnels-mock-node { min-width: 82px; padding: 0.7rem 0.5rem; }
-  .funnels-mock-node-label { font-size: 0.62rem; }
+  .funnels-mock-canvas { padding: 2.75rem 0.6rem 1.75rem; gap: 1.25rem; }
+  .funnels-mock-node { min-width: 0; flex: 1 1 0; padding: 0.6rem 0.4rem; }
+  .funnels-mock-node-label { font-size: 0.6rem; white-space: normal; line-height: 1.15; }
   .funnels-mock-node-metric { font-size: 1rem; }
-  .funnels-mock-connector { flex-basis: 22px; }
+  .funnels-mock-connector { flex: 0 0 14px; margin: 0 0.1rem; }
+  .funnels-mock-stats { gap: 0.6rem 1rem; }
+  .funnels-mock-badge { font-size: 0.62rem; padding: 0.3rem 0.6rem; }
 }
 .cgc-feat-title { font-family: var(--fd); font-weight: 700; color: #fff; }
 .investora-feat { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 0.95rem; color: var(--faint); line-height: 1.5; }
@@ -633,6 +637,13 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 
 /* CONTACT */
 .contact-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 4rem; position: relative; z-index: 2; }
+.contact-methods { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
+.contact-method { display: flex; align-items: center; gap: 0.9rem; flex: 1 1 260px; max-width: 360px; padding: 1.1rem 1.25rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 1rem; text-decoration: none; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.contact-method:hover { border-color: var(--aqua); box-shadow: 0 0 20px rgba(127,255,212,0.1); transform: translateY(-2px); }
+.contact-method-icon { width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; border-radius: 0.75rem; background: rgba(127,255,212,0.1); }
+.contact-method-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.contact-method-label { font-family: var(--fd); font-weight: 700; font-size: 0.8rem; color: var(--aqua); }
+.contact-method-val { font-size: 0.95rem; color: var(--text); word-break: break-word; }
 .form-input, .form-textarea, .form-select { width: 100%; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 0.75rem; padding: 1rem; color: #fff; font-family: inherit; margin-bottom: 1rem; outline: none; transition: 0.3s; }
 .form-input:focus, .form-textarea:focus { border-color: var(--aqua); box-shadow: 0 0 15px rgba(127,255,212,0.1); }
 .form-submit { width: 100%; padding: 1rem; border-radius: 99px; background: var(--aqua); color: #000; font-family: var(--fd); font-weight: 800; border: none; cursor: pointer; transition: 0.2s; box-shadow: 0 8px 25px rgba(127, 255, 212, 0.3); }
@@ -712,6 +723,13 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
 @media (max-width: 640px) {
   /* Globale Reduzierung von Paddings/Größen für kleine Bildschirme */
   .container { padding: 0 1.25rem; }
+
+  /* Reveal-Animationen auf Mobile vertikal statt horizontal:
+     die ±50px-X-Verschiebung ragt sonst über den Viewport und erzeugt
+     (v.a. auf iOS Safari trotz overflow-x:hidden) horizontales Scrollen.
+     :not(.visible) hebt die Spezifität über die Basisregel und lässt den
+     eingeblendeten Endzustand (transform:none) unberührt. */
+  [data-anim="fade-left"]:not(.visible), [data-anim="fade-right"]:not(.visible) { transform: translateY(30px); }
   
   .liquid-header {
     top: 1rem; left: 1rem; right: 1rem; padding: 0 0.5rem 0 1.25rem;
@@ -1487,7 +1505,7 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
       <div data-anim="fade-right">
         <div class="section-eyebrow"><div class="dot"></div><span>Kontakt</span></div>
         <h2 class="section-title">Lass uns<br><em>reden.</em></h2>
-        <p class="contact-info-sub">Schildere uns kurz dein Projekt. Wir melden uns innerhalb von 24 Stunden mit einem konkreten Vorschlag.</p>
+        <p class="contact-info-sub">Schreib uns per E-Mail oder WhatsApp und schildere uns kurz dein Projekt. Wir melden uns innerhalb von 24 Stunden mit einem konkreten Vorschlag.</p>
         <div class="contact-methods">
           <!--email_off--><a href="mailto:kontakt@cloudgains.de" class="contact-method">
             <div class="contact-method-icon email">✉️</div>
@@ -1496,33 +1514,21 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
               <div class="contact-method-val">kontakt@cloudgains.de</div>
             </div>
           </a><!--/email_off-->
-          <a href="https://wa.me/015202315946" target="_blank" class="contact-method">
+          <a href="https://wa.me/4915202315946" target="_blank" rel="noopener" class="contact-method">
             <div class="contact-method-icon whatsapp">💬</div>
             <div class="contact-method-text">
               <div class="contact-method-label">WhatsApp</div>
               <div class="contact-method-val">01520 2315946</div>
             </div>
           </a>
+          <a href="tel:+4915202315946" class="contact-method">
+            <div class="contact-method-icon email">📞</div>
+            <div class="contact-method-text">
+              <div class="contact-method-label">Telefon</div>
+              <div class="contact-method-val">01520 2315946</div>
+            </div>
+          </a>
         </div>
-      </div>
-      <div data-anim="fade-left" data-delay="1">
-        <!--email_off--><form class="contact-form" id="contact-form">
-          <div class="form-group"><label class="form-label" for="contact-name">Dein Name</label><input class="form-input" id="contact-name" type="text" name="name" placeholder="Max Mustermann" required></div>
-          <div class="form-group"><label class="form-label" for="contact-email">E-Mail-Adresse</label><input class="form-input" id="contact-email" type="email" name="email" placeholder="max@beispiel.de" required></div>
-          <div class="form-group"><label class="form-label" for="contact-paket">Interesse an</label>
-            <select class="form-select form-input" id="contact-paket" name="paket">
-              <option>Websites & Onepager</option>
-              <option>Apps & Dashboards</option>
-              <option>Marketing & Automation</option>
-              <option>Komplettes System</option>
-              <option>Beratung / Noch unsicher</option>
-            </select>
-          </div>
-          <div class="form-group"><label class="form-label" for="contact-nachricht">Deine Nachricht</label><textarea class="form-textarea" id="contact-nachricht" name="nachricht" placeholder="Erzähl uns von deinem Projekt..." required></textarea></div>
-          <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY" data-theme="dark"></div>
-          <button type="submit" class="form-submit"><span>Nachricht senden</span><span>→</span></button>
-          <p class="form-status" id="contact-form-status" role="status" aria-live="polite"></p>
-        </form><!--/email_off-->
       </div>
     </div>
     <div class="personal-cta" data-anim="zoom-in" data-delay="2" style="background: transparent; border-top-width: 2px;">
@@ -1564,6 +1570,6 @@ input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<script src="assets/app.js" defer></script>
+<script src="assets/app.js?v=2" defer></script>
 </body>
 </html>
